@@ -1,0 +1,67 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+/* font */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400..800&display=swap');
+
+body{
+  font-family: "Baloo Da 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  color: #151515;
+}
+
+/* button */
+
+.btn_css {
+ padding: 0.5em;
+ background: #f22303;
+ color: white;
+ border: none;
+ border-radius: 0.5em; 
+ font-size: medium;
+ font-weight: bold;
+ cursor: pointer;
+ position: relative;
+ z-index: 1;
+ overflow: hidden;
+ margin: 0.5em;
+}
+
+button:hover {
+ color: white;
+}
+
+button:after {
+ content: "";
+ background: #151515;
+ position: absolute;
+ z-index: -1;
+ left: -20%;
+ right: -20%;
+ top: 0;
+ bottom: 0;
+ transform: skewX(-45deg) scale(0, 1);
+ transition: all 0.5s;
+}
+
+button:hover:after {
+ transform: skewX(-45deg) scale(1, 1);
+ -webkit-transition: all 0.5s;
+ transition: all 0.5s;
+}
+
+/* navbar border  */
+
+.radius_left_right_css{
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+}
+
+/* rounded */
+
+.radius_css{
+    border-radius: 0.5em;
+}
