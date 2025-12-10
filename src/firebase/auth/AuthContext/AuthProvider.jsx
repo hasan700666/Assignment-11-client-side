@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -31,6 +32,10 @@ const AuthProvider = ({ children }) => {
     return signOut(auth)
   }
 
+  const singInUserByGoogle = (provider)  =>{
+    return signInWithPopup(auth,provider)
+  }
+
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
@@ -50,6 +55,7 @@ const AuthProvider = ({ children }) => {
     singInUser,
     updateUser,
     singOutUser,
+    singInUserByGoogle,
   };
 
   return <AuthContext value={authValue}>{children}</AuthContext>;

@@ -5,9 +5,11 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { NavLink } from "react-router";
 import { AuthContext } from "../firebase/auth/AuthContext/AuthContext";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const Login = () => {
-  const { singInUser } = use(AuthContext);
+  const provider = new GoogleAuthProvider();
+  const { singInUser, singInUserByGoogle } = use(AuthContext);
   const [sow, setSow] = useState(false);
   const {
     register,
@@ -30,6 +32,16 @@ const Login = () => {
   const handelSow = () => {
     setSow(!sow);
     console.log(sow);
+  };
+
+  const handelGoogleSingIn = () => {
+    singInUserByGoogle(provider)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -91,7 +103,10 @@ const Login = () => {
                     <button className="btn_css">Login</button>
                   </fieldset>
                 </form>
-                <a className="btn bg-white text-black border-[#e5e5e5]">
+                <a
+                  className="btn bg-white text-black border-[#e5e5e5]"
+                  onClick={handelGoogleSingIn}
+                >
                   <svg
                     aria-label="Google logo"
                     width="16"

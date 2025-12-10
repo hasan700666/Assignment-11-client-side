@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" ;
 
 
 /* font */
@@ -64,4 +64,14 @@ button:hover:after {
 
 .radius_css{
     border-radius: 0.5em;
+}
+
+/* text desing */
+
+.text_design_like_btn{
+  padding: 0.5em;
+ background: #f22303;
+ color: white;
+ border: none;
+ border-radius: 0.5em;
 }

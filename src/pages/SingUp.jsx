@@ -4,9 +4,11 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { NavLink } from "react-router";
 import { AuthContext } from "../firebase/auth/AuthContext/AuthContext";
 import { useForm } from "react-hook-form";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const SingUp = () => {
-  const { createUser, updateUser } = use(AuthContext);
+  const provider = new GoogleAuthProvider();
+  const { createUser, updateUser, singInUserByGoogle } = use(AuthContext);
   const [sow, setSow] = useState(false);
   const [sowConfirm, setSowConfirm] = useState(false);
 
@@ -47,7 +49,16 @@ const SingUp = () => {
     setSowConfirm(!sowConfirm);
   };
 
-  const handleGoogleLogin = () => {};
+  const handelGoogleSingIn = () => {
+    singInUserByGoogle(provider)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div>
       <div>{/* <Toaster /> */}</div>
@@ -164,7 +175,7 @@ const SingUp = () => {
                 </form>
                 <a
                   className="btn bg-white text-black border-[#e5e5e5]"
-                  onClick={handleGoogleLogin}
+                  onClick={handelGoogleSingIn}
                 >
                   <svg
                     aria-label="Google logo"
