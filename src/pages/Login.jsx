@@ -142,7 +142,7 @@ const Login = () => {
                 </a>
                 <div className="flex justify-center items-center flex-col mt-5">
                   Don't have an account?{" "}
-                  <NavLink to="/user/sing_up">
+                  <NavLink to="/user/sing_up" state={location.state}>
                     <button className="btn_css mt-3">Sing up</button>
                   </NavLink>
                 </div>

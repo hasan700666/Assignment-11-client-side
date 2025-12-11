@@ -8,7 +8,7 @@ const PrivetRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="h-[100vh] flex justify-center items-center">
+      <div className="h-screen flex justify-center items-center">
         <span className="loading loading-infinity size-20"></span>
       </div>
     );

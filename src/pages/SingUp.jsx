@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { NavLink } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { GoogleAuthProvider } from "firebase/auth";
 import useAuth from "../hooks/useAuth";
+import axios from "axios";
 
 const SingUp = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
   const { createUser, updateUser, singInUserByGoogle } = useAuth();
   const [sow, setSow] = useState(false);
@@ -23,18 +26,25 @@ const SingUp = () => {
       return console.log("password!=confirmPassword");
     }
 
-    console.log(data);
-
     createUser(data.email, data.password)
       .then((res) => {
         console.log(res);
-        updateUser(data.name, data.photo)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        const fromData = new FormData();
+        fromData.append("image", data.photo[0]);
+        const imgURL = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_imgbb_api_key
+        }`;
+        axios.post(imgURL, fromData).then((res) => {
+          console.log("img upload", res.data.data.url);
+          updateUser(data.name, res.data.data.url)
+            .then((res) => {
+              console.log(res, "update Done");
+              navigate(location.state || "/");
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        });
       })
       .catch((e) => {
         console.log(e);
@@ -53,6 +63,7 @@ const SingUp = () => {
     singInUserByGoogle(provider)
       .then((res) => {
         console.log(res);
+        navigate(location.state || "/");
       })
       .catch((e) => {
         console.log(e);
@@ -98,10 +109,10 @@ const SingUp = () => {
                       <p className="text-red-500">Email field required</p>
                     )}
                     {/* photo field */}
-                    <label className="label">Photo-URL</label>
+                    <label className="label">Photo</label>
                     <input
-                      type=""
-                      className="input w-full rounded_css"
+                      type="file"
+                      className="file-input w-full rounded_css"
                       placeholder="Enter Your Photo-URL"
                       name="photo"
                       {...register("photo", { required: true })}
@@ -208,7 +219,7 @@ const SingUp = () => {
                 </a>
                 <div className="flex justify-center items-center flex-col mt-5">
                   Already have an account?{" "}
-                  <NavLink to="/user/login">
+                  <NavLink to="/user/login" state={location.state}>
                     <button className="btn_css mt-3">Log in</button>
                   </NavLink>
                 </div>
