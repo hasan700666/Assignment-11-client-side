@@ -4,6 +4,7 @@ import "./index.css";
 import { router } from "./router/router";
 import { RouterProvider } from "react-router";
 import AuthProvider from "./firebase/auth/AuthContext/AuthProvider";
+import PrivetRoute from "./router/PrivetRoute";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

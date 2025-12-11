@@ -6,8 +6,6 @@ import { AuthContext } from "../../../firebase/auth/AuthContext/AuthContext";
 const Navbar = () => {
   const { user, singOutUser } = use(AuthContext);
 
-  console.log(user);
-
   const li = (
     <>
       <NavLink to="/" className="mx-3">

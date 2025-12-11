@@ -12,36 +12,44 @@ import { auth } from "../../firebaseConfig";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const createUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const singInUser = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const updateUser = (displayName, photoURL) => {
+    setLoading(true);
     return updateProfile(auth.currentUser, {
       displayName: displayName,
       photoURL: photoURL,
     });
   };
 
-  const singOutUser  = ()=>{
-    return signOut(auth)
-  }
+  const singOutUser = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
 
-  const singInUserByGoogle = (provider)  =>{
-    return signInWithPopup(auth,provider)
-  }
+  const singInUserByGoogle = (provider) => {
+    setLoading(true);
+    return signInWithPopup(auth, provider);
+  };
 
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        setLoading(false);
       } else {
         setUser(null);
+        setLoading(false);
       }
     });
     return () => {
@@ -51,6 +59,7 @@ const AuthProvider = ({ children }) => {
 
   const authValue = {
     user,
+    loading,
     createUser,
     singInUser,
     updateUser,

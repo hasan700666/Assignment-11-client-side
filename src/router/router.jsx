@@ -8,6 +8,7 @@ import MyFavorites from "../pages/MyFavorites";
 import SingUp from "../pages/SingUp";
 import Login from "../pages/Login";
 import Root2 from "../layout/layout_2/Root2";
+import PrivetRoute from "./PrivetRoute";
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +33,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "my_favorites",
-        Component: MyFavorites,
+        element: (
+          <PrivetRoute>
+            <MyFavorites></MyFavorites>
+          </PrivetRoute>
+        ),
       },
     ],
   },

@@ -1,15 +1,17 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { NavLink } from "react-router";
-import { AuthContext } from "../firebase/auth/AuthContext/AuthContext";
+import { Navigate, NavLink, useLocation, useNavigate } from "react-router";
 import { GoogleAuthProvider } from "firebase/auth";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate()
   const provider = new GoogleAuthProvider();
-  const { singInUser, singInUserByGoogle } = use(AuthContext);
+  const { singInUser, singInUserByGoogle } = useAuth();
   const [sow, setSow] = useState(false);
   const {
     register,
@@ -23,6 +25,7 @@ const Login = () => {
     singInUser(data.email, data.password)
       .then((res) => {
         console.log(res);
+        navigate(location.state || "/")
       })
       .catch((e) => {
         console.log(e);
@@ -38,6 +41,7 @@ const Login = () => {
     singInUserByGoogle(provider)
       .then((res) => {
         console.log(res);
+        navigate(location.state || "/")
       })
       .catch((e) => {
         console.log(e);

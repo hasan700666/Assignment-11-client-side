@@ -1,14 +1,14 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { NavLink } from "react-router";
-import { AuthContext } from "../firebase/auth/AuthContext/AuthContext";
 import { useForm } from "react-hook-form";
 import { GoogleAuthProvider } from "firebase/auth";
+import useAuth from "../hooks/useAuth";
 
 const SingUp = () => {
   const provider = new GoogleAuthProvider();
-  const { createUser, updateUser, singInUserByGoogle } = use(AuthContext);
+  const { createUser, updateUser, singInUserByGoogle } = useAuth();
   const [sow, setSow] = useState(false);
   const [sowConfirm, setSowConfirm] = useState(false);
 
