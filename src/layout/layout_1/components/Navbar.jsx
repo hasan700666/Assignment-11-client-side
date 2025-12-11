@@ -6,6 +6,9 @@ import { AuthContext } from "../../../firebase/auth/AuthContext/AuthContext";
 const Navbar = () => {
   const { user, singOutUser } = use(AuthContext);
 
+  console.log(user);
+  
+
   const li = (
     <>
       <NavLink to="/" className="mx-3">
@@ -18,6 +21,10 @@ const Navbar = () => {
       <NavLink to="/all_issues" className="mx-3">
         {" "}
         All Issues
+      </NavLink>
+      <NavLink to="/add_issues" className="mx-3">
+        {" "}
+        Add Issues
       </NavLink>
       <NavLink to="/my_issues" className="mx-3">
         {" "}
@@ -94,12 +101,12 @@ const Navbar = () => {
                   className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
                 >
                   <h1 className="text-xs mb-5">Welcome {user.displayName}</h1>
-                    <button onClick={handleSingOut} className="btn_css">
-                      Dashboard
-                    </button>
-                    <button onClick={handleSingOut} className="btn_css">
-                      Sing Out
-                    </button>
+                  <button className="btn_css">
+                    Dashboard
+                  </button>
+                  <button onClick={handleSingOut} className="btn_css">
+                    Sing Out
+                  </button>
                 </ul>
               </div>
             </>

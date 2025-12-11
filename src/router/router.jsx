@@ -9,6 +9,7 @@ import SingUp from "../pages/SingUp";
 import Login from "../pages/Login";
 import Root2 from "../layout/layout_2/Root2";
 import PrivetRoute from "./PrivetRoute";
+import AddIssues from "../pages/AddIssues";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <MyFavorites></MyFavorites>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "add_issues",
+        element: (
+          <PrivetRoute>
+            <AddIssues></AddIssues>
           </PrivetRoute>
         ),
       },
