@@ -1,22 +1,22 @@
 import { createBrowserRouter } from "react-router";
-import Root from "../layout/layout_1/Root";
-import Home from "../pages/Home";
-import AllIssues from "../pages/AllIssues";
-import About from "../pages/About";
-import MyIssues from "../pages/MyIssues";
-import MyFavorites from "../pages/MyFavorites";
-import SingUp from "../pages/SingUp";
-import Login from "../pages/Login";
-import Root2 from "../layout/layout_2/Root2";
+import Home from "../pages/Root/home/Home";
+import AllIssues from "../pages/Root/allIssues/AllIssues";
+import About from "../pages/Root/about/About";
+import MyIssues from "../pages/Root/myIssues/MyIssues";
+import MyFavorites from "../pages/Root/myFavorites/MyFavorites";
+import SingUp from "../pages/Auth/singUp/SingUp";
 import PrivetRoute from "./PrivetRoute";
-import AddIssues from "../pages/AddIssues";
-import Root3 from "../layout/layout_3/Root3";
-import Profile from "../layout/layout_3/components/Profile";
+import AddIssues from "../pages/Root/addIssues/AddIssues";
+import Profile from "../pages/Dashbord/profile/Profile";
+import RootLayout from "../layout/RootLayout";
+import AuthLayout from "../layout/AuthLayout";
+import DashboardLayout from "../layout/DashboardLayout";
+import Login from "../pages/Auth/login/Login";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: Root,
+    Component: RootLayout,
     children: [
       {
         index: true,
@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/user/",
-    Component: Root2,
+    Component: AuthLayout,
     children: [
       {
         path: "sing_up",
@@ -68,7 +68,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    Component: Root3,
+    element: (
+      <PrivetRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivetRoute>
+    ),
     children: [
       {
         index: true,

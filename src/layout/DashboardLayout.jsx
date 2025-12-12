@@ -1,7 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router";
+import Logo from "../components/Logo";
+import img from "../../public/CircleLogo.png";
 
-const Root3 = () => {
+const DashboardLayout = () => {
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -12,7 +14,7 @@ const Root3 = () => {
             <label
               htmlFor="my-drawer-4"
               aria-label="open sidebar"
-              className="btn btn-square btn-ghost"
+              className="btn_css"
             >
               {/* Sidebar toggle icon */}
               <svg
@@ -49,8 +51,24 @@ const Root3 = () => {
             <ul className="menu w-full grow">
               {/* List item */}
               <li>
-                <button
+                <a
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Homepage"
+                >
+                  {/* Logo icon */}
+                  <img
+                    src={img}
+                    alt=""
+                    className="my-1.5 hidden is-drawer-close:block size-4"
+                  />
+                  <span className="is-drawer-close:hidden mx-15">
+                    <Logo></Logo>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <button
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
                   data-tip="Homepage"
                 >
                   {/* Home icon */}
@@ -74,7 +92,7 @@ const Root3 = () => {
               {/* List item */}
               <li>
                 <button
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
                   data-tip="Settings"
                 >
                   {/* Settings icon */}
@@ -104,4 +122,4 @@ const Root3 = () => {
   );
 };
 
-export default Root3;
+export default DashboardLayout;

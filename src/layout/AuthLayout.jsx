@@ -1,9 +1,9 @@
 import React from "react";
-import Logo from "../../components/Logo";
+import Logo from "../components/Logo";
 import { Outlet } from "react-router";
-import SideDesign from "./SideDesign";
+import SideDesign from "../pages/Auth/layout_file/SideDesign";
 
-const Root2 = () => {
+const AuthLayout = () => {
   return (
     <div className="flex justify-between ml-30">
       <div className="h-full">
@@ -17,4 +17,4 @@ const Root2 = () => {
   );
 };
 
-export default Root2;
+export default AuthLayout;

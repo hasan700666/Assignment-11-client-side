@@ -1,10 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import img from "../assets/photo-add.svg";
+import img from "../../../assets/photo-add.svg";
 import Swal from "sweetalert2";
-import useAxiousInstance from "../hooks/useAxiousInstance";
+import useAxiousInstance from "../../../hooks/useAxiousInstance";
 import axios from "axios";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 
 const AddIssues = () => {
   const { user } = useAuth();
@@ -16,7 +16,6 @@ const AddIssues = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-
     const fromData = new FormData();
     fromData.append("image", data.photo[0]);
     const imgURL = `https://api.imgbb.com/1/upload?key=${

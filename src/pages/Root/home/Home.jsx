@@ -1,6 +1,6 @@
 import React from "react";
-import Slider from "../components/Slider";
-import HomeIssues from "../components/HomeIssues";
+import Slider from "./Slider";
+import HomeIssues from "./HomeIssues";
 
 const Home = () => {
   return (

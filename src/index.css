@@ -30,11 +30,11 @@ body{
  margin: 0.5em;
 }
 
-button:hover {
+.btn_css:hover {
  color: white;
 }
 
-button:after {
+.btn_css:after {
  content: "";
  background: #151515;
  position: absolute;
@@ -47,7 +47,7 @@ button:after {
  transition: all 0.5s;
 }
 
-button:hover:after {
+.btn_css:hover:after {
  transform: skewX(-45deg) scale(1, 1);
  -webkit-transition: all 0.5s;
  transition: all 0.5s;
@@ -74,4 +74,10 @@ button:hover:after {
  color: white;
  border: none;
  border-radius: 0.5em;
+}
+
+/* logo button desing */
+
+.logo_btn{
+  
 }

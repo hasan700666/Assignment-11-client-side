@@ -1,7 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import img from "../assets/oneboglin.png";
+import img from "../../../assets/oneboglin.png";
 import { Autoplay } from "swiper/modules";
 
 const Slider = () => {

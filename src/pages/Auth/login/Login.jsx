@@ -5,11 +5,11 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Navigate, NavLink, useLocation, useNavigate } from "react-router";
 import { GoogleAuthProvider } from "firebase/auth";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 
 const Login = () => {
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
   const { singInUser, singInUserByGoogle } = useAuth();
   const [sow, setSow] = useState(false);
@@ -25,7 +25,7 @@ const Login = () => {
     singInUser(data.email, data.password)
       .then((res) => {
         console.log(res);
-        navigate(location.state || "/")
+        navigate(location.state || "/");
       })
       .catch((e) => {
         console.log(e);
@@ -41,7 +41,7 @@ const Login = () => {
     singInUserByGoogle(provider)
       .then((res) => {
         console.log(res);
-        navigate(location.state || "/")
+        navigate(location.state || "/");
       })
       .catch((e) => {
         console.log(e);

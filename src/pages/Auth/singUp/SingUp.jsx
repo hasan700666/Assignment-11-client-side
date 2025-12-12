@@ -4,9 +4,9 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { GoogleAuthProvider } from "firebase/auth";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
-import useAxiousInstance from "../hooks/useAxiousInstance";
+import useAxiousInstance from "../../../hooks/useAxiousInstance";
 
 const SingUp = () => {
   const axiosInstance = useAxiousInstance();
