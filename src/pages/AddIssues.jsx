@@ -1,8 +1,14 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import img from "../assets/photo-add.svg";
+import Swal from "sweetalert2";
+import useAxiousInstance from "../hooks/useAxiousInstance";
+import axios from "axios";
+import useAuth from "../hooks/useAuth";
 
 const AddIssues = () => {
+  const { user } = useAuth();
+  const axiousInsrance = useAxiousInstance();
   const {
     handleSubmit,
     register,
@@ -10,7 +16,56 @@ const AddIssues = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+
+    const fromData = new FormData();
+    fromData.append("image", data.photo[0]);
+    const imgURL = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_imgbb_api_key
+    }`;
+    axios.post(imgURL, fromData).then((res) => {
+      console.log("img upload", res.data.data.url);
+      // id = 1
+      axiousInsrance
+        .post("/issues", {
+          title: data.title,
+          location: data.location,
+          category: data.category,
+          description: data.description,
+          photoURL: res.data.data.url,
+          status: "Pending",
+          priority: "normal",
+          boosted: false,
+          boostedAt: null,
+          upvotes: undefined,
+          upvoters: [undefined],
+          reporterFirebaseUid: user.uid,
+          assignedStaffId: null,
+          timeline: [
+            {
+              status: "Pending",
+              note: "...",
+              by: "userId/admin/staff",
+              at: undefined,
+            },
+          ],
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .then((res) => {
+          console.log(res);
+          Swal.fire({
+            title: "Issues are added",
+            confirmButtonText: "Awesome!",
+            customClass: {
+              confirmButton: "btn_css",
+            },
+            buttonsStyling: false,
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    });
   };
 
   return (
@@ -54,7 +109,7 @@ const AddIssues = () => {
                   className="select w-full"
                   {...register("category", { required: true })}
                 >
-                  <option disabled={true}>Pick a color</option>
+                  <option disabled={true}>Pick a category</option>
                   <option>Road</option>
                   <option>Mosquito</option>
                   <option>Garbage</option>
@@ -82,17 +137,21 @@ const AddIssues = () => {
                 <input
                   type="file"
                   className="text-white w-full h-[60vh] bg-white radius_css relative cursor-pointer"
+                  {...register("photo", { required: true })}
                 ></input>
                 <img
                   src={img}
                   alt=""
                   className="absolute w-20 top-145 right-140"
                 />
+                {errors.photo && (
+                  <p className="text-red-500">Photo field required</p>
+                )}
               </div>
             </div>
           </div>
           <div className="flex justify-start mx-10 items-center">
-            <button className="btn_css w-30 text-center ">Add Issues</button>
+            <button className="btn_css w-30 text-center">Add Issues</button>
           </div>
         </form>
       </div>

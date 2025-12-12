@@ -10,6 +10,8 @@ import Login from "../pages/Login";
 import Root2 from "../layout/layout_2/Root2";
 import PrivetRoute from "./PrivetRoute";
 import AddIssues from "../pages/AddIssues";
+import Root3 from "../layout/layout_3/Root3";
+import Profile from "../layout/layout_3/components/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +63,16 @@ export const router = createBrowserRouter([
       {
         path: "login",
         Component: Login,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    Component: Root3,
+    children: [
+      {
+        index: true,
+        Component: Profile,
       },
     ],
   },

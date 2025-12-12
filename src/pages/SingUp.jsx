@@ -6,8 +6,10 @@ import { useForm } from "react-hook-form";
 import { GoogleAuthProvider } from "firebase/auth";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
+import useAxiousInstance from "../hooks/useAxiousInstance";
 
 const SingUp = () => {
+  const axiosInstance = useAxiousInstance();
   const location = useLocation();
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
@@ -28,18 +30,38 @@ const SingUp = () => {
 
     createUser(data.email, data.password)
       .then((res) => {
-        console.log(res);
+        const firebaseUid = res.user.uid;
         const fromData = new FormData();
         fromData.append("image", data.photo[0]);
-        const imgURL = `https://api.imgbb.com/1/upload?key=${
+        const imgUploadURL = `https://api.imgbb.com/1/upload?key=${
           import.meta.env.VITE_imgbb_api_key
         }`;
-        axios.post(imgURL, fromData).then((res) => {
-          console.log("img upload", res.data.data.url);
+        axios.post(imgUploadURL, fromData).then((res) => {
+          const imgURL = res.data.data.url;
+
           updateUser(data.name, res.data.data.url)
             .then((res) => {
               console.log(res, "update Done");
-              navigate(location.state || "/");
+
+              // id = 4
+              axiosInstance
+                .post("/user", {
+                  firebaseUid: firebaseUid,
+                  name: data.name,
+                  email: data.email,
+                  photoURL: imgURL,
+                  role: "citizen",
+                  isBlocked: false,
+                  isPremium: false,
+                  createdAt: new Date(),
+                })
+                .then((res) => {
+                  console.log(res.data.insertedId);
+                  navigate(location.state || "/");
+                })
+                .catch((e) => {
+                  console.log(e);
+                });
             })
             .catch((e) => {
               console.log(e);

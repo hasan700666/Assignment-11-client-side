@@ -7,7 +7,6 @@ const Navbar = () => {
   const { user, singOutUser } = use(AuthContext);
 
   console.log(user);
-  
 
   const li = (
     <>
@@ -101,9 +100,9 @@ const Navbar = () => {
                   className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
                 >
                   <h1 className="text-xs mb-5">Welcome {user.displayName}</h1>
-                  <button className="btn_css">
-                    Dashboard
-                  </button>
+                  <NavLink to="/dashboard" className="btn_css text-center">
+                    <button >Dashboard</button>
+                  </NavLink>
                   <button onClick={handleSingOut} className="btn_css">
                     Sing Out
                   </button>
