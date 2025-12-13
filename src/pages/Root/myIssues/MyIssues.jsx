@@ -49,6 +49,7 @@ const MyIssues = () => {
       name: name,
       id: id,
       email: user.email,
+      uid: user.uid,
     };
 
     const res = await axiousInsrance.post(

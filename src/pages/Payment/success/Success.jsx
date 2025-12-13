@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import useAxiousInstance from "../../../hooks/useAxiousInstance";
 
@@ -6,14 +6,22 @@ const Success = () => {
   const [searchParams] = useSearchParams();
   const session_id = searchParams.get("session_id");
   const axiousInsrance = useAxiousInstance();
+  const [transactionId, setTransactionId] = useState(null);
 
-  if (session_id) {
-    axiousInsrance
-      .patch(`/payment/success?session_id=${session_id}`)
-      .then((res) => console.log(res));
-  }
+  useEffect(() => {
+    if (session_id) {
+      axiousInsrance
+        .patch(`/payment/success?session_id=${session_id}`)
+        .then((res) => setTransactionId(res.data.transactionId));
+    }
+  }, [session_id, axiousInsrance]);
 
-  return <div>Success</div>;
+  return (
+    <div className="flex flex-col justify-between items-center">
+      <div className="text-4xl my-10">Success</div>
+      <div>{transactionId}</div>
+    </div>
+  );
 };
 
 export default Success;
