@@ -12,6 +12,9 @@ import RootLayout from "../layout/RootLayout";
 import AuthLayout from "../layout/AuthLayout";
 import DashboardLayout from "../layout/DashboardLayout";
 import Login from "../pages/Auth/login/Login";
+import PaymentLayout from "../layout/PaymentLayout";
+import Success from "../pages/Payment/Success/Success";
+import Failed from "../pages/Payment/failed/Failed";
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +35,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "my_issues",
-        Component: MyIssues,
+        element: (
+          <PrivetRoute>
+            <MyIssues></MyIssues>
+          </PrivetRoute>
+        ),
       },
       {
         path: "my_favorites",
@@ -77,6 +84,24 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Profile,
+      },
+    ],
+  },
+  {
+    path: "/payment",
+    element: (
+      <PrivetRoute>
+        <PaymentLayout></PaymentLayout>
+      </PrivetRoute>
+    ),
+    children: [
+      {
+        path: "success",
+        Component: Success,
+      },
+      {
+        path: "failed",
+        Component: Failed,
       },
     ],
   },

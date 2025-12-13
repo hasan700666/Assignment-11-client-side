@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { Navigate, NavLink, useLocation, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { GoogleAuthProvider } from "firebase/auth";
 import useAuth from "../../../hooks/useAuth";
 
