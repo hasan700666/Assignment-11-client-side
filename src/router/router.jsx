@@ -15,6 +15,11 @@ import Login from "../pages/Auth/login/Login";
 import PaymentLayout from "../layout/PaymentLayout";
 import Success from "../pages/Payment/Success/Success";
 import Failed from "../pages/Payment/failed/Failed";
+import TotalIssuesSubmitted from "../pages/Dashbord/totalIssuesSubmitted/TotalIssuesSubmitted";
+import TotalPayments from "../pages/Dashbord/totalPayments/TotalPayments";
+import TotalInProgressIssues from "../pages/Dashbord/totalInProgressIssues/TotalInProgressIssues";
+import TotalPendingIssues from "../pages/Dashbord/totalPendingIssues/TotalPendingIssues";
+import TotalResolvedIssues from "../pages/Dashbord/totalResolvedIssues/TotalResolvedIssues";
 
 export const router = createBrowserRouter([
   {
@@ -84,6 +89,26 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Profile,
+      },
+      {
+        path: "total_issues",
+        Component: TotalIssuesSubmitted,
+      },
+      {
+        path: "total_payment",
+        Component: TotalPayments,
+      },
+      {
+        path: "total_in_progress_issues",
+        Component: TotalInProgressIssues,
+      },
+      {
+        path: "total_pending_issues",
+        Component: TotalPendingIssues,
+      },
+      {
+        path: "total_resolved_issues",
+        Component: TotalResolvedIssues,
       },
     ],
   },

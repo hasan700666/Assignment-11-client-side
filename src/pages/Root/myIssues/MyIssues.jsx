@@ -63,7 +63,7 @@ const MyIssues = () => {
   return (
     <div>
       <div></div>
-      <div className="bg-[#fee9e6] w-9/12 h-[80vh] mx-auto my-10 radius_css p-5">
+      <div className="bg-[#fee9e6] w-9/12 mx-auto my-10 radius_css p-5">
         <div className="overflow-x-auto">
           <table className="table table-zebra">
             {/* head */}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { NavLink, Outlet } from "react-router";
 import Logo from "../components/Logo";
 import img from "../../public/CircleLogo.png";
 
@@ -88,7 +88,6 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">Homepage</span>
                 </button>
               </li>
-
               {/* List item */}
               <li>
                 <button
@@ -113,6 +112,94 @@ const DashboardLayout = () => {
                   </svg>
                   <span className="is-drawer-close:hidden">Settings</span>
                 </button>
+              </li>
+              <li>
+                <NavLink to="/dashboard/total_issues"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Homepage"
+                >
+                  {/* Logo icon */}
+                  <img
+                    src={img}
+                    alt=""
+                    className="my-1.5 hidden is-drawer-close:block size-4"
+                  />
+                  <span className="is-drawer-close:hidden mx-15">
+                    <>Total Issues</>
+                  </span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/total_payment"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Homepage"
+                >
+                  {/* Logo icon */}
+                  <img
+                    src={img}
+                    alt=""
+                    className="my-1.5 hidden is-drawer-close:block size-4"
+                  />
+                  <span className="is-drawer-close:hidden mx-15">
+                    <>
+                      Total Payment
+                    </>
+                  </span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/total_in_progress_issues"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Homepage"
+                >
+                  {/* Logo icon */}
+                  <img
+                    src={img}
+                    alt=""
+                    className="my-1.5 hidden is-drawer-close:block size-4"
+                  />
+                  <span className="is-drawer-close:hidden mx-15">
+                    <>
+                      Total In Progress Issues
+                    </>
+                  </span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/total_pending_issues"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Homepage"
+                >
+                  {/* Logo icon */}
+                  <img
+                    src={img}
+                    alt=""
+                    className="my-1.5 hidden is-drawer-close:block size-4"
+                  />
+                  <span className="is-drawer-close:hidden mx-15">
+                    <>
+                      Total Panding Issues
+                    </>
+                  </span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/total_resolved_issues"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Homepage"
+                >
+                  {/* Logo icon */}
+                  <img
+                    src={img}
+                    alt=""
+                    className="my-1.5 hidden is-drawer-close:block size-4"
+                  />
+                  <span className="is-drawer-close:hidden mx-15">
+                    <>
+                      Total Resolved Issues
+                    </>
+                  </span>
+                </NavLink>
               </li>
             </ul>
           </div>
