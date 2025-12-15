@@ -20,6 +20,7 @@ import TotalPayments from "../pages/Dashbord/totalPayments/TotalPayments";
 import TotalInProgressIssues from "../pages/Dashbord/totalInProgressIssues/TotalInProgressIssues";
 import TotalPendingIssues from "../pages/Dashbord/totalPendingIssues/TotalPendingIssues";
 import TotalResolvedIssues from "../pages/Dashbord/totalResolvedIssues/TotalResolvedIssues";
+import IssueDetails from "../components/IssueDetails";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ export const router = createBrowserRouter([
       {
         path: "all_issues",
         Component: AllIssues,
+      },
+      {
+        path: "issue_details",
+        element: (
+          <PrivetRoute>
+            <IssueDetails></IssueDetails>
+          </PrivetRoute>
+        ),
       },
       {
         path: "my_issues",

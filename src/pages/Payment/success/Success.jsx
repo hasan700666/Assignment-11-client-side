@@ -16,6 +16,9 @@ const Success = () => {
     }
   }, [session_id, axiousInsrance]);
 
+  console.log(session_id);
+  
+
   return (
     <div className="flex flex-col justify-between items-center">
       <div className="text-4xl my-10">Success</div>
