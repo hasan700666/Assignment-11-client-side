@@ -104,7 +104,6 @@ const MyIssues = () => {
                         >
                           Bost Now
                         </button>
-                        {/* Open the modal using document.getElementById('ID').showModal() method */}
                         <dialog
                           id="my_modal_5"
                           className="modal modal-bottom sm:modal-middle"
@@ -116,7 +115,6 @@ const MyIssues = () => {
                             </p>
                             <div className="modal-action">
                               <form method="dialog">
-                                {/* if there is a button in form, it will close the modal */}
                                 <button
                                   className="btn_css"
                                   onClick={() =>
