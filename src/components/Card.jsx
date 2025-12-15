@@ -1,9 +1,13 @@
 import React from "react";
 import { MdCategory } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import useAuth from "../hooks/useAuth";
+import useAxiousInstance from "../hooks/useAxiousInstance";
 
-const Card = ({ issue, onUpvote }) => {
+const Card = ({ issue, refetch }) => {
+  const navigate = useNavigate();
+  const axiousInsrance = useAxiousInstance();
   const {
     photoURL,
     title,
@@ -11,9 +15,30 @@ const Card = ({ issue, onUpvote }) => {
     status,
     priority,
     location,
-    upvotes,
+    upvoters,
     _id,
   } = issue;
+  const { user } = useAuth();
+
+  const onUpvote = () => {
+    if (!user) {
+      return navigate("/user/login");
+    }
+
+    const obj = {
+      firebaseUid: user.uid,
+    };
+    const res = axiousInsrance.patch(`/issues/${_id}`, obj).then((res) => {
+      console.log(res.data);
+      refetch();
+    });
+
+    console.log("hasan ", user.uid);
+    return res;
+  };
+
+  console.log(issue?.reporterFirebaseUid);
+  console.log(user?.uid);
 
   return (
     <div className="card bg-base-100 w-96 shadow-sm">
@@ -37,9 +62,15 @@ const Card = ({ issue, onUpvote }) => {
           </div>
         </p>
         <div className="card-actions justify-end">
-          <button className="btn_css" onClick={() => onUpvote()}>
-            Upvotea | <samp className="">60</samp>
-          </button>
+          {issue?.reporterFirebaseUid == user?.uid ? (
+            <>
+              <div>this is your</div>
+            </>
+          ) : (
+            <button className="btn_css" onClick={() => onUpvote()}>
+              Upvotea | <samp className="">{upvoters.length - 1}</samp>
+            </button>
+          )}
           <NavLink to={`/issue_details?id=${_id}`}>
             <div className="btn_css">View</div>
           </NavLink>

@@ -1,12 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiousInstance from "../../../hooks/useAxiousInstance";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 
 const MyIssues = () => {
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const { data: issues = [], refetch } = useQuery({
     queryKey: ["my-issues", user.uid],
@@ -17,7 +26,6 @@ const MyIssues = () => {
   });
 
   const handleDelete = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -60,6 +68,23 @@ const MyIssues = () => {
 
     window.location.assign(res.data.url);
   };
+
+  const handleSow = (id) => {
+    navigate(`/issue_details?id=${id}`);
+  };
+
+  const onSubmit = async (data) => {
+    const res = await axiousInsrance.patch(`/issues/${data?._id}`, data);
+    console.log(res);
+    document.getElementById("edit_modal").close();
+    refetch()
+  };
+
+  const openEditModal = (issue) => {
+    reset(issue);
+    document.getElementById("edit_modal").showModal();
+  };
+
   return (
     <div>
       <div></div>
@@ -88,7 +113,7 @@ const MyIssues = () => {
                   <td>{issue.location}</td>
                   <td>{issue.category}</td>
                   <td>{issue.status}</td>
-                  <td>{issue.upvoters}</td>
+                  <td>{issue.upvoters.length - 1}</td>
                   <td>
                     {issue.boosted ? (
                       <div className="bg-[#f22303] text-center p-2 rounded-xl text-white">
@@ -134,8 +159,18 @@ const MyIssues = () => {
                   <td>{issue.updatedAt}</td>
                   <td>
                     <>
-                      <button className="btn_css">Sow</button>
-                      <button className="btn_css">Update</button>
+                      <button
+                        className="btn_css"
+                        onClick={() => handleSow(issue?._id)}
+                      >
+                        Sow
+                      </button>
+                      <button
+                        className="btn_css"
+                        onClick={() => openEditModal(issue)}
+                      >
+                        Update
+                      </button>
                       <button
                         className="btn_css"
                         onClick={() => handleDelete(issue._id)}
@@ -148,6 +183,78 @@ const MyIssues = () => {
               ))}
             </tbody>
           </table>
+          <div>
+            <dialog id="edit_modal" className="modal">
+              <div className="modal-box">
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className=" m-auto my-10 p-10 bg-[#fee9e6] radius_css"
+                >
+                  <fieldset className="fieldset">
+                    <label className="label">Title</label>
+                    <input
+                      type="text"
+                      className="input w-full"
+                      placeholder="name of issues"
+                      {...register("title", { required: true })}
+                    />
+                    {errors.title && (
+                      <p className="text-red-500">Title field required</p>
+                    )}
+                    <label className="label">Location</label>
+                    <input
+                      type="text"
+                      className="input w-full"
+                      placeholder="select category name"
+                      {...register("location", { required: true })}
+                    />
+                    {errors.location && (
+                      <p className="text-red-500">Label field required</p>
+                    )}
+                    <label className="label">Category</label>
+                    <select
+                      className="select w-full"
+                      {...register("category", { required: true })}
+                    >
+                      <option disabled={true}>Pick a category</option>
+                      <option>Road</option>
+                      <option>Mosquito</option>
+                      <option>Garbage</option>
+                      <option>Street Light</option>
+                      <option>Air Pollution </option>
+                    </select>
+                    {errors.category && (
+                      <p className="text-red-500">Category field required</p>
+                    )}
+                    <label className="label">Description</label>
+                    <textarea
+                      type="text"
+                      className="textarea w-full h-30"
+                      placeholder="add description"
+                      {...register("description", { required: true })}
+                    ></textarea>
+                    {errors.description && (
+                      <p className="text-red-500">Description field required</p>
+                    )}
+                    <input
+                      className="bg-white p-2"
+                      type="file"
+                      {...register("photo")}
+                    ></input>
+                  </fieldset>
+                  <div className="flex justify-center items-center">
+                    <button className="btn_css text-center">Update</button>
+                  </div>
+                </form>
+
+                <div className="modal-action">
+                  <form method="dialog">
+                    <button className="btn_css">Close</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
+          </div>
         </div>
       </div>
     </div>

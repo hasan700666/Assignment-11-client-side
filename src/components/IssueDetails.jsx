@@ -2,12 +2,14 @@ import React from "react";
 import useAuth from "../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiousInstance from "../hooks/useAxiousInstance";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
+import Swal from "sweetalert2";
 
 const IssueDetails = () => {
   const [searchParams] = useSearchParams();
   const issues_id = searchParams.get("id");
   const { user } = useAuth();
+  const navigate = useNavigate()
 
   const axiousInsrance = useAxiousInstance();
   const { data: issue = [] } = useQuery({
@@ -18,15 +20,61 @@ const IssueDetails = () => {
     },
   });
 
+  const handleBost = async (name, id) => {
+    const paymentInfo = {
+      name: name,
+      id: id,
+      email: user.email,
+      uid: user.uid,
+    };
+
+    const res = await axiousInsrance.post(
+      // id = 6
+      "/create-checkout-session",
+      paymentInfo
+    );
+
+    window.location.assign(res.data.url);
+  };
+
+  const handleDelete = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiousInsrance.delete(`/issues/${id}`).then((res) => {
+          // id = 5
+          navigate("/all_issues")
+          if (res.data.deletedCount) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
+
   const isOwner = user?.uid === issue?.reporterFirebaseUid;
   const canEdit = isOwner && issue?.status === "Pending";
   const canDelete = isOwner;
   const canBoost = !issue?.boosted;
 
   //console.log(issues_id);
+  //console.log(isOwner);
   console.log(issue);
+  //console.log(issue?.status);
   //console.log(canEdit);
-  console.log(canBoost);
+  //console.log(canBoost);
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-[#fee9e6] m-20 radius_css">
@@ -80,9 +128,45 @@ const IssueDetails = () => {
           {/* Right: Action Buttons */}
           <div className="flex flex-col gap-2">
             {canEdit && <button className="btn_css">Edit</button>}
-            {canDelete && <button className="btn_css">Delete</button>}
+            {canDelete && (
+              <button
+                className="btn_css"
+                onClick={() => handleDelete(issue._id)}
+              >
+                Delete
+              </button>
+            )}
             {canBoost && (
-              <button className="btn_css">Boost Issue (100 Tk)</button>
+              <>
+                <button
+                  onClick={() =>
+                    document.getElementById("my_modal_5").showModal()
+                  }
+                  className="btn_css"
+                >
+                  Bost Now
+                </button>
+                <dialog
+                  id="my_modal_5"
+                  className="modal modal-bottom sm:modal-middle"
+                >
+                  <div className="modal-box">
+                    <h3 className="font-bold text-lg">Bost Now!</h3>
+                    <p className="py-4">Please pay $5 for bust yout issue</p>
+                    <div className="modal-action">
+                      <form method="dialog">
+                        <button
+                          className="btn_css"
+                          onClick={() => handleBost(issue.title, issue._id)}
+                        >
+                          Bost
+                        </button>
+                        <button className="btn_css">Close</button>
+                      </form>
+                    </div>
+                  </div>
+                </dialog>
+              </>
             )}
           </div>
         </div>
