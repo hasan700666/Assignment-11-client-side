@@ -3,7 +3,6 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiousInstance from "../../../hooks/useAxiousInstance";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import { data } from "react-router";
 
 const TotalUser = () => {
   const { user } = useAuth();
@@ -29,9 +28,7 @@ const TotalUser = () => {
   if (!isAdmin) {
     return <>un authrorize access</>;
   }
-
-  console.log(AllUser.data);
-
+  
   const handleBlock = (id) => {
     Swal.fire({
       title: "Are you sure?",

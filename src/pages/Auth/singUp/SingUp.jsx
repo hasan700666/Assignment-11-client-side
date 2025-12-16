@@ -13,7 +13,7 @@ const SingUp = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
-  const { user, createUser, updateUser, singInUserByGoogle } = useAuth();
+  const { createUser, updateUser, singInUserByGoogle } = useAuth();
   const [sow, setSow] = useState(false);
   const [sowConfirm, setSowConfirm] = useState(false);
 

@@ -12,6 +12,8 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import useAxiousInstance from "../hooks/useAxiousInstance";
 import { ImProfile } from "react-icons/im";
+import { IoPersonAddSharp } from "react-icons/io5";
+import { RiUserSharedLine } from "react-icons/ri";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
@@ -172,6 +174,23 @@ const DashboardLayout = () => {
                       {/* icon */}
                       <ImProfile />
                       <span className="is-drawer-close:hidden">Total User</span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              {isAdmin && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/manage_staff"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                      data-tip="Homepage"
+                    >
+                      {/* icon */}
+                      <IoPersonAddSharp />
+                      <span className="is-drawer-close:hidden">
+                        Manage Staff
+                      </span>
                     </NavLink>
                   </li>
                 </>

@@ -22,6 +22,7 @@ import TotalPendingIssues from "../pages/Dashbord/totalPendingIssues/TotalPendin
 import TotalResolvedIssues from "../pages/Dashbord/totalResolvedIssues/TotalResolvedIssues";
 import IssueDetails from "../components/IssueDetails";
 import TotalUser from "../pages/Dashbord/totalUaser/TotalUser";
+import ManageStaff from "../pages/Dashbord/manageStaff/ManageStaff";
 
 export const router = createBrowserRouter([
   {
@@ -123,6 +124,10 @@ export const router = createBrowserRouter([
       {
         path: "total_user",
         Component: TotalUser,
+      },
+      {
+        path: "manage_staff",
+        Component: ManageStaff,
       },
     ],
   },
