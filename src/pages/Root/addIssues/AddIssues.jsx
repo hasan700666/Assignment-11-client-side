@@ -20,7 +20,7 @@ const AddIssues = () => {
 
   useEffect(() => {
     // id = 3
-    axiousInsrance.get(`/user/${user.uid}`).then((res) => {
+    axiousInsrance.get(`/user?firebaseUid=${user.uid}`).then((res) => {
       if (!res.data.result.isPremium) {
         axiousInsrance
           .get(`/issues?firebaseId=${user?.uid}`)

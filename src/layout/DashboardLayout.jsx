@@ -11,22 +11,21 @@ import { IoCheckmarkDone } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import useAxiousInstance from "../hooks/useAxiousInstance";
+import { ImProfile } from "react-icons/im";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
 
-  const { data: isAdmin = [] } = useQuery({
+  const { data: isAdmin } = useQuery({
     queryKey: ["is_admin", user.uid],
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/user/${user.uid}`);
+      const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
       if (res.data.result.role == "admin") {
         return res.data.result.role;
       }
     },
   });
-
-  console.log(isAdmin.length);
 
   return (
     <div>
@@ -101,7 +100,7 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">Profile</span>
                 </NavLink>
               </li>
-              <li >
+              <li>
                 <NavLink
                   to="/dashboard/total_issues"
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
@@ -162,6 +161,21 @@ const DashboardLayout = () => {
                   </span>
                 </NavLink>
               </li>
+              {isAdmin && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/total_user"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                      data-tip="Homepage"
+                    >
+                      {/* icon */}
+                      <ImProfile />
+                      <span className="is-drawer-close:hidden">Total User</span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
