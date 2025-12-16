@@ -71,7 +71,7 @@ const IssueDetails = () => {
 
   //console.log(issues_id);
   //console.log(isOwner);
-  console.log(issue);
+  //console.log(issue);
   //console.log(issue?.status);
   //console.log(canEdit);
   //console.log(canBoost);

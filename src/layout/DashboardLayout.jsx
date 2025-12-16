@@ -8,8 +8,26 @@ import { PiMoneyWavyDuotone } from "react-icons/pi";
 import { GrUserWorker } from "react-icons/gr";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { IoCheckmarkDone } from "react-icons/io5";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../hooks/useAuth";
+import useAxiousInstance from "../hooks/useAxiousInstance";
 
 const DashboardLayout = () => {
+  const { user } = useAuth();
+  const axiousInsrance = useAxiousInstance();
+
+  const { data: isAdmin = [] } = useQuery({
+    queryKey: ["is_admin", user.uid],
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/user/${user.uid}`);
+      if (res.data.result.role == "admin") {
+        return res.data.result.role;
+      }
+    },
+  });
+
+  console.log(isAdmin.length);
+
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -83,7 +101,7 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">Profile</span>
                 </NavLink>
               </li>
-              <li>
+              <li >
                 <NavLink
                   to="/dashboard/total_issues"
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
@@ -113,7 +131,9 @@ const DashboardLayout = () => {
                 >
                   {/* Logo icon */}
                   <GrUserWorker />
-                  <span className="is-drawer-close:hidden">Total In Progress Issues</span>
+                  <span className="is-drawer-close:hidden">
+                    Total In Progress Issues
+                  </span>
                 </NavLink>
               </li>
               <li>
@@ -124,7 +144,9 @@ const DashboardLayout = () => {
                 >
                   {/* Logo icon */}
                   <FaClockRotateLeft />
-                  <span className="is-drawer-close:hidden">Total Panding Issues</span>
+                  <span className="is-drawer-close:hidden">
+                    Total Panding Issues
+                  </span>
                 </NavLink>
               </li>
               <li>
@@ -135,7 +157,9 @@ const DashboardLayout = () => {
                 >
                   {/* Logo icon */}
                   <IoCheckmarkDone />
-                  <span className="is-drawer-close:hidden">Total Resolved Issues</span>
+                  <span className="is-drawer-close:hidden">
+                    Total Resolved Issues
+                  </span>
                 </NavLink>
               </li>
             </ul>

@@ -19,6 +19,7 @@ const AddIssues = () => {
   const [userIssuesLen, setUserIssuesLen] = useState({});
 
   useEffect(() => {
+    // id = 3
     axiousInsrance.get(`/user/${user.uid}`).then((res) => {
       if (!res.data.result.isPremium) {
         axiousInsrance
@@ -85,8 +86,11 @@ const AddIssues = () => {
     <div>
       {userIssuesLen >= 3 ? (
         <>
-        <div className="text-2xl">you con't add more then 3 data</div>
-        <NavLink to="/dashboard"><button className="btn_css">Subscribe</button></NavLink></>
+          <div className="text-2xl">you con't add more then 3 data</div>
+          <NavLink to="/dashboard">
+            <button className="btn_css">Subscribe</button>
+          </NavLink>
+        </>
       ) : (
         <>
           <div>

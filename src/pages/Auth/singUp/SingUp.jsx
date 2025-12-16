@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,7 @@ const SingUp = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
-  const { createUser, updateUser, singInUserByGoogle } = useAuth();
+  const { user, createUser, updateUser, singInUserByGoogle } = useAuth();
   const [sow, setSow] = useState(false);
   const [sowConfirm, setSowConfirm] = useState(false);
 
@@ -24,8 +24,8 @@ const SingUp = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    if (data.password != data.confirmPassword) {
-      return console.log("password!=confirmPassword");
+    if (data.password !== data.confirmPassword) {
+      return toast.error("Password and confirm password do not match.");
     }
 
     createUser(data.email, data.password)
@@ -56,7 +56,7 @@ const SingUp = () => {
                   createdAt: new Date(),
                 })
                 .then((res) => {
-                  console.log(res.data.insertedId);
+                  console.log(res.data);
                   navigate(location.state || "/");
                 })
                 .catch((e) => {
@@ -84,8 +84,26 @@ const SingUp = () => {
   const handelGoogleSingIn = () => {
     singInUserByGoogle(provider)
       .then((res) => {
-        console.log(res);
-        navigate(location.state || "/");
+        console.log(res.user.email);
+        // id = 4
+        axiosInstance
+          .post("/user", {
+            firebaseUid: res.user.uid,
+            name: res.user.displayName,
+            email: res.user.email,
+            photoURL: res.user.photoURL,
+            role: "citizen",
+            isBlocked: false,
+            isPremium: false,
+            createdAt: new Date(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            navigate(location.state || "/");
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       })
       .catch((e) => {
         console.log(e);
@@ -94,7 +112,9 @@ const SingUp = () => {
 
   return (
     <div>
-      <div>{/* <Toaster /> */}</div>
+      <div>
+        <Toaster />
+      </div>
       <div className="flex justify-center items-center">
         <div className="m-5">
           <div className="flex-col lg:flex-row-reverse ">

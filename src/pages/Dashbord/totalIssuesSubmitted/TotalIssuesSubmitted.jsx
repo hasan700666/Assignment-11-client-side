@@ -7,26 +7,49 @@ import { FileText } from "lucide-react";
 const TotalIssuesSubmitted = () => {
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
+  
+  const { data: isAdmin = false } = useQuery({
+    queryKey: ["is_admin", user.uid],
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/user/${user.uid}`);
+      return res.data.result.role === "admin";
+    },
+  });
 
   const { data: issues = [] } = useQuery({
     queryKey: ["my-issues", user.uid],
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 8
-      return res.data;
+      if (isAdmin) {
+        const res = await axiousInsrance.get(`/issues`); // id = 3
+        return res.data;
+      } else {
+        const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 8
+        return res.data;
+      }
     },
   });
 
   const { data: pendingIssues = [] } = useQuery({
     queryKey: ["my-pending-issues", user.uid],
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
-      const Issues = res.data;
-      const FilrerdPandingIssues = Issues.filter(
-        (data) => data.status === "Pending"
-      );
-      //console.log(FilrerdPandingIssues);
-      if (FilrerdPandingIssues) {
-        return FilrerdPandingIssues;
+      if (isAdmin) {
+        const res = await axiousInsrance.get(`/issues`); // id = 3
+        const Issues = res.data;
+        const FilrerdPandingIssues = Issues.filter(
+          (data) => data.status === "Pending"
+        );
+        if (FilrerdPandingIssues) {
+          return FilrerdPandingIssues;
+        }
+      } else {
+        const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdPandingIssues = Issues.filter(
+          (data) => data.status === "Pending"
+        );
+        if (FilrerdPandingIssues) {
+          return FilrerdPandingIssues;
+        }
       }
     },
   });
@@ -34,14 +57,24 @@ const TotalIssuesSubmitted = () => {
   const { data: inProgressIssues = [] } = useQuery({
     queryKey: ["my-inProgress-issues", user.uid],
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
-      const Issues = res.data;
-      const FilrerdinProgressIssues = Issues.filter(
-        (data) => data.status === "In-Progress"
-      );
-      console.log("in", FilrerdinProgressIssues);
-      if (FilrerdinProgressIssues) {
-        return FilrerdinProgressIssues;
+      if (isAdmin) {
+        const res = await axiousInsrance.get(`/issues`); // id = 3
+        const Issues = res.data;
+        const FilrerdInProgressIssues = Issues.filter(
+          (data) => data.status === "In-Progress"
+        );
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
+        }
+      } else {
+        const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdInProgressIssues = Issues.filter(
+          (data) => data.status === "In-Progress"
+        );
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
+        }
       }
     },
   });
@@ -49,23 +82,34 @@ const TotalIssuesSubmitted = () => {
   const { data: resolvedIssues = [] } = useQuery({
     queryKey: ["my-resolved-issues", user.uid],
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
-      const Issues = res.data;
-      const FilrerdPandingIssues = Issues.filter(
-        (data) => data.status === "Resolved"
-      );
-      console.log(FilrerdPandingIssues);
-      if (FilrerdPandingIssues) {
-        return FilrerdPandingIssues;
+      if (isAdmin) {
+        const res = await axiousInsrance.get(`/issues`); // id = 3
+        const Issues = res.data;
+        const FilrerdPandingIssues = Issues.filter(
+          (data) => data.status === "Resolved"
+        );
+        if (FilrerdPandingIssues) {
+          return FilrerdPandingIssues;
+        }
+      } else {
+        const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdPandingIssues = Issues.filter(
+          (data) => data.status === "Resolved"
+        );
+        if (FilrerdPandingIssues) {
+          return FilrerdPandingIssues;
+        }
       }
     },
   });
 
   //console.log(payment);
   //console.log(user.uid);
-  console.log(pendingIssues.length);
-  console.log(inProgressIssues.length);
-  console.log(resolvedIssues.length);
+  //console.log(pendingIssues.length);
+  //console.log(inProgressIssues.length);
+  //console.log(resolvedIssues.length);
+  console.log(isAdmin?.length);
 
   return (
     <div className="flex flex-col justify-center items-center m-30">

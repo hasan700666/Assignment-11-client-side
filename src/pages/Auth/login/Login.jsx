@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import { GoogleAuthProvider } from "firebase/auth";
 import useAuth from "../../../hooks/useAuth";
+import useAxiousInstance from "../../../hooks/useAxiousInstance";
 
 const Login = () => {
+  const axiosInstance = useAxiousInstance()
   const location = useLocation();
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
@@ -28,6 +30,7 @@ const Login = () => {
       })
       .catch((e) => {
         console.log(e);
+        toast.error("This didn't work.");
       });
   };
 
@@ -39,18 +42,38 @@ const Login = () => {
   const handelGoogleSingIn = () => {
     singInUserByGoogle(provider)
       .then((res) => {
-        console.log(res);
-        navigate(location.state || "/");
+        // id = 4
+        axiosInstance
+          .post("/user", {
+            firebaseUid: res.user.uid,
+            name: res.user.displayName,
+            email: res.user.email,
+            photoURL: res.user.photoURL,
+            role: "citizen",
+            isBlocked: false,
+            isPremium: false,
+            createdAt: new Date(),
+          })
+          .then((res) => {
+            console.log(res.data);
+            navigate(location.state || "/");
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       })
       .catch((e) => {
         console.log(e);
+        toast.error("This didn't work.");
       });
   };
 
   return (
     <div>
       <div className="flex justify-center items-center">
-        <div>{/* <Toaster /> */}</div>
+        <div>
+          <Toaster />
+        </div>
         <div className="m-5">
           <div className="hero-content flex-col lg:flex-row-reverse ">
             <div className="card w-full shrink-0 shadow-2xl bg_css">
