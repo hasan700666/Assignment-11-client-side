@@ -7,9 +7,10 @@ import { FileText } from "lucide-react";
 const TotalIssuesSubmitted = () => {
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
-  
-  const { data: isAdmin = false } = useQuery({
-    queryKey: ["is_admin", user.uid],
+
+  const { data: isAdmin } = useQuery({
+    queryKey: ["is_admin", user?.uid],
+    enabled: !!user?.uid,
     queryFn: async () => {
       const res = await axiousInsrance.get(`/user/${user.uid}`);
       return res.data.result.role === "admin";
@@ -18,6 +19,7 @@ const TotalIssuesSubmitted = () => {
 
   const { data: issues = [] } = useQuery({
     queryKey: ["my-issues", user.uid],
+    enabled: !!user?.uid && isAdmin !== undefined,
     queryFn: async () => {
       if (isAdmin) {
         const res = await axiousInsrance.get(`/issues`); // id = 3
@@ -31,6 +33,7 @@ const TotalIssuesSubmitted = () => {
 
   const { data: pendingIssues = [] } = useQuery({
     queryKey: ["my-pending-issues", user.uid],
+    enabled: !!user?.uid && isAdmin !== undefined,
     queryFn: async () => {
       if (isAdmin) {
         const res = await axiousInsrance.get(`/issues`); // id = 3
@@ -56,6 +59,7 @@ const TotalIssuesSubmitted = () => {
 
   const { data: inProgressIssues = [] } = useQuery({
     queryKey: ["my-inProgress-issues", user.uid],
+    enabled: !!user?.uid && isAdmin !== undefined,
     queryFn: async () => {
       if (isAdmin) {
         const res = await axiousInsrance.get(`/issues`); // id = 3
@@ -81,6 +85,7 @@ const TotalIssuesSubmitted = () => {
 
   const { data: resolvedIssues = [] } = useQuery({
     queryKey: ["my-resolved-issues", user.uid],
+    enabled: !!user?.uid && isAdmin !== undefined,
     queryFn: async () => {
       if (isAdmin) {
         const res = await axiousInsrance.get(`/issues`); // id = 3
@@ -103,13 +108,6 @@ const TotalIssuesSubmitted = () => {
       }
     },
   });
-
-  //console.log(payment);
-  //console.log(user.uid);
-  //console.log(pendingIssues.length);
-  //console.log(inProgressIssues.length);
-  //console.log(resolvedIssues.length);
-  console.log(isAdmin?.length);
 
   return (
     <div className="flex flex-col justify-center items-center m-30">

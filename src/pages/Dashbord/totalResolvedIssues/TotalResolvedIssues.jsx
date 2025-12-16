@@ -8,23 +8,40 @@ const TotalResolvedIssues = () => {
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
 
-  const { data: resolvedIssues = [] } = useQuery({
-    queryKey: ["my-resolved-issues", user.uid],
+  const { data: isAdmin } = useQuery({
+    queryKey: ["is_admin", user.uid],
+    enabled: !!user?.uid,
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
-      const Issues = res.data;
-      const FilrerdPandingIssues = Issues.filter(
-        (data) => data.status === "Resolved"
-      );
-      console.log(FilrerdPandingIssues);
-      if (FilrerdPandingIssues) {
-        return FilrerdPandingIssues;
-      }
+      const res = await axiousInsrance.get(`/user/${user.uid}`);
+      return res.data.result.role === "admin";
     },
   });
 
-  console.log(resolvedIssues);
-  console.log(user.uid);
+  const { data: resolvedIssues = [] } = useQuery({
+    queryKey: ["my-resolved-issues", user.uid],
+    enabled: !!user?.uid && isAdmin !== undefined,
+    queryFn: async () => {
+      if (isAdmin) {
+        const res = await axiousInsrance.get(`/issues`); // id = 3
+        const Issues = res.data;
+        const FilrerdPandingIssues = Issues.filter(
+          (data) => data.status === "Resolved"
+        );
+        if (FilrerdPandingIssues) {
+          return FilrerdPandingIssues;
+        }
+      } else {
+        const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdPandingIssues = Issues.filter(
+          (data) => data.status === "Resolved"
+        );
+        if (FilrerdPandingIssues) {
+          return FilrerdPandingIssues;
+        }
+      }
+    },
+  });
 
   return (
     <div>

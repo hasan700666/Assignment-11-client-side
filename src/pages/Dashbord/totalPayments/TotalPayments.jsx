@@ -8,16 +8,34 @@ const TotalPayments = () => {
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
 
+  const { data: isAdmin } = useQuery({
+    queryKey: ["is_admin", user.uid],
+    enabled: !!user?.uid,
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/user/${user.uid}`);
+      return res.data.result.role === "admin";
+    },
+  });
+
   const { data: payment = [] } = useQuery({
     queryKey: ["my-payment", user.uid],
+    enabled: !!user?.uid && isAdmin !== undefined,
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/payment/${user.uid}`); // id = 8
-      return res.data;
+      if (isAdmin) {
+        console.log("hello");
+
+        const res = await axiousInsrance.get(`/payment`); // id = 8
+        return res.data;
+      } else {
+        const res = await axiousInsrance.get(
+          `/payment?firebaseUid=${user.uid}`
+        ); // id = 8
+        return res.data;
+      }
     },
   });
 
   console.log(payment);
-  console.log(user.uid);
 
   return (
     <div>

@@ -8,23 +8,40 @@ const TotalInProgressIssues = () => {
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
 
+  const { data: isAdmin } = useQuery({
+    queryKey: ["is_admin", user.uid],
+    enabled: !!user?.uid,
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/user/${user.uid}`);
+      return res.data.result.role === "admin";
+    },
+  });
+
   const { data: inProgressIssues = [] } = useQuery({
-      queryKey: ["my-inProgress-issues", user.uid],
-      queryFn: async () => {
-        const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
+    queryKey: ["my-inProgress-issues", user.uid],
+    enabled: !!user?.uid && isAdmin !== undefined,
+    queryFn: async () => {
+      if (isAdmin) {
+        const res = await axiousInsrance.get(`/issues`); // id = 3
         const Issues = res.data;
-        const FilrerdinProgressIssues = Issues.filter(
+        const FilrerdInProgressIssues = Issues.filter(
           (data) => data.status === "In-Progress"
         );
-        console.log("in", FilrerdinProgressIssues);
-        if (FilrerdinProgressIssues) {
-          return FilrerdinProgressIssues;
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
         }
-      },
-    });
-
-  console.log(inProgressIssues);
-  console.log(user.uid);
+      } else {
+        const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdInProgressIssues = Issues.filter(
+          (data) => data.status === "In-Progress"
+        );
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
+        }
+      }
+    },
+  });
 
   return (
     <div>
@@ -41,7 +58,9 @@ const TotalInProgressIssues = () => {
           {/* Total Count */}
           <div className="text-center my-6">
             <p className="text-sm text-gray-500">Total In-Progress Submitted</p>
-            <h1 className="text-5xl font-bold text-red-600 mt-2">{inProgressIssues.length}</h1>
+            <h1 className="text-5xl font-bold text-red-600 mt-2">
+              {inProgressIssues.length}
+            </h1>
           </div>
         </div>
       </div>

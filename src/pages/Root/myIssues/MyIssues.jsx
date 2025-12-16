@@ -18,7 +18,7 @@ const MyIssues = () => {
   } = useForm();
 
   const { data: issues = [], refetch } = useQuery({
-    queryKey: ["my-issues", user.uid],
+    queryKey: ["issues", user.uid],
     queryFn: async () => {
       const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
       return res.data;
@@ -77,7 +77,7 @@ const MyIssues = () => {
     const res = await axiousInsrance.patch(`/issues/${data?._id}`, data);
     console.log(res);
     document.getElementById("edit_modal").close();
-    refetch()
+    refetch();
   };
 
   const openEditModal = (issue) => {
