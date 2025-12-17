@@ -52,7 +52,7 @@ const AddIssues = () => {
           upvotes: undefined,
           upvoters: [undefined],
           reporterFirebaseUid: user.uid,
-          assignedStaffId: null,
+          assignedStaffId: undefined,
           timeline: [
             {
               status: "Pending",

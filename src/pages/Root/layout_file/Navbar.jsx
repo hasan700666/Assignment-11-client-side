@@ -19,7 +19,7 @@ const Navbar = () => {
   });
 
   const { data: isStaff } = useQuery({
-    queryKey: ["is_isStaff", user?.uid],
+    queryKey: ["is_staff", user?.uid],
     queryFn: async () => {
       const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
       if (res.data.result.role == "staff") {
