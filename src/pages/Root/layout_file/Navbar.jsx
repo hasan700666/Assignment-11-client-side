@@ -2,37 +2,71 @@ import React, { use } from "react";
 import { NavLink } from "react-router";
 import Logo from "../../../components/Logo";
 import { AuthContext } from "../../../firebase/auth/AuthContext/AuthContext";
+import { useQuery } from "@tanstack/react-query";
+import useAxiousInstance from "../../../hooks/useAxiousInstance";
 
 const Navbar = () => {
   const { user, singOutUser } = use(AuthContext);
+  const axiousInsrance = useAxiousInstance();
+
+  const { data: isAdmin } = useQuery({
+    queryKey: ["is_admin", user?.uid],
+    enabled: !!user?.uid,
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
+      return res.data.result.role === "admin";
+    },
+  });
+
+  const { data: isStaff } = useQuery({
+    queryKey: ["is_isStaff", user?.uid],
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
+      if (res.data.result.role == "staff") {
+        return res.data.result.role;
+      }
+    },
+  });
 
   console.log(user);
 
   const li = (
     <>
-      <NavLink to="/" className="mx-3">
-        Home
-      </NavLink>
-      <NavLink to="/about" className="mx-3">
-        {" "}
-        About
-      </NavLink>
-      <NavLink to="/all_issues" className="mx-3">
-        {" "}
-        All Issues
-      </NavLink>
-      <NavLink to="/add_issues" className="mx-3">
-        {" "}
-        Add Issues
-      </NavLink>
-      <NavLink to="/my_issues" className="mx-3">
-        {" "}
-        My Issues
-      </NavLink>
-      <NavLink to="/my_favorites" className="mx-3">
-        {" "}
-        My favorites
-      </NavLink>
+      {!isStaff && (
+        <>
+          <NavLink to="/" className="mx-3">
+            Home
+          </NavLink>
+          <NavLink to="/about" className="mx-3">
+            {" "}
+            About
+          </NavLink>
+          <NavLink to="/all_issues" className="mx-3">
+            {" "}
+            All Issues
+          </NavLink>
+          <NavLink to="/add_issues" className="mx-3">
+            {" "}
+            Add Issues
+          </NavLink>
+          <NavLink to="/my_issues" className="mx-3">
+            {" "}
+            My Issues
+          </NavLink>
+          <NavLink to="/my_favorites" className="mx-3">
+            {" "}
+            My favorites
+          </NavLink>
+        </>
+      )}
+      {isStaff && (
+        <>
+          <NavLink to="/assigned_issues_for_staff" className="mx-3">
+            {" "}
+            Assigned issues
+          </NavLink>
+        </>
+      )}
     </>
   );
 
@@ -101,7 +135,7 @@ const Navbar = () => {
                 >
                   <h1 className="text-xs mb-5">Welcome {user.displayName}</h1>
                   <NavLink to="/dashboard" className="btn_css text-center">
-                    <button >Dashboard</button>
+                    <button>Dashboard</button>
                   </NavLink>
                   <button onClick={handleSingOut} className="btn_css">
                     Sing Out

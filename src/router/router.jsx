@@ -26,6 +26,7 @@ import ManageStaff from "../pages/Dashbord/manageStaff/ManageStaff";
 import TotalStaffResolvedIssues from "../pages/Dashbord/totalStaffResolvedIssues/TotalStaffResolvedIssues";
 import TotalStaffAssignedIssues from "../pages/Dashbord/totalStaffAssignedIssues/TotalStaffAssignedIssues";
 import StaffTodayTask from "../pages/Dashbord/staffTodayTask/StaffTodayTask";
+import AssignedIssues from "../pages/Root/assignedIssues/AssignedIssues";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +74,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <AddIssues></AddIssues>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "assigned_issues_for_staff",
+        element: (
+          <PrivetRoute>
+            <AssignedIssues></AssignedIssues>
           </PrivetRoute>
         ),
       },
