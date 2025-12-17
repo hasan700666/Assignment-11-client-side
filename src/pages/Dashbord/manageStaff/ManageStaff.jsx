@@ -24,7 +24,7 @@ const ManageStaff = () => {
     },
   });
 
-  const { data: AllStaff = [] } = useQuery({
+  const { data: AllStaff = [], refetch } = useQuery({
     queryKey: ["AllStaff", user?.uid],
     queryFn: async () => {
       const res = await axiousInsrance.get("/user");
@@ -66,9 +66,15 @@ const ManageStaff = () => {
         })
         .then((res) => {
           console.log(res.data);
+          refetch();
+          document.getElementById("my_modal_1")?.close();
         })
         .catch((e) => {
-          console.log(e);
+          console.log(e.message);
+          if (e.message == "timeout of 1000ms exceeded") {
+            refetch();
+            document.getElementById("my_modal_1")?.close();
+          }
         });
     });
   };

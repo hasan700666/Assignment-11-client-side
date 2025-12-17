@@ -8,11 +8,11 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiousInstance from "../../../hooks/useAxiousInstance";
 
 const Login = () => {
-  const axiosInstance = useAxiousInstance()
+  const axiosInstance = useAxiousInstance();
   const location = useLocation();
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
-  const { singInUser, singInUserByGoogle } = useAuth();
+  const { singInUser, singInUserByGoogle} = useAuth();
   const [sow, setSow] = useState(false);
   const {
     register,
@@ -21,12 +21,16 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-
     singInUser(data.email, data.password)
       .then((res) => {
-        console.log(res);
-        navigate(location.state || "/");
+        axiosInstance.get(`/user?email=${res.user.email}`).then((res) => {
+          console.log(res);
+          if (res.data?.result?.role == "staff") {
+            navigate("/dashboard");
+          } else {
+            navigate(location.state || "/");
+          }
+        });
       })
       .catch((e) => {
         console.log(e);
@@ -42,6 +46,8 @@ const Login = () => {
   const handelGoogleSingIn = () => {
     singInUserByGoogle(provider)
       .then((res) => {
+        console.log(res.user.email);
+        const FachEmail = res.user.email;
         // id = 4
         axiosInstance
           .post("/user", {
@@ -56,7 +62,14 @@ const Login = () => {
           })
           .then((res) => {
             console.log(res.data);
-            navigate(location.state || "/");
+            axiosInstance.get(`/user?email=${FachEmail}`).then((res) => {
+              console.log(res);
+              if (res.data?.result?.role == "staff") {
+                navigate("/dashboard");
+              } else {
+                navigate(location.state || "/");
+              }
+            });
           })
           .catch((e) => {
             console.log(e);
