@@ -231,7 +231,7 @@ const ManageStaff = () => {
                 )}
               </fieldset>
               <div className="flex justify-center items-center">
-                <button className="btn_css text-center">Update</button>
+                <button className="btn_css text-center">Add</button>
               </div>
             </form>
 

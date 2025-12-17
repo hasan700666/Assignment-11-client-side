@@ -20,7 +20,7 @@ const AssignedIssues = () => {
   const { data: StaffAssignedIssues = [] } = useQuery({
     queryKey: ["issues_data", user?.uid],
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/issues?staffId=${user?.uid}`);
+      const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`);
       return res.data;
     },
   });
@@ -29,7 +29,7 @@ const AssignedIssues = () => {
     return <>unaturize access</>;
   }
 
-  console.log(StaffAssignedIssues);
+  console.log("the data ", StaffAssignedIssues);
   console.log(user.uid);
 
   return <div>i am for staff</div>;

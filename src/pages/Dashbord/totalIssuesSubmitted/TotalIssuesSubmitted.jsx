@@ -124,9 +124,12 @@ const TotalIssuesSubmitted = () => {
     const findStffData = AllStaff.find(
       (staff) => StaffUid === staff.firebaseUid
     );
+
+    console.log(findStffData);
+
     if (findStffData) {
       const staffUidObj = {
-        StafFirebaseUid: findStffData._id,
+        StafFirebaseUid: findStffData.firebaseUid,
         StaffName: findStffData.name,
       };
       axiousInsrance
@@ -179,7 +182,7 @@ const TotalIssuesSubmitted = () => {
                     <th>Category</th>
                     <th>State</th>
                     <th>priority</th>
-                    <th>Assigned Staff</th>
+                    {isAdmin && <th>Assigned Staff</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -191,70 +194,72 @@ const TotalIssuesSubmitted = () => {
                       <td>{issue.category}</td>
                       <td>{issue.status}</td>
                       <td>{issue.priority}</td>
-                      <td>
-                        {issue.assignedStaffUid ? (
-                          <div className="bg-[#f22303] text-center p-2 rounded-xl text-white">
-                            {issue.assignedStaffName}
-                          </div>
-                        ) : (
-                          <>
-                            <button
-                              onClick={() =>
-                                document
-                                  .getElementById(`my_modal_5_${issue._id}`)
-                                  .showModal()
-                              }
-                              className="btn_css"
-                            >
-                              Assigned Staff
-                            </button>
-                            <dialog
-                              id={`my_modal_5_${issue._id}`}
-                              className="modal modal-bottom sm:modal-middle"
-                            >
-                              <div className="modal-box">
-                                <h3 className="font-bold text-lg">
-                                  Assigned Staff Now!
-                                </h3>
-                                <p className="py-4">
-                                  Please Assigned The Issues With Staff Now!
-                                </p>
-                                <p>
-                                  <select
-                                    defaultValue="Pick a color"
-                                    className="select appearance-none"
-                                    onChange={(e) => {
-                                      const selectedId = e.target.value;
-                                      setStaffUid(selectedId);
-                                      setIssuesData(issue);
-                                    }}
-                                  >
-                                    <option disabled={true}>
-                                      Pick a staff
-                                    </option>
-                                    {AllStaff.map((staff) => (
-                                      <option value={staff.firebaseUid}>
-                                        {staff.name}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </p>
-                                <div className="modal-action">
-                                  <form method="dialog">
-                                    <button
-                                      className="btn_css"
-                                      onClick={HandleAssignedStaff}
+                      {isAdmin && (
+                        <td>
+                          {issue.assignedStaffUid ? (
+                            <div className="bg-[#f22303] text-center p-2 rounded-xl text-white">
+                              {issue.assignedStaffName}
+                            </div>
+                          ) : (
+                            <>
+                              <button
+                                onClick={() =>
+                                  document
+                                    .getElementById(`my_modal_5_${issue._id}`)
+                                    .showModal()
+                                }
+                                className="btn_css"
+                              >
+                                Assigned Staff
+                              </button>
+                              <dialog
+                                id={`my_modal_5_${issue._id}`}
+                                className="modal modal-bottom sm:modal-middle"
+                              >
+                                <div className="modal-box">
+                                  <h3 className="font-bold text-lg">
+                                    Assigned Staff Now!
+                                  </h3>
+                                  <p className="py-4">
+                                    Please Assigned The Issues With Staff Now!
+                                  </p>
+                                  <p>
+                                    <select
+                                      defaultValue="Pick a color"
+                                      className="select appearance-none"
+                                      onChange={(e) => {
+                                        const selectedId = e.target.value;
+                                        setStaffUid(selectedId);
+                                        setIssuesData(issue);
+                                      }}
                                     >
-                                      Assign
-                                    </button>
-                                    <button className="btn_css">Close</button>
-                                  </form>
+                                      <option disabled={true}>
+                                        Pick a staff
+                                      </option>
+                                      {AllStaff.map((staff) => (
+                                        <option value={staff.firebaseUid}>
+                                          {staff.name}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </p>
+                                  <div className="modal-action">
+                                    <form method="dialog">
+                                      <button
+                                        className="btn_css"
+                                        onClick={HandleAssignedStaff}
+                                      >
+                                        Assign
+                                      </button>
+                                      <button className="btn_css">Close</button>
+                                    </form>
+                                  </div>
                                 </div>
-                              </div>
-                            </dialog>
-                          </>
-                        )}
-                      </td>
+                              </dialog>
+                            </>
+                          )}
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
