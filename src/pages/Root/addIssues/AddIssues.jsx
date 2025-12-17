@@ -58,7 +58,7 @@ const AddIssues = () => {
             {
               status: "Pending",
               note: "Issue created",
-              by: `${user.uid}`,
+              by: `${user.displayName}`,
               at: new Date(),
             },
           ],

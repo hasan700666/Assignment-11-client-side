@@ -166,18 +166,13 @@ const IssueDetails = () => {
       </div>
 
       {/* Staff Info */}
-      {issue.assignedStaff ? (
+      {issue.assignedStaffUid ? (
         <div className="bg-white rounded-lg p-4 mb-6">
           <h3 className="font-semibold text-lg mb-2">Assigned Staff</h3>
           <div className="flex items-center gap-4">
-            <img
-              src={issue.assignedStaff.photo}
-              alt={issue.assignedStaff.name}
-              className="w-12 h-12 rounded-full"
-            />
             <div>
-              <p className="font-medium">{issue.assignedStaff.name}</p>
-              <p className="text-gray-500">{issue.assignedStaff.email}</p>
+              <p className="font-medium">{issue.assignedStaffName}</p>
+              <p className="text-gray-500">{}</p>
             </div>
           </div>
         </div>

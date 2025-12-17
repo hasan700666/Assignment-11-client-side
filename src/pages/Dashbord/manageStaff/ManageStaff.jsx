@@ -12,7 +12,6 @@ const ManageStaff = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
   const { user, createUser, updateUser } = useAuth();
   const axiousInsrance = useAxiousInstance();
@@ -37,7 +36,11 @@ const ManageStaff = () => {
   });
 
   if (!isAdmin) {
-    return <>un authrorize access</>;
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <span className="loading loading-infinity size-20"></span>
+      </div>
+    );
   }
 
   const handleAddStaff = (data) => {
@@ -95,11 +98,11 @@ const ManageStaff = () => {
     console.log("delete", id);
   };
 
-  const handleUpdate = (id)=>{
+  const handleUpdate = (id) => {
     console.log(id);
 
     // the word is not done
-  }
+  };
 
   return (
     <div>
@@ -134,7 +137,7 @@ const ManageStaff = () => {
                     <td>{new Date(staff.createdAt).toLocaleDateString()}</td>
                     <td>
                       <button
-                        onClick={()=>handleUpdate(staff)}
+                        onClick={() => handleUpdate(staff)}
                         className="btn_css"
                       >
                         Update

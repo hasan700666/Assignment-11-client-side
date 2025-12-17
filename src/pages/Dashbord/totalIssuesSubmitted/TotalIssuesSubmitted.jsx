@@ -197,9 +197,25 @@ const TotalIssuesSubmitted = () => {
                       {isAdmin && (
                         <td>
                           {issue.assignedStaffUid ? (
-                            <div className="bg-[#f22303] text-center p-2 rounded-xl text-white">
-                              {issue.assignedStaffName}
-                            </div>
+                            <>
+                              {isAdmin && (
+                                <th>
+                                  {issue.status === "Pending" ? (
+                                    <>
+                                      <button className="btn_css">
+                                        Reject
+                                      </button>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <div className="bg-[#f22303] text-center p-2 rounded-xl text-white">
+                                        {issue.assignedStaffName}
+                                      </div>
+                                    </>
+                                  )}
+                                </th>
+                              )}
+                            </>
                           ) : (
                             <>
                               <button
