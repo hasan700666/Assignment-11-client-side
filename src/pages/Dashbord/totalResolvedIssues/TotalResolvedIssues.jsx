@@ -12,7 +12,7 @@ const TotalResolvedIssues = () => {
     queryKey: ["is_admin", user.uid],
     enabled: !!user?.uid,
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
+      const res = await axiousInsrance.get(`/user?email=${user.email}`);
       return res.data.result.role === "admin";
     },
   });

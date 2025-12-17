@@ -20,14 +20,14 @@ const AddIssues = () => {
 
   useEffect(() => {
     // id = 3
-    axiousInsrance.get(`/user?firebaseUid=${user.uid}`).then((res) => {
+    axiousInsrance.get(`/user?email=${user.email}`).then((res) => {
       if (!res.data.result.isPremium) {
         axiousInsrance
           .get(`/issues?firebaseId=${user?.uid}`)
           .then((res) => setUserIssuesLen(res.data.length));
       }
     });
-  }, []);
+  }, [user,axiousInsrance]);
 
   const onSubmit = (data) => {
     const fromData = new FormData();

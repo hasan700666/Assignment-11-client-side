@@ -10,7 +10,7 @@ const AssignedIssues = () => {
   const { data: isStaff } = useQuery({
     queryKey: ["is_staff", user?.uid],
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/user?firebaseUid=${user?.uid}`);
+      const res = await axiousInsrance.get(`/user?email=${user.email}`);
       if (res.data.result.role == "staff") {
         return res.data.result.role;
       }

@@ -23,7 +23,7 @@ const DashboardLayout = () => {
   const { data: isAdmin } = useQuery({
     queryKey: ["is_admin", user.uid],
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
+      const res = await axiousInsrance.get(`/user?email=${user.email}`);
       if (res.data.result.role == "admin") {
         return res.data.result.role;
       }
@@ -33,7 +33,7 @@ const DashboardLayout = () => {
   const { data: isStaff } = useQuery({
     queryKey: ["is_isStaff", user.uid],
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
+      const res = await axiousInsrance.get(`/user?email=${user.email}`);
       if (res.data.result.role == "staff") {
         return res.data.result.role;
       }

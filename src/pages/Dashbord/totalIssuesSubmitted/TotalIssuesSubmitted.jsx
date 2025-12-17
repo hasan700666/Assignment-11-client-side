@@ -3,6 +3,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiousInstance from "../../../hooks/useAxiousInstance";
 import { useQuery } from "@tanstack/react-query";
 import { FileText } from "lucide-react";
+import Swal from "sweetalert2";
 
 const TotalIssuesSubmitted = () => {
   const [StaffUid, setStaffUid] = useState({});
@@ -14,7 +15,7 @@ const TotalIssuesSubmitted = () => {
     queryKey: ["is_admin", user?.uid],
     enabled: !!user?.uid,
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
+      const res = await axiousInsrance.get(`/user?email=${user.email}`);
       return res.data.result.role === "admin";
     },
   });
@@ -141,6 +142,38 @@ const TotalIssuesSubmitted = () => {
     }
   };
 
+  const handleReject = (id) => {
+    console.log("hasan ", id);
+
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text: "You won to reject the Issues for this Staff!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     const RejactObj = {
+    //       data: "Delete",
+    //     };
+    //     axiousInsrance.patch(`/issues?_id=${id}`, RejactObj).then/////((res) => {
+    //       // id = 5
+    //       console.log(res.data);
+    //       if (res.data) {
+    //         refetch();
+    //         Swal.fire({
+    //           title: "Deleted!",
+    //           text: "Your file has been deleted.",
+    //           icon: "success",
+    //         });
+    //       }
+    //     });
+    //   }
+    // });
+  };
+
   return (
     <div className="flex flex-col justify-center items-center m-30">
       <div className="max-w-md bg-white rounded-2xl shadow-md p-6 ">
@@ -202,7 +235,10 @@ const TotalIssuesSubmitted = () => {
                                 <th>
                                   {issue.status === "Pending" ? (
                                     <>
-                                      <button className="btn_css">
+                                      <button
+                                        className="btn_css"
+                                        onClick={() => handleReject(issue._id)}
+                                      >
                                         Reject
                                       </button>
                                     </>

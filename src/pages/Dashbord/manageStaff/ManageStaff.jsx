@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router";
 
 const ManageStaff = () => {
   const {
@@ -13,15 +12,14 @@ const ManageStaff = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { user, createUser, updateUser } = useAuth();
+  const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
-  const navigate = useNavigate();
 
   const { data: isAdmin } = useQuery({
     queryKey: ["is_admin", user?.uid],
     enabled: !!user?.uid,
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
+      const res = await axiousInsrance.get(`/user?email=${user.email}`);
       return res.data.result.role === "admin";
     },
   });
@@ -47,51 +45,32 @@ const ManageStaff = () => {
     if (data.password !== data.confirm_password) {
       return toast.error("Password and confirm password do not match.");
     }
-
-    createUser(data.email, data.password)
-      .then((res) => {
-        const firebaseUid = res.user.uid;
-        const fromData = new FormData();
-        fromData.append("image", data.photo[0]);
-        const imgUploadURL = `https://api.imgbb.com/1/upload?key=${
-          import.meta.env.VITE_imgbb_api_key
-        }`;
-        axios.post(imgUploadURL, fromData).then((res) => {
-          const imgURL = res.data.data.url;
-
-          updateUser(data.name, res.data.data.url)
-            .then((res) => {
-              console.log(res, "update Done");
-
-              // id = 4
-              axiousInsrance
-                .post("/user", {
-                  firebaseUid: firebaseUid,
-                  name: data.name,
-                  email: data.email,
-                  photoURL: imgURL,
-                  role: "staff",
-                  phone: data.phone,
-                  isBlocked: false,
-                  isPremium: false,
-                  createdAt: new Date(),
-                })
-                .then((res) => {
-                  console.log(res.data);
-                  navigate("/user/login");
-                })
-                .catch((e) => {
-                  console.log(e);
-                });
-            })
-            .catch((e) => {
-              console.log(e);
-            });
+    const fromData = new FormData();
+    fromData.append("image", data.photo[0]);
+    const imgUploadURL = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_imgbb_api_key
+    }`;
+    axios.post(imgUploadURL, fromData).then((res) => {
+      const imgURL = res.data.data.url;
+      axiousInsrance
+        .post("/create/staff", {
+          password: data.password,
+          name: data.name,
+          email: data.email,
+          photoURL: imgURL,
+          role: "staff",
+          phone: data.phone,
+          isBlocked: false,
+          isPremium: false,
+          createdAt: new Date(),
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
         });
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    });
   };
 
   const handleDelete = (id) => {
