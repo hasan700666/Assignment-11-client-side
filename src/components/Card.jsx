@@ -28,7 +28,7 @@ const Card = ({ issue, refetch }) => {
     const obj = {
       firebaseUid: user.uid,
     };
-    const res = axiousInsrance.patch(`/issues/${_id}`, obj).then((res) => {
+    const res = axiousInsrance.patch(`/issues?_id=${_id}`, obj).then((res) => {
       console.log(res.data);
       refetch();
     });

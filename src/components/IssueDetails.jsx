@@ -69,13 +69,6 @@ const IssueDetails = () => {
   const canDelete = isOwner;
   const canBoost = !issue?.boosted;
 
-  //console.log(issues_id);
-  //console.log(isOwner);
-  //console.log(issue);
-  //console.log(issue?.status);
-  //console.log(canEdit);
-  //console.log(canBoost);
-
   return (
     <div className="max-w-5xl mx-auto p-6 bg-[#fee9e6] m-20 radius_css">
       {/* Issue Header */}

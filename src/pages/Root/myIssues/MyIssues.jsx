@@ -74,7 +74,7 @@ const MyIssues = () => {
   };
 
   const onSubmit = async (data) => {
-    const res = await axiousInsrance.patch(`/issues/${data?._id}`, data);
+    const res = await axiousInsrance.patch(`/issues?_id=${data?._id}`, data);
     console.log(res);
     document.getElementById("edit_modal").close();
     refetch();
