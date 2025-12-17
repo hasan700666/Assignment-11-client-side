@@ -23,6 +23,9 @@ import TotalResolvedIssues from "../pages/Dashbord/totalResolvedIssues/TotalReso
 import IssueDetails from "../components/IssueDetails";
 import TotalUser from "../pages/Dashbord/totalUaser/TotalUser";
 import ManageStaff from "../pages/Dashbord/manageStaff/ManageStaff";
+import TotalStaffResolvedIssues from "../pages/Dashbord/totalStaffResolvedIssues/TotalStaffResolvedIssues";
+import TotalStaffAssignedIssues from "../pages/Dashbord/totalStaffAssignedIssues/TotalStaffAssignedIssues";
+import StaffTodayTask from "../pages/Dashbord/staffTodayTask/StaffTodayTask";
 
 export const router = createBrowserRouter([
   {
@@ -128,6 +131,18 @@ export const router = createBrowserRouter([
       {
         path: "manage_staff",
         Component: ManageStaff,
+      },
+      {
+        path: "total_staff_resolved_issues",
+        Component: TotalStaffResolvedIssues,
+      },
+      {
+        path: "total_staff_assigned_issues",
+        Component: TotalStaffAssignedIssues,
+      },
+      {
+        path: "staff_today_task",
+        Component: StaffTodayTask,
       },
     ],
   },

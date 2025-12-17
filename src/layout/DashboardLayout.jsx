@@ -14,6 +14,7 @@ import useAxiousInstance from "../hooks/useAxiousInstance";
 import { ImProfile } from "react-icons/im";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { RiUserSharedLine } from "react-icons/ri";
+import { FaTasks } from "react-icons/fa";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
@@ -24,6 +25,16 @@ const DashboardLayout = () => {
     queryFn: async () => {
       const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
       if (res.data.result.role == "admin") {
+        return res.data.result.role;
+      }
+    },
+  });
+
+  const { data: isStaff } = useQuery({
+    queryKey: ["is_isStaff", user.uid],
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/user?firebaseUid=${user.uid}`);
+      if (res.data.result.role == "staff") {
         return res.data.result.role;
       }
     },
@@ -102,67 +113,79 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">Profile</span>
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  to="/dashboard/total_issues"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
-                  data-tip="Homepage"
-                >
-                  {/* Logo icon */}
-                  <BiErrorAlt />
-                  <span className="is-drawer-close:hidden">Total Issues</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/total_payment"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
-                  data-tip="Homepage"
-                >
-                  {/* Logo icon */}
-                  <PiMoneyWavyDuotone />
-                  <span className="is-drawer-close:hidden">Total Payment</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/total_in_progress_issues"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
-                  data-tip="Homepage"
-                >
-                  {/* Logo icon */}
-                  <GrUserWorker />
-                  <span className="is-drawer-close:hidden">
-                    Total In Progress Issues
-                  </span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/total_pending_issues"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
-                  data-tip="Homepage"
-                >
-                  {/* Logo icon */}
-                  <FaClockRotateLeft />
-                  <span className="is-drawer-close:hidden">
-                    Total Panding Issues
-                  </span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/total_resolved_issues"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
-                  data-tip="Homepage"
-                >
-                  {/* Logo icon */}
-                  <IoCheckmarkDone />
-                  <span className="is-drawer-close:hidden">
-                    Total Resolved Issues
-                  </span>
-                </NavLink>
-              </li>
+              {!isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/total_issues"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <BiErrorAlt />
+                    <span className="is-drawer-close:hidden">Total Issues</span>
+                  </NavLink>
+                </li>
+              )}
+              {!isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/total_payment"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <PiMoneyWavyDuotone />
+                    <span className="is-drawer-close:hidden">
+                      Total Payment
+                    </span>
+                  </NavLink>
+                </li>
+              )}
+              {!isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/total_in_progress_issues"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <GrUserWorker />
+                    <span className="is-drawer-close:hidden">
+                      Total In Progress Issues
+                    </span>
+                  </NavLink>
+                </li>
+              )}
+              {!isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/total_pending_issues"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <FaClockRotateLeft />
+                    <span className="is-drawer-close:hidden">
+                      Total Panding Issues
+                    </span>
+                  </NavLink>
+                </li>
+              )}
+              {!isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/total_resolved_issues"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <IoCheckmarkDone />
+                    <span className="is-drawer-close:hidden">
+                      Total Resolved Issues
+                    </span>
+                  </NavLink>
+                </li>
+              )}
               {isAdmin && (
                 <>
                   <li>
@@ -194,6 +217,49 @@ const DashboardLayout = () => {
                     </NavLink>
                   </li>
                 </>
+              )}
+              {isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/total_staff_resolved_issues"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <IoCheckmarkDone />
+                    <span className="is-drawer-close:hidden">
+                      Total Issues resolved
+                    </span>
+                  </NavLink>
+                </li>
+              )}
+              {isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/total_staff_assigned_issues"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <RiUserSharedLine />
+                    <span className="is-drawer-close:hidden">
+                      Total Assigned Issues
+                    </span>
+                  </NavLink>
+                </li>
+              )}
+              {isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/staff_today_task"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <FaTasks />
+                    <span className="is-drawer-close:hidden">Today’s Task</span>
+                  </NavLink>
+                </li>
               )}
             </ul>
           </div>
