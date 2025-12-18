@@ -15,7 +15,6 @@ import Login from "../pages/Auth/login/Login";
 import PaymentLayout from "../layout/PaymentLayout";
 import Success from "../pages/Payment/Success/Success";
 import Failed from "../pages/Payment/failed/Failed";
-import TotalIssuesSubmitted from "../pages/Dashbord/totalIssuesSubmitted/TotalIssuesSubmitted";
 import TotalPayments from "../pages/Dashbord/totalPayments/TotalPayments";
 import TotalInProgressIssues from "../pages/Dashbord/totalInProgressIssues/TotalInProgressIssues";
 import TotalPendingIssues from "../pages/Dashbord/totalPendingIssues/TotalPendingIssues";
@@ -28,6 +27,7 @@ import TotalStaffAssignedIssues from "../pages/Dashbord/totalStaffAssignedIssues
 import StaffTodayTask from "../pages/Dashbord/staffTodayTask/StaffTodayTask";
 import TotalStaffClosedIssues from "../pages/Dashbord/totalStaffClosedIssues/totalStaffClosedIssues";
 import AssignedIssues from "../pages/Dashbord/assignedIssues/AssignedIssues";
+import DashboardOverview from "../pages/Dashbord/Dashboard Overview/DashboardOverview";
 
 export const router = createBrowserRouter([
   {
@@ -107,8 +107,8 @@ export const router = createBrowserRouter([
         Component: Profile,
       },
       {
-        path: "total_issues",
-        Component: TotalIssuesSubmitted,
+        path: "dashboard_overview",
+        Component: DashboardOverview,
       },
       {
         path: "total_payment",

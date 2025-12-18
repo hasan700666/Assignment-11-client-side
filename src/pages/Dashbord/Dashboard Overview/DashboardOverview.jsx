@@ -16,7 +16,7 @@ import TotalStaffAssignedIssues from "../totalStaffAssignedIssues/TotalStaffAssi
 import TotalStaffResolvedIssues from "../totalStaffResolvedIssues/TotalStaffResolvedIssues";
 import TotalStaffClosedIssues from "../totalStaffClosedIssues/totalStaffClosedIssues";
 
-const TotalIssuesSubmitted = () => {
+const DashboardOverview = () => {
   const [StaffUid, setStaffUid] = useState({});
   const [IssuesData, setIssuesData] = useState({});
   const { user } = useAuth();
@@ -428,7 +428,7 @@ const TotalIssuesSubmitted = () => {
   );
 };
 
-export default TotalIssuesSubmitted;
+export default DashboardOverview;
 
 const StatusItem = ({ label, value }) => {
   return (

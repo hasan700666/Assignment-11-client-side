@@ -16,6 +16,7 @@ import { IoPersonAddSharp } from "react-icons/io5";
 import { RiUserSharedLine } from "react-icons/ri";
 import { FaTasks } from "react-icons/fa";
 import { TiLockClosedOutline } from "react-icons/ti";
+import { RiSlideshowFill } from "react-icons/ri";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
@@ -116,13 +117,15 @@ const DashboardLayout = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard/total_issues"
+                  to="/dashboard/dashboard_overview"
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
                   data-tip="Homepage"
                 >
                   {/* Logo icon */}
-                  <BiErrorAlt />
-                  <span className="is-drawer-close:hidden">Total Issues</span>
+                  <RiSlideshowFill />
+                  <span className="is-drawer-close:hidden">
+                    Dashboard Overview
+                  </span>
                 </NavLink>
               </li>
               {!isStaff && (
