@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiousInstance from "../../../hooks/useAxiousInstance";
 
 const AssignedIssues = () => {
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
+  const [filter, setfilter] = useState("");
 
   const { data: isStaff } = useQuery({
     queryKey: ["is_staff", user?.uid],
@@ -17,10 +18,12 @@ const AssignedIssues = () => {
     },
   });
 
-  const { data: StaffAssignedIssues = [],refetch } = useQuery({
-    queryKey: ["issues_data", user?.uid],
+  const { data: StaffAssignedIssues = [], refetch } = useQuery({
+    queryKey: ["issues_data", user?.uid, filter],
     queryFn: async () => {
-      const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`);
+      const res = await axiousInsrance.get(
+        `/issues?staffUid=${user?.uid}&sort=${filter}`
+      );
       return res.data;
     },
   });
@@ -38,10 +41,15 @@ const AssignedIssues = () => {
     };
     axiousInsrance.patch(`/issues?_id=${id}`, obj).then((res) => {
       console.log(res.data);
-      refetch()
+      refetch();
     });
 
     document.activeElement.blur();
+  };
+
+  const handleSortChange = (e) => {
+    const value = e.target.value;
+    setfilter(value);
   };
 
   console.log("the data ", StaffAssignedIssues);
@@ -49,7 +57,23 @@ const AssignedIssues = () => {
 
   return (
     <div>
-      <div></div>
+      <div>
+        <div className="m-5">
+          sort by:{" "}
+          <select
+            defaultValue=""
+            className="select"
+            onChange={handleSortChange}
+          >
+            <option disabled={true} value="">
+              Pick a color
+            </option>
+            <option value="boost">Boost</option>
+            <option value="date">Date</option>
+          </select>
+        </div>
+        <div></div>
+      </div>
       <div>
         <div className="bg-[#fee9e6] w-9/12 mx-auto my-10 radius_css p-5">
           <div className="overflow-x-auto">
