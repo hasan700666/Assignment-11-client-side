@@ -60,6 +60,7 @@ const AuthProvider = ({ children }) => {
     updateUser,
     singOutUser,
     singInUserByGoogle,
+    setUser,
   };
 
   return <AuthContext value={authValue}>{children}</AuthContext>;

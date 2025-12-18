@@ -16,7 +16,6 @@ const SingUp = () => {
   const { createUser, updateUser, singInUserByGoogle } = useAuth();
   const [sow, setSow] = useState(false);
   const [sowConfirm, setSowConfirm] = useState(false);
-
   const {
     register,
     handleSubmit,

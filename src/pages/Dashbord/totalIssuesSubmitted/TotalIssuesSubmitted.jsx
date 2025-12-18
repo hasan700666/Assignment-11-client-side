@@ -277,7 +277,7 @@ const TotalIssuesSubmitted = () => {
                                   </p>
                                   <p>
                                     <select
-                                      defaultValue="Pick a color"
+                                      defaultValue=""
                                       className="select appearance-none"
                                       onChange={(e) => {
                                         const selectedId = e.target.value;
@@ -285,7 +285,7 @@ const TotalIssuesSubmitted = () => {
                                         setIssuesData(issue);
                                       }}
                                     >
-                                      <option disabled={true}>
+                                      <option disabled={true} value="">
                                         Pick a staff
                                       </option>
                                       {AllStaff.map((staff) => (

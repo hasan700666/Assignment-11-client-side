@@ -41,12 +41,12 @@ const TotalUser = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // id = 10
-        axiousInsrance.patch(`/user/${id}`, { data: true }).then((res) => {
+        axiousInsrance.patch(`/user?id=${id}`, { data: true }).then((res) => {
           console.log(res.data);
           if (res.data.acknowledged) {
             refetch();
             Swal.fire({
-              title: "Deleted!",
+              title: "Blocked!",
               text: "Your file has been deleted.",
               icon: "success",
             });
@@ -68,12 +68,12 @@ const TotalUser = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // id = 10
-        axiousInsrance.patch(`/user/${id}`, { data: false }).then((res) => {
+        axiousInsrance.patch(`/user?id=${id}`, { data: false }).then((res) => {
           console.log(res.data);
           if (res.data.acknowledged) {
             refetch();
             Swal.fire({
-              title: "Deleted!",
+              title: "Un Blocked!",
               text: "Your file has been deleted.",
               icon: "success",
             });
