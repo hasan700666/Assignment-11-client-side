@@ -15,6 +15,7 @@ import { ImProfile } from "react-icons/im";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { RiUserSharedLine } from "react-icons/ri";
 import { FaTasks } from "react-icons/fa";
+import { TiLockClosedOutline } from "react-icons/ti";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
@@ -113,7 +114,6 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">Profile</span>
                 </NavLink>
               </li>
-              {!isStaff && (
                 <li>
                   <NavLink
                     to="/dashboard/total_issues"
@@ -125,7 +125,6 @@ const DashboardLayout = () => {
                     <span className="is-drawer-close:hidden">Total Issues</span>
                   </NavLink>
                 </li>
-              )}
               {!isStaff && (
                 <li>
                   <NavLink
@@ -221,15 +220,13 @@ const DashboardLayout = () => {
               {isStaff && (
                 <li>
                   <NavLink
-                    to="/dashboard/total_staff_resolved_issues"
+                    to="/dashboard/staff_today_task"
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
                     data-tip="Homepage"
                   >
                     {/* Logo icon */}
-                    <IoCheckmarkDone />
-                    <span className="is-drawer-close:hidden">
-                      Total Issues resolved
-                    </span>
+                    <FaTasks />
+                    <span className="is-drawer-close:hidden">Today’s Task</span>
                   </NavLink>
                 </li>
               )}
@@ -251,13 +248,30 @@ const DashboardLayout = () => {
               {isStaff && (
                 <li>
                   <NavLink
-                    to="/dashboard/staff_today_task"
+                    to="/dashboard/total_staff_resolved_issues"
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
                     data-tip="Homepage"
                   >
                     {/* Logo icon */}
-                    <FaTasks />
-                    <span className="is-drawer-close:hidden">Today’s Task</span>
+                    <IoCheckmarkDone />
+                    <span className="is-drawer-close:hidden">
+                      Total Issues resolved
+                    </span>
+                  </NavLink>
+                </li>
+              )}
+              {isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/total_staff_closed_issues"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <TiLockClosedOutline />
+                    <span className="is-drawer-close:hidden">
+                      Total Issues Closed
+                    </span>
                   </NavLink>
                 </li>
               )}

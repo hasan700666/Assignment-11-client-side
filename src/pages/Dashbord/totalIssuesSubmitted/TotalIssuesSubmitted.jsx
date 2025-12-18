@@ -20,12 +20,23 @@ const TotalIssuesSubmitted = () => {
     },
   });
 
+  const { data: isStaff } = useQuery({
+    queryKey: ["is_staff", user?.uid],
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/user?email=${user.email}`);
+      return res.data.result.role === "staff"   
+    },
+  });
+
   const { data: issues = [], refetch } = useQuery({
     queryKey: ["my-issues", user.uid],
-    enabled: !!user?.uid && isAdmin !== undefined,
+    enabled: !!user?.uid && isAdmin !== undefined && isStaff !== undefined,
     queryFn: async () => {
       if (isAdmin) {
         const res = await axiousInsrance.get(`/issues`); // id = 3
+        return res.data;
+      } else if (isStaff) {
+        const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`);
         return res.data;
       } else {
         const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 8
@@ -36,13 +47,22 @@ const TotalIssuesSubmitted = () => {
 
   const { data: pendingIssues = [] } = useQuery({
     queryKey: ["my-pending-issues", user.uid],
-    enabled: !!user?.uid && isAdmin !== undefined,
+    enabled: !!user?.uid && isAdmin !== undefined && isStaff !== undefined,
     queryFn: async () => {
       if (isAdmin) {
         const res = await axiousInsrance.get(`/issues`); // id = 3
         const Issues = res.data;
         const FilrerdPandingIssues = Issues.filter(
-          (data) => data.status === "Pending"
+          (data) => data.status === "pending"
+        );
+        if (FilrerdPandingIssues) {
+          return FilrerdPandingIssues;
+        }
+      } else if (isStaff) {
+        const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdPandingIssues = Issues.filter(
+          (data) => data.status === "pending"
         );
         if (FilrerdPandingIssues) {
           return FilrerdPandingIssues;
@@ -51,7 +71,7 @@ const TotalIssuesSubmitted = () => {
         const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
         const Issues = res.data;
         const FilrerdPandingIssues = Issues.filter(
-          (data) => data.status === "Pending"
+          (data) => data.status === "pending"
         );
         if (FilrerdPandingIssues) {
           return FilrerdPandingIssues;
@@ -62,13 +82,22 @@ const TotalIssuesSubmitted = () => {
 
   const { data: inProgressIssues = [] } = useQuery({
     queryKey: ["my-inProgress-issues", user.uid],
-    enabled: !!user?.uid && isAdmin !== undefined,
+    enabled: !!user?.uid && isAdmin !== undefined && isStaff !== undefined,
     queryFn: async () => {
       if (isAdmin) {
         const res = await axiousInsrance.get(`/issues`); // id = 3
         const Issues = res.data;
         const FilrerdInProgressIssues = Issues.filter(
-          (data) => data.status === "In-Progress"
+          (data) => data.status === "in-progress"
+        );
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
+        }
+      } else if (isStaff) {
+        const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdInProgressIssues = Issues.filter(
+          (data) => data.status === "in-progress"
         );
         if (FilrerdInProgressIssues) {
           return FilrerdInProgressIssues;
@@ -77,7 +106,7 @@ const TotalIssuesSubmitted = () => {
         const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
         const Issues = res.data;
         const FilrerdInProgressIssues = Issues.filter(
-          (data) => data.status === "In-Progress"
+          (data) => data.status === "in-progress"
         );
         if (FilrerdInProgressIssues) {
           return FilrerdInProgressIssues;
@@ -88,13 +117,22 @@ const TotalIssuesSubmitted = () => {
 
   const { data: resolvedIssues = [] } = useQuery({
     queryKey: ["my-resolved-issues", user.uid],
-    enabled: !!user?.uid && isAdmin !== undefined,
+    enabled: !!user?.uid && isAdmin !== undefined && isStaff !== undefined,
     queryFn: async () => {
       if (isAdmin) {
         const res = await axiousInsrance.get(`/issues`); // id = 3
         const Issues = res.data;
         const FilrerdPandingIssues = Issues.filter(
-          (data) => data.status === "Resolved"
+          (data) => data.status === "resolved"
+        );
+        if (FilrerdPandingIssues) {
+          return FilrerdPandingIssues;
+        }
+      } else if (isStaff) {
+        const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdPandingIssues = Issues.filter(
+          (data) => data.status === "resolved"
         );
         if (FilrerdPandingIssues) {
           return FilrerdPandingIssues;
@@ -103,7 +141,7 @@ const TotalIssuesSubmitted = () => {
         const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
         const Issues = res.data;
         const FilrerdPandingIssues = Issues.filter(
-          (data) => data.status === "Resolved"
+          (data) => data.status === "resolved"
         );
         if (FilrerdPandingIssues) {
           return FilrerdPandingIssues;
@@ -121,13 +159,21 @@ const TotalIssuesSubmitted = () => {
     },
   });
 
+  const { data: StaffAssignedClosedIssues = [] } = useQuery({
+    queryKey: ["issues_data", user?.uid],
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`);
+      const allInProgressIssues = res.data.filter(
+        (res) => res.status === "closed"
+      );
+      return allInProgressIssues;
+    },
+  });
+
   const HandleAssignedStaff = () => {
     const findStffData = AllStaff.find(
       (staff) => StaffUid === staff.firebaseUid
     );
-
-    console.log(findStffData);
-
     if (findStffData) {
       const staffUidObj = {
         StafFirebaseUid: findStffData.firebaseUid,
@@ -198,6 +244,12 @@ const TotalIssuesSubmitted = () => {
           <StatusItem label="Pending" value={pendingIssues.length} />
           <StatusItem label="In Progress" value={inProgressIssues.length} />
           <StatusItem label="Resolved" value={resolvedIssues.length} />
+          {StaffAssignedClosedIssues.length > 0 && (
+            <StatusItem
+              label="Resolved"
+              value={StaffAssignedClosedIssues.length}
+            />
+          )}
         </div>
       </div>
       <div className="my-10">
@@ -233,7 +285,7 @@ const TotalIssuesSubmitted = () => {
                             <>
                               {isAdmin && (
                                 <th>
-                                  {issue.status === "Pending" ? (
+                                  {issue.status === "pending" ? (
                                     <>
                                       <button
                                         className="btn_css"

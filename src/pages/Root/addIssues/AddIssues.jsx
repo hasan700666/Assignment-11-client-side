@@ -45,7 +45,7 @@ const AddIssues = () => {
           category: data.category,
           description: data.description,
           photoURL: res.data.data.url,
-          status: "Pending",
+          status: "pending",
           priority: "normal",
           boosted: false,
           boostedAt: null,

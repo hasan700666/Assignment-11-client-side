@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import useAxiousInstance from "../../../hooks/useAxiousInstance";
 import useAuth from "../../../hooks/useAuth";
+import useAxiousInstance from "../../../hooks/useAxiousInstance";
 import { NavLink } from "react-router";
 
-const TotalStaffAssignedIssues = () => {
+const TotalStaffClosedIssues = () => {
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
 
@@ -23,7 +23,7 @@ const TotalStaffAssignedIssues = () => {
     queryFn: async () => {
       const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`);
       const allInProgressIssues = res.data.filter(
-        (res) => res.status === "pending"
+        (res) => res.status === "closed"
       );
       return allInProgressIssues;
     },
@@ -38,9 +38,9 @@ const TotalStaffAssignedIssues = () => {
   return (
     <div>
       <div></div>
-      {StaffAssignedIssues.length === 0 ? (
+      {StaffAssignedIssues.langth == 0 ? (
         <>
-          <div>No Issues Assigned With You Yet</div>
+        <div>No Closed Issues Yet</div>
         </>
       ) : (
         <>
@@ -87,4 +87,4 @@ const TotalStaffAssignedIssues = () => {
   );
 };
 
-export default TotalStaffAssignedIssues;
+export default TotalStaffClosedIssues;

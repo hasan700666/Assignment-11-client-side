@@ -25,7 +25,7 @@ const TotalPendingIssues = () => {
         const res = await axiousInsrance.get(`/issues`); // id = 3
         const Issues = res.data;
         const FilrerdPandingIssues = Issues.filter(
-          (data) => data.status === "Pending"
+          (data) => data.status === "pending"
         );
         if (FilrerdPandingIssues) {
           return FilrerdPandingIssues;
@@ -34,7 +34,7 @@ const TotalPendingIssues = () => {
         const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
         const Issues = res.data;
         const FilrerdPandingIssues = Issues.filter(
-          (data) => data.status === "Pending"
+          (data) => data.status === "pending"
         );
         if (FilrerdPandingIssues) {
           return FilrerdPandingIssues;

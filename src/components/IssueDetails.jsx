@@ -65,7 +65,7 @@ const IssueDetails = () => {
   };
 
   const isOwner = user?.uid === issue?.reporterFirebaseUid;
-  const canEdit = isOwner && issue?.status === "Pending";
+  const canEdit = isOwner && issue?.status === "pending";
   const canDelete = isOwner;
   const canBoost = !issue?.boosted;
 
@@ -92,11 +92,11 @@ const IssueDetails = () => {
               <span
                 className={`px-3 py-1 rounded-full text-white text-sm 
               ${
-                issue.status === "Pending"
+                issue.status === "pending"
                   ? "bg-yellow-500"
-                  : issue.status === "In-Progress"
+                  : issue.status === "in-progress"
                   ? "bg-blue-500"
-                  : issue.status === "Resolved"
+                  : issue.status === "resolved"
                   ? "bg-green-500"
                   : issue.status === "working"
                   ? "bg-yellow-500"
