@@ -9,7 +9,7 @@ const IssueDetails = () => {
   const [searchParams] = useSearchParams();
   const issues_id = searchParams.get("id");
   const { user } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const axiousInsrance = useAxiousInstance();
   const { data: issue = [] } = useQuery({
@@ -51,7 +51,7 @@ const IssueDetails = () => {
       if (result.isConfirmed) {
         axiousInsrance.delete(`/issues/${id}`).then((res) => {
           // id = 5
-          navigate("/all_issues")
+          navigate("/all_issues");
           if (res.data.deletedCount) {
             Swal.fire({
               title: "Deleted!",
@@ -98,7 +98,9 @@ const IssueDetails = () => {
                   ? "bg-blue-500"
                   : issue.status === "Resolved"
                   ? "bg-green-500"
-                  : "bg-gray-500"
+                  : issue.status === "working"
+                  ? "bg-yellow-500"
+                  : "bg-red-500"
               }`}
               >
                 {issue.status}
