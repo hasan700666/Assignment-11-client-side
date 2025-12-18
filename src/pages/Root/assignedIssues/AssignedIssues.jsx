@@ -17,7 +17,7 @@ const AssignedIssues = () => {
     },
   });
 
-  const { data: StaffAssignedIssues = [] } = useQuery({
+  const { data: StaffAssignedIssues = [],refetch } = useQuery({
     queryKey: ["issues_data", user?.uid],
     queryFn: async () => {
       const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`);
@@ -38,6 +38,7 @@ const AssignedIssues = () => {
     };
     axiousInsrance.patch(`/issues?_id=${id}`, obj).then((res) => {
       console.log(res.data);
+      refetch()
     });
 
     document.activeElement.blur();
