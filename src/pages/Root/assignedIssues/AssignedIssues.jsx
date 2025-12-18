@@ -32,7 +32,13 @@ const AssignedIssues = () => {
     return <>unaturize access</>;
   }
 
-  const statusOptions = ["in-progress", "working", "resolved", "cancel"];
+  const statusFlow = {
+    pending: ["in-progress"],
+    "in-progress": ["working"],
+    working: ["resolved"],
+    resolved: ["closed"],
+    closed: [], 
+  };
 
   const handleStatusClick = (status, id) => {
     console.log("status ", status, id);
@@ -121,7 +127,7 @@ const AssignedIssues = () => {
                             tabIndex={-1}
                             className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
                           >
-                            {statusOptions.map((status) => (
+                            {(statusFlow[issue.status] || []).map((status) => (
                               <li key={status}>
                                 <button
                                   onClick={() =>
