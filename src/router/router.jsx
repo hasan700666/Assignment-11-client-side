@@ -26,8 +26,8 @@ import ManageStaff from "../pages/Dashbord/manageStaff/ManageStaff";
 import TotalStaffResolvedIssues from "../pages/Dashbord/totalStaffResolvedIssues/TotalStaffResolvedIssues";
 import TotalStaffAssignedIssues from "../pages/Dashbord/totalStaffAssignedIssues/TotalStaffAssignedIssues";
 import StaffTodayTask from "../pages/Dashbord/staffTodayTask/StaffTodayTask";
-import AssignedIssues from "../pages/Root/assignedIssues/AssignedIssues";
 import TotalStaffClosedIssues from "../pages/Dashbord/totalStaffClosedIssues/totalStaffClosedIssues";
+import AssignedIssues from "../pages/Dashbord/assignedIssues/AssignedIssues";
 
 export const router = createBrowserRouter([
   {
@@ -75,14 +75,6 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <AddIssues></AddIssues>
-          </PrivetRoute>
-        ),
-      },
-      {
-        path: "assigned_issues_for_staff",
-        element: (
-          <PrivetRoute>
-            <AssignedIssues></AssignedIssues>
           </PrivetRoute>
         ),
       },
@@ -157,6 +149,10 @@ export const router = createBrowserRouter([
       {
         path: "total_staff_closed_issues",
         Component: TotalStaffClosedIssues,
+      },
+      {
+        path: "assigned_issues_page",
+        Component: AssignedIssues,
       },
     ],
   },

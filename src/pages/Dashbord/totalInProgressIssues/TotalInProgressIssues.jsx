@@ -25,7 +25,7 @@ const TotalInProgressIssues = () => {
         const res = await axiousInsrance.get(`/issues`); // id = 3
         const Issues = res.data;
         const FilrerdInProgressIssues = Issues.filter(
-          (data) => data.status === "In-Progress"
+          (data) => data.status === "in-progress"
         );
         if (FilrerdInProgressIssues) {
           return FilrerdInProgressIssues;
@@ -34,7 +34,7 @@ const TotalInProgressIssues = () => {
         const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
         const Issues = res.data;
         const FilrerdInProgressIssues = Issues.filter(
-          (data) => data.status === "In-Progress"
+          (data) => data.status === "in-progress"
         );
         if (FilrerdInProgressIssues) {
           return FilrerdInProgressIssues;

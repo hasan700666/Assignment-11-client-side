@@ -3,7 +3,18 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiousInstance from "../../../hooks/useAxiousInstance";
 import { useQuery } from "@tanstack/react-query";
 import { FileText } from "lucide-react";
-import Swal from "sweetalert2";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import StaffTodayTask from "../staffTodayTask/StaffTodayTask";
+import TotalStaffAssignedIssues from "../totalStaffAssignedIssues/TotalStaffAssignedIssues";
+import TotalStaffResolvedIssues from "../totalStaffResolvedIssues/TotalStaffResolvedIssues";
+import TotalStaffClosedIssues from "../totalStaffClosedIssues/totalStaffClosedIssues";
 
 const TotalIssuesSubmitted = () => {
   const [StaffUid, setStaffUid] = useState({});
@@ -24,7 +35,7 @@ const TotalIssuesSubmitted = () => {
     queryKey: ["is_staff", user?.uid],
     queryFn: async () => {
       const res = await axiousInsrance.get(`/user?email=${user.email}`);
-      return res.data.result.role === "staff"   
+      return res.data.result.role === "staff";
     },
   });
 
@@ -220,6 +231,25 @@ const TotalIssuesSubmitted = () => {
     // });
   };
 
+  const issueChartData = [
+    {
+      name: "Pending",
+      value: pendingIssues.length,
+    },
+    {
+      name: "In Progress",
+      value: inProgressIssues.length,
+    },
+    {
+      name: "Resolved",
+      value: resolvedIssues.length,
+    },
+    {
+      name: "Closed (Staff)",
+      value: StaffAssignedClosedIssues.length,
+    },
+  ];
+
   return (
     <div className="flex flex-col justify-center items-center m-30">
       <div className="max-w-md bg-white rounded-2xl shadow-md p-6 ">
@@ -250,6 +280,22 @@ const TotalIssuesSubmitted = () => {
               value={StaffAssignedClosedIssues.length}
             />
           )}
+        </div>
+      </div>
+      <div>
+        <div></div>
+        <div>
+          <div className="h-100 my-10 bg-white p-5">
+            <h3 className="text-center p-5">Issues Status Overview</h3>
+            <ResponsiveContainer width="700" height="100%">
+              <BarChart data={issueChartData}>
+                <XAxis dataKey="name" />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Bar dataKey="value" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
       <div className="my-10">
@@ -286,14 +332,12 @@ const TotalIssuesSubmitted = () => {
                               {isAdmin && (
                                 <th>
                                   {issue.status === "pending" ? (
-                                    <>
-                                      <button
-                                        className="btn_css"
-                                        onClick={() => handleReject(issue._id)}
-                                      >
-                                        Reject
-                                      </button>
-                                    </>
+                                    <button
+                                      className="btn_css"
+                                      onClick={() => handleReject(issue._id)}
+                                    >
+                                      Reject
+                                    </button>
                                   ) : (
                                     <>
                                       <div className="bg-[#f22303] text-center p-2 rounded-xl text-white">
@@ -371,6 +415,14 @@ const TotalIssuesSubmitted = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="w-full">
+        {isStaff && <>
+            <div><StaffTodayTask></StaffTodayTask></div>
+            <div><TotalStaffAssignedIssues></TotalStaffAssignedIssues></div>
+            <div><TotalStaffResolvedIssues></TotalStaffResolvedIssues></div>
+            <div><TotalStaffClosedIssues></TotalStaffClosedIssues></div>
+        </>}
       </div>
     </div>
   );

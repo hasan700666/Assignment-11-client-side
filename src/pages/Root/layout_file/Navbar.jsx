@@ -22,17 +22,16 @@ const Navbar = () => {
     queryKey: ["is_staff", user?.uid],
     queryFn: async () => {
       const res = await axiousInsrance.get(`/user?email=${user.email}`);
-      if (res.data.result.role == "staff") {
-        return res.data.result.role;
-      }
+      return res.data.result.role === "staff";
     },
   });
 
-  console.log(user);
+  console.log(isAdmin);
+  console.log(isStaff);
 
   const li = (
     <>
-      {!isStaff && (
+      {!isStaff && !isAdmin && (
         <>
           <NavLink to="/" className="mx-3">
             Home
@@ -56,14 +55,6 @@ const Navbar = () => {
           <NavLink to="/my_favorites" className="mx-3">
             {" "}
             My favorites
-          </NavLink>
-        </>
-      )}
-      {isStaff && (
-        <>
-          <NavLink to="/assigned_issues_for_staff" className="mx-3">
-            {" "}
-            Assigned issues
           </NavLink>
         </>
       )}

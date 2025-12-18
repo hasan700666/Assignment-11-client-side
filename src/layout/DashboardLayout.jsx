@@ -114,17 +114,17 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">Profile</span>
                 </NavLink>
               </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/total_issues"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
-                    data-tip="Homepage"
-                  >
-                    {/* Logo icon */}
-                    <BiErrorAlt />
-                    <span className="is-drawer-close:hidden">Total Issues</span>
-                  </NavLink>
-                </li>
+              <li>
+                <NavLink
+                  to="/dashboard/total_issues"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                  data-tip="Homepage"
+                >
+                  {/* Logo icon */}
+                  <BiErrorAlt />
+                  <span className="is-drawer-close:hidden">Total Issues</span>
+                </NavLink>
+              </li>
               {!isStaff && (
                 <li>
                   <NavLink
@@ -216,6 +216,21 @@ const DashboardLayout = () => {
                     </NavLink>
                   </li>
                 </>
+              )}
+              {isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/assigned_issues_page"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <TiLockClosedOutline />
+                    <span className="is-drawer-close:hidden">
+                      Assigned issues
+                    </span>
+                  </NavLink>
+                </li>
               )}
               {isStaff && (
                 <li>

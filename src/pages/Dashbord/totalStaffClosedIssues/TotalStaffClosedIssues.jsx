@@ -33,14 +33,14 @@ const TotalStaffClosedIssues = () => {
     return <>unaturize access</>;
   }
 
-  console.log(StaffAssignedIssues);
+  console.log(StaffAssignedIssues.length);
 
   return (
     <div>
       <div></div>
       {StaffAssignedIssues.langth == 0 ? (
         <>
-        <div>No Closed Issues Yet</div>
+          <div>No Closed Issues Yet</div>
         </>
       ) : (
         <>
@@ -77,12 +77,11 @@ const TotalStaffClosedIssues = () => {
           </div>
         </>
       )}
-      <NavLink
-        to="/assigned_issues_for_staff"
-        className="flex justify-center items-center"
-      >
-        <button className="btn_css">Update Issues Status</button>
-      </NavLink>
+      <div className="flex justify-center items-center">
+        <NavLink to="/dashboard/assigned_issues_page">
+          <button className="btn_css">Update Issues Status</button>
+        </NavLink>
+      </div>
     </div>
   );
 };

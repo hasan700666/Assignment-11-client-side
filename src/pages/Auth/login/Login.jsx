@@ -12,7 +12,7 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
-  const { singInUser, singInUserByGoogle} = useAuth();
+  const { singInUser, singInUserByGoogle } = useAuth();
   const [sow, setSow] = useState(false);
   const {
     register,
@@ -26,6 +26,8 @@ const Login = () => {
         axiosInstance.get(`/user?email=${res.user.email}`).then((res) => {
           console.log(res);
           if (res.data?.result?.role == "staff") {
+            navigate("/dashboard");
+          } else if (res.data.result.role == "admin") {
             navigate("/dashboard");
           } else {
             navigate(location.state || "/");

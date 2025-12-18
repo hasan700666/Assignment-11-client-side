@@ -60,6 +60,7 @@ const SingUp = () => {
                 })
                 .catch((e) => {
                   console.log(e);
+                  navigate(location.state || "/");
                 });
             })
             .catch((e) => {

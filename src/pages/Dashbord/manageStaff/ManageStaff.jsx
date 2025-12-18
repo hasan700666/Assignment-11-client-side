@@ -71,10 +71,6 @@ const ManageStaff = () => {
         })
         .catch((e) => {
           console.log(e.message);
-          if (e.message == "timeout of 1000ms exceeded") {
-            refetch();
-            document.getElementById("my_modal_1")?.close();
-          }
         });
     });
   };
