@@ -4,6 +4,7 @@ import useAxiousInstance from "../../../hooks/useAxiousInstance";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import IsUserBlocked from "../../../components/IsUserBlocked";
 
 const MyIssues = () => {
   const { user } = useAuth();
@@ -122,36 +123,39 @@ const MyIssues = () => {
                     ) : (
                       <>
                         <button
-                          onClick={() =>
-                            document.getElementById("my_modal_5").showModal()
-                          }
+                          onClick={() => {
+                            document.getElementById("my_modal_5").showModal();
+                          }}
                           className="btn_css"
                         >
                           Bost Now
                         </button>
+
                         <dialog
                           id="my_modal_5"
                           className="modal modal-bottom sm:modal-middle"
                         >
-                          <div className="modal-box">
-                            <h3 className="font-bold text-lg">Bost Now!</h3>
-                            <p className="py-4">
-                              Please pay $5 for bust yout issue
-                            </p>
-                            <div className="modal-action">
-                              <form method="dialog">
-                                <button
-                                  className="btn_css"
-                                  onClick={() =>
-                                    handleBost(issue.title, issue._id)
-                                  }
-                                >
-                                  Bost
-                                </button>
-                                <button className="btn_css">Close</button>
-                              </form>
+                          <IsUserBlocked>
+                            <div className="modal-box">
+                              <h3 className="font-bold text-lg">Bost Now!</h3>
+                              <p className="py-4">
+                                Please pay $5 for bust yout issue
+                              </p>
+                              <div className="modal-action">
+                                <form method="dialog">
+                                  <button
+                                    className="btn_css"
+                                    onClick={() =>
+                                      handleBost(issue.title, issue._id)
+                                    }
+                                  >
+                                    Bost
+                                  </button>
+                                  <button className="btn_css">Close</button>
+                                </form>
+                              </div>
                             </div>
-                          </div>
+                          </IsUserBlocked>
                         </dialog>
                       </>
                     )}
@@ -185,74 +189,78 @@ const MyIssues = () => {
           </table>
           <div>
             <dialog id="edit_modal" className="modal">
-              <div className="modal-box">
-                <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  className=" m-auto my-10 p-10 bg-[#fee9e6] radius_css"
-                >
-                  <fieldset className="fieldset">
-                    <label className="label">Title</label>
-                    <input
-                      type="text"
-                      className="input w-full"
-                      placeholder="name of issues"
-                      {...register("title", { required: true })}
-                    />
-                    {errors.title && (
-                      <p className="text-red-500">Title field required</p>
-                    )}
-                    <label className="label">Location</label>
-                    <input
-                      type="text"
-                      className="input w-full"
-                      placeholder="select category name"
-                      {...register("location", { required: true })}
-                    />
-                    {errors.location && (
-                      <p className="text-red-500">Label field required</p>
-                    )}
-                    <label className="label">Category</label>
-                    <select
-                      className="select w-full"
-                      {...register("category", { required: true })}
-                    >
-                      <option disabled={true}>Pick a category</option>
-                      <option>Road</option>
-                      <option>Mosquito</option>
-                      <option>Garbage</option>
-                      <option>Street Light</option>
-                      <option>Air Pollution </option>
-                    </select>
-                    {errors.category && (
-                      <p className="text-red-500">Category field required</p>
-                    )}
-                    <label className="label">Description</label>
-                    <textarea
-                      type="text"
-                      className="textarea w-full h-30"
-                      placeholder="add description"
-                      {...register("description", { required: true })}
-                    ></textarea>
-                    {errors.description && (
-                      <p className="text-red-500">Description field required</p>
-                    )}
-                    <input
-                      className="bg-white p-2"
-                      type="file"
-                      {...register("photo")}
-                    ></input>
-                  </fieldset>
-                  <div className="flex justify-center items-center">
-                    <button className="btn_css text-center">Update</button>
-                  </div>
-                </form>
-
-                <div className="modal-action">
-                  <form method="dialog">
-                    <button className="btn_css">Close</button>
+              <IsUserBlocked>
+                <div className="modal-box">
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className=" m-auto my-10 p-10 bg-[#fee9e6] radius_css"
+                  >
+                    <fieldset className="fieldset">
+                      <label className="label">Title</label>
+                      <input
+                        type="text"
+                        className="input w-full"
+                        placeholder="name of issues"
+                        {...register("title", { required: true })}
+                      />
+                      {errors.title && (
+                        <p className="text-red-500">Title field required</p>
+                      )}
+                      <label className="label">Location</label>
+                      <input
+                        type="text"
+                        className="input w-full"
+                        placeholder="select category name"
+                        {...register("location", { required: true })}
+                      />
+                      {errors.location && (
+                        <p className="text-red-500">Label field required</p>
+                      )}
+                      <label className="label">Category</label>
+                      <select
+                        className="select w-full"
+                        {...register("category", { required: true })}
+                      >
+                        <option disabled={true}>Pick a category</option>
+                        <option>Road</option>
+                        <option>Mosquito</option>
+                        <option>Garbage</option>
+                        <option>Street Light</option>
+                        <option>Air Pollution </option>
+                      </select>
+                      {errors.category && (
+                        <p className="text-red-500">Category field required</p>
+                      )}
+                      <label className="label">Description</label>
+                      <textarea
+                        type="text"
+                        className="textarea w-full h-30"
+                        placeholder="add description"
+                        {...register("description", { required: true })}
+                      ></textarea>
+                      {errors.description && (
+                        <p className="text-red-500">
+                          Description field required
+                        </p>
+                      )}
+                      <input
+                        className="bg-white p-2"
+                        type="file"
+                        {...register("photo")}
+                      ></input>
+                    </fieldset>
+                    <div className="flex justify-center items-center">
+                      <button className="btn_css text-center">Update</button>
+                    </div>
                   </form>
+
+                  <div className="modal-action">
+                    <form method="dialog">
+                      <button className="btn_css">Close</button>
+                    </form>
+                  </div>
                 </div>
-              </div>
+              </IsUserBlocked>
             </dialog>
           </div>
         </div>

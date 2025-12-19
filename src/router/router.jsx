@@ -28,6 +28,7 @@ import StaffTodayTask from "../pages/Dashbord/staffTodayTask/StaffTodayTask";
 import TotalStaffClosedIssues from "../pages/Dashbord/totalStaffClosedIssues/totalStaffClosedIssues";
 import AssignedIssues from "../pages/Dashbord/assignedIssues/AssignedIssues";
 import DashboardOverview from "../pages/Dashbord/Dashboard Overview/DashboardOverview";
+import IsUserBlocked from "../components/IsUserBlocked";
 
 export const router = createBrowserRouter([
   {
@@ -74,7 +75,9 @@ export const router = createBrowserRouter([
         path: "add_issues",
         element: (
           <PrivetRoute>
-            <AddIssues></AddIssues>
+            <IsUserBlocked>
+              <AddIssues></AddIssues>
+            </IsUserBlocked>
           </PrivetRoute>
         ),
       },
@@ -173,5 +176,9 @@ export const router = createBrowserRouter([
         Component: Failed,
       },
     ],
+  },
+  {
+    path: "/isuser_is_blocked",
+    Component: IsUserBlocked,
   },
 ]);

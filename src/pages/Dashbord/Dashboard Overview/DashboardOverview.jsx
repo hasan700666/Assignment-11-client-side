@@ -15,6 +15,10 @@ import StaffTodayTask from "../staffTodayTask/StaffTodayTask";
 import TotalStaffAssignedIssues from "../totalStaffAssignedIssues/TotalStaffAssignedIssues";
 import TotalStaffResolvedIssues from "../totalStaffResolvedIssues/TotalStaffResolvedIssues";
 import TotalStaffClosedIssues from "../totalStaffClosedIssues/totalStaffClosedIssues";
+import TotalPendingIssues from "../totalPendingIssues/TotalPendingIssues";
+import TotalInProgressIssues from "../totalInProgressIssues/TotalInProgressIssues";
+import TotalResolvedIssues from "../totalResolvedIssues/TotalResolvedIssues";
+import TotalPayments from "../totalPayments/TotalPayments";
 
 const DashboardOverview = () => {
   const [StaffUid, setStaffUid] = useState({});
@@ -161,23 +165,82 @@ const DashboardOverview = () => {
     },
   });
 
+  const { data: closedIssues = [] } = useQuery({
+    queryKey: ["my-closed-issues", user.uid],
+    enabled: !!user?.uid && isAdmin !== undefined && isStaff !== undefined,
+    queryFn: async () => {
+      if (isAdmin) {
+        const res = await axiousInsrance.get(`/issues`); // id = 3
+        const Issues = res.data;
+        const FilrerdInProgressIssues = Issues.filter(
+          (data) => data.status === "closed"
+        );
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
+        }
+      } else if (isStaff) {
+        const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdInProgressIssues = Issues.filter(
+          (data) => data.status === "closed"
+        );
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
+        }
+      } else {
+        const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdInProgressIssues = Issues.filter(
+          (data) => data.status === "closed"
+        );
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
+        }
+      }
+    },
+  });
+
+  const { data: workingIssues = [] } = useQuery({
+    queryKey: ["my-working-issues", user.uid],
+    enabled: !!user?.uid && isAdmin !== undefined && isStaff !== undefined,
+    queryFn: async () => {
+      if (isAdmin) {
+        const res = await axiousInsrance.get(`/issues`); // id = 3
+        const Issues = res.data;
+        const FilrerdInProgressIssues = Issues.filter(
+          (data) => data.status === "working"
+        );
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
+        }
+      } else if (isStaff) {
+        const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdInProgressIssues = Issues.filter(
+          (data) => data.status === "working"
+        );
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
+        }
+      } else {
+        const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 2
+        const Issues = res.data;
+        const FilrerdInProgressIssues = Issues.filter(
+          (data) => data.status === "working"
+        );
+        if (FilrerdInProgressIssues) {
+          return FilrerdInProgressIssues;
+        }
+      }
+    },
+  });
+
   const { data: AllStaff = [] } = useQuery({
     queryKey: ["AllStaff", user?.uid],
     queryFn: async () => {
       const res = await axiousInsrance.get("/user");
       const filterStaff = res.data.filter((data) => data.role == "staff");
       return filterStaff;
-    },
-  });
-
-  const { data: StaffAssignedClosedIssues = [] } = useQuery({
-    queryKey: ["issues_data", user?.uid],
-    queryFn: async () => {
-      const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`);
-      const allInProgressIssues = res.data.filter(
-        (res) => res.status === "closed"
-      );
-      return allInProgressIssues;
     },
   });
 
@@ -241,18 +304,29 @@ const DashboardOverview = () => {
       value: inProgressIssues.length,
     },
     {
+      name: "Working",
+      value: workingIssues.length,
+    },
+    {
       name: "Resolved",
       value: resolvedIssues.length,
     },
     {
-      name: "Closed (Staff)",
-      value: StaffAssignedClosedIssues.length,
+      name: "Closed",
+      value: closedIssues.length,
     },
   ];
 
+  console.log("p", pendingIssues);
+  console.log("i", inProgressIssues);
+  console.log("w", workingIssues);
+  console.log("r", resolvedIssues);
+  console.log("i", issues);
+  console.log("c", closedIssues);
+
   return (
     <div className="flex flex-col justify-center items-center m-30">
-      <div className="max-w-md bg-white rounded-2xl shadow-md p-6 ">
+      <div className="w-200 bg-white rounded-2xl shadow-md p-6 ">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-800">
@@ -270,16 +344,12 @@ const DashboardOverview = () => {
         </div>
 
         {/* Status Breakdown (UI only) */}
-        <div className="grid grid-cols-3 gap-4 mt-6 text-center">
+        <div className="grid grid-cols-5 gap-4 mt-6 text-center">
           <StatusItem label="Pending" value={pendingIssues.length} />
           <StatusItem label="In Progress" value={inProgressIssues.length} />
+          <StatusItem label="Working" value={workingIssues.length} />
           <StatusItem label="Resolved" value={resolvedIssues.length} />
-          {StaffAssignedClosedIssues.length > 0 && (
-            <StatusItem
-              label="Resolved"
-              value={StaffAssignedClosedIssues.length}
-            />
-          )}
+          <StatusItem label="Closed" value={closedIssues.length} />
         </div>
       </div>
       <div>
@@ -417,12 +487,31 @@ const DashboardOverview = () => {
         </div>
       </div>
       <div className="w-full">
-        {isStaff && <>
-            <div><StaffTodayTask></StaffTodayTask></div>
-            <div><TotalStaffAssignedIssues></TotalStaffAssignedIssues></div>
-            <div><TotalStaffResolvedIssues></TotalStaffResolvedIssues></div>
-            <div><TotalStaffClosedIssues></TotalStaffClosedIssues></div>
-        </>}
+        {isStaff ? (
+          <>
+            <div>
+              <StaffTodayTask></StaffTodayTask>
+            </div>
+            <div>
+              <TotalStaffAssignedIssues></TotalStaffAssignedIssues>
+            </div>
+            <div>
+              <TotalStaffResolvedIssues></TotalStaffResolvedIssues>
+            </div>
+            <div>
+              <TotalStaffClosedIssues></TotalStaffClosedIssues>
+            </div>
+          </>
+        ) : (
+          <>{isAdmin ? <></> : <>
+          <div>
+            <div><TotalPendingIssues></TotalPendingIssues></div>
+            <div><TotalInProgressIssues></TotalInProgressIssues></div>
+            <div><TotalResolvedIssues></TotalResolvedIssues></div>
+            <div><TotalPayments></TotalPayments></div>
+          </div>
+          </>}</>
+        )}
       </div>
     </div>
   );

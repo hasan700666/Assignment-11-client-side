@@ -4,6 +4,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { NavLink, useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useAxiousInstance from "../hooks/useAxiousInstance";
+import { useQuery } from "@tanstack/react-query";
 
 const Card = ({ issue, refetch }) => {
   const navigate = useNavigate();
@@ -20,9 +21,21 @@ const Card = ({ issue, refetch }) => {
   } = issue;
   const { user } = useAuth();
 
+  const { data: IsUserBlocked = [] } = useQuery({
+    queryKey: ["isUser", user.email],
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/user?email=${user.email}`);
+      return res.data.result.isBlocked;
+    },
+  });
+
   const onUpvote = () => {
     if (!user) {
       return navigate("/user/login");
+    }
+
+    if (IsUserBlocked) {
+      return navigate("/isuser_is_blocked");
     }
 
     const obj = {
