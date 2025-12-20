@@ -32,16 +32,13 @@ const AllIssuesForAdmin = () => {
     queryKey: ["my-issues", user.uid],
     enabled: !!user?.uid && isAdmin !== undefined && isStaff !== undefined,
     queryFn: async () => {
-      if (isAdmin) {
-        const res = await axiousInsrance.get(`/issues`); // id = 3
-        return res.data;
-      } else if (isStaff) {
-        const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`);
-        return res.data;
-      } else {
-        const res = await axiousInsrance.get(`/issues?firebaseId=${user?.uid}`); // id = 8
-        return res.data;
-      }
+      const res = await axiousInsrance.get(`/issues`); // id = 3
+      const filterdHigh = res.data.filter((data) => "high" === data.priority);
+      const filterdNormal = res.data.filter(
+        (data) => "normal" === data.priority
+      );
+      const arr = [...filterdHigh, ...filterdNormal];
+      return arr;
     },
   });
 
