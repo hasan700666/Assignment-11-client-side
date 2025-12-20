@@ -42,6 +42,16 @@ const DashboardLayout = () => {
     },
   });
 
+  const { data: isUser } = useQuery({
+    queryKey: ["is_isUser", user.uid],
+    queryFn: async () => {
+      const res = await axiousInsrance.get(`/user?email=${user.email}`);
+      if (res.data.result.role == "citizen") {
+        return res.data.result.role;
+      }
+    },
+  });
+
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -128,7 +138,7 @@ const DashboardLayout = () => {
                   </span>
                 </NavLink>
               </li>
-              {!isStaff && (
+              {!isStaff && !isAdmin && (
                 <li>
                   <NavLink
                     to="/dashboard/my_issues"
@@ -138,6 +148,19 @@ const DashboardLayout = () => {
                     {/* Logo icon */}
                     <MdError />
                     <span className="is-drawer-close:hidden">My issues</span>
+                  </NavLink>
+                </li>
+              )}
+              {!isStaff && !isUser && (
+                <li>
+                  <NavLink
+                    to="/dashboard/all_issues"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <MdError />
+                    <span className="is-drawer-close:hidden">All Issues</span>
                   </NavLink>
                 </li>
               )}

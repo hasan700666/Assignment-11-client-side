@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import useAuth from "../../../hooks/useAuth";
 import useAxiousInstance from "../../../hooks/useAxiousInstance";
 import { useQuery } from "@tanstack/react-query";
@@ -21,8 +21,6 @@ import TotalResolvedIssues from "../totalResolvedIssues/TotalResolvedIssues";
 import TotalPayments from "../totalPayments/TotalPayments";
 
 const DashboardOverview = () => {
-  const [StaffUid, setStaffUid] = useState({});
-  const [IssuesData, setIssuesData] = useState({});
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
 
@@ -43,7 +41,7 @@ const DashboardOverview = () => {
     },
   });
 
-  const { data: issues = [], refetch } = useQuery({
+  const { data: issues = [] } = useQuery({
     queryKey: ["my-issues", user.uid],
     enabled: !!user?.uid && isAdmin !== undefined && isStaff !== undefined,
     queryFn: async () => {
@@ -244,56 +242,6 @@ const DashboardOverview = () => {
     },
   });
 
-  const HandleAssignedStaff = () => {
-    const findStffData = AllStaff.find(
-      (staff) => StaffUid === staff.firebaseUid
-    );
-    if (findStffData) {
-      const staffUidObj = {
-        StafFirebaseUid: findStffData.firebaseUid,
-        StaffName: findStffData.name,
-      };
-      axiousInsrance
-        .patch(`/issues?_id=${IssuesData._id}`, staffUidObj)
-        .then((res) => {
-          refetch();
-          console.log("update is done ", res.data);
-        });
-    }
-  };
-
-  const handleReject = (id) => {
-    console.log("hasan ", id);
-
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "You won to reject the Issues for this Staff!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Yes, delete it!",
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     const RejactObj = {
-    //       data: "Delete",
-    //     };
-    //     axiousInsrance.patch(`/issues?_id=${id}`, RejactObj).then/////((res) => {
-    //       // id = 5
-    //       console.log(res.data);
-    //       if (res.data) {
-    //         refetch();
-    //         Swal.fire({
-    //           title: "Deleted!",
-    //           text: "Your file has been deleted.",
-    //           icon: "success",
-    //         });
-    //       }
-    //     });
-    //   }
-    // });
-  };
-
   const issueChartData = [
     {
       name: "Pending",
@@ -381,7 +329,6 @@ const DashboardOverview = () => {
                     <th>Category</th>
                     <th>State</th>
                     <th>priority</th>
-                    {isAdmin && <th>Assigned Staff</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -393,89 +340,6 @@ const DashboardOverview = () => {
                       <td>{issue.category}</td>
                       <td>{issue.status}</td>
                       <td>{issue.priority}</td>
-                      {isAdmin && (
-                        <td>
-                          {issue.assignedStaffUid ? (
-                            <>
-                              {isAdmin && (
-                                <th>
-                                  {issue.status === "pending" ? (
-                                    <button
-                                      className="btn_css"
-                                      onClick={() => handleReject(issue._id)}
-                                    >
-                                      Reject
-                                    </button>
-                                  ) : (
-                                    <>
-                                      <div className="bg-[#f22303] text-center p-2 rounded-xl text-white">
-                                        {issue.assignedStaffName}
-                                      </div>
-                                    </>
-                                  )}
-                                </th>
-                              )}
-                            </>
-                          ) : (
-                            <>
-                              <button
-                                onClick={() =>
-                                  document
-                                    .getElementById(`my_modal_5_${issue._id}`)
-                                    .showModal()
-                                }
-                                className="btn_css"
-                              >
-                                Assigned Staff
-                              </button>
-                              <dialog
-                                id={`my_modal_5_${issue._id}`}
-                                className="modal modal-bottom sm:modal-middle"
-                              >
-                                <div className="modal-box">
-                                  <h3 className="font-bold text-lg">
-                                    Assigned Staff Now!
-                                  </h3>
-                                  <p className="py-4">
-                                    Please Assigned The Issues With Staff Now!
-                                  </p>
-                                  <p>
-                                    <select
-                                      defaultValue=""
-                                      className="select appearance-none"
-                                      onChange={(e) => {
-                                        const selectedId = e.target.value;
-                                        setStaffUid(selectedId);
-                                        setIssuesData(issue);
-                                      }}
-                                    >
-                                      <option disabled={true} value="">
-                                        Pick a staff
-                                      </option>
-                                      {AllStaff.map((staff) => (
-                                        <option value={staff.firebaseUid}>
-                                          {staff.name}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </p>
-                                  <div className="modal-action">
-                                    <form method="dialog">
-                                      <button
-                                        className="btn_css"
-                                        onClick={HandleAssignedStaff}
-                                      >
-                                        Assign
-                                      </button>
-                                      <button className="btn_css">Close</button>
-                                    </form>
-                                  </div>
-                                </div>
-                              </dialog>
-                            </>
-                          )}
-                        </td>
-                      )}
                     </tr>
                   ))}
                 </tbody>
@@ -503,7 +367,42 @@ const DashboardOverview = () => {
         ) : (
           <>
             {isAdmin ? (
-              <></>
+              <>
+                <div>
+                  <div>
+                    <div className="text-center mt-10 text-5xl text-[#f22303]">
+                      Total Panding Issues
+                    </div>
+                    <div>
+                      <TotalPendingIssues></TotalPendingIssues>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-center mt-10 text-5xl text-[#f22303]">
+                      Total In Progress Issues
+                    </div>
+                    <div>
+                      <TotalInProgressIssues></TotalInProgressIssues>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-center mt-10 text-5xl text-[#f22303]">
+                      Total Resolved Issues
+                    </div>
+                    <div>
+                      <TotalResolvedIssues></TotalResolvedIssues>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-center mt-10 text-5xl text-[#f22303]">
+                      Total Payment Issues
+                    </div>
+                    <div>
+                      <TotalPayments></TotalPayments>
+                    </div>
+                  </div>
+                </div>
+              </>
             ) : (
               <>
                 <div>

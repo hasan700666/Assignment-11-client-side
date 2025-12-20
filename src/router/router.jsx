@@ -29,6 +29,7 @@ import AssignedIssues from "../pages/Dashbord/assignedIssues/AssignedIssues";
 import DashboardOverview from "../pages/Dashbord/Dashboard Overview/DashboardOverview";
 import IsUserBlocked from "../components/IsUserBlocked";
 import MyIssues from "../pages/Dashbord/myIssues/MyIssues";
+import AllIssuesForAdmin from "../pages/Dashbord/allIssuesForAdmin/AllIssuesForAdmin";
 
 export const router = createBrowserRouter([
   {
@@ -152,6 +153,10 @@ export const router = createBrowserRouter([
       {
         path: "my_issues",
         Component: MyIssues,
+      },
+      {
+        path: "all_issues",
+        Component: AllIssuesForAdmin,
       },
     ],
   },

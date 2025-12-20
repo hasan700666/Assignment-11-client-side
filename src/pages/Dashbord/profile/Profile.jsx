@@ -29,8 +29,6 @@ const Profile = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data.name, data.photo);
-
     const fromData = new FormData();
     fromData.append("image", data.photo[0]);
     const imgUploadURL = `https://api.imgbb.com/1/upload?key=${
@@ -48,10 +46,13 @@ const Profile = () => {
             photoURL: imgURL,
           })
           .then((res) => {
+            console.log("hello");
+            
             console.log(res.data);
             toast.success("Successful!");
           })
           .catch((e) => {
+            console.log("hello");
             console.log(e);
             toast.success("Successful!");
           });
