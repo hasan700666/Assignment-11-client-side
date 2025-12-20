@@ -46,8 +46,6 @@ const Profile = () => {
             photoURL: imgURL,
           })
           .then((res) => {
-            console.log("hello");
-            
             console.log(res.data);
             toast.success("Successful!");
           })

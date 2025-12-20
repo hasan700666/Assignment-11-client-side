@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const ManageStaff = () => {
   const {
@@ -77,6 +78,31 @@ const ManageStaff = () => {
 
   const handleDelete = (id) => {
     console.log("delete", id);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won to rejected the Issues for this Staff!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiousInsrance.delete(`/staff_delete/${id}`).then((res) => {
+          // id = 5
+          console.log(res.data.deletedCount);
+          if (res.data.deletedCount) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
   };
 
   const handleUpdate = (id) => {
