@@ -27,7 +27,7 @@ const AddIssues = () => {
           .then((res) => setUserIssuesLen(res.data.length));
       }
     });
-  }, [user,axiousInsrance]);
+  }, [user, axiousInsrance]);
 
   const onSubmit = (data) => {
     const fromData = new FormData();
@@ -67,7 +67,7 @@ const AddIssues = () => {
         })
         .then((res) => {
           console.log(res);
-          navigate("/my_issues");
+          navigate("/dashboard/my_issues");
           Swal.fire({
             title: "Issues are added",
             confirmButtonText: "Awesome!",
@@ -86,12 +86,17 @@ const AddIssues = () => {
   return (
     <div>
       {userIssuesLen >= 3 ? (
-        <>
-          <div className="text-2xl">you con't add more then 3 data</div>
-          <NavLink to="/dashboard">
-            <button className="btn_css">Subscribe</button>
+        <div className="my-80">
+          <div className="text-4xl text-center">
+            You con't add more then 3 datas
+          </div>
+          <NavLink to="/dashboard" className="flex justify-center items-center">
+            <div className="m-10 flex flex-col justify-center items-center">
+              <div className="m-3">Want to add more issues!</div>
+              <button className="btn_css">Subscribe Now!</button>
+            </div>
           </NavLink>
-        </>
+        </div>
       ) : (
         <>
           <div>

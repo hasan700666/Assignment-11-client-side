@@ -4,6 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import useAxiousInstance from "../../../hooks/useAxiousInstance";
+import { useQuery } from "@tanstack/react-query";
 
 const Profile = () => {
   const { user, updateUser } = useAuth();
@@ -14,6 +15,14 @@ const Profile = () => {
     formState: { errors },
   } = useForm();
   const axiosInstance = useAxiousInstance();
+
+  const { data: UserData = [] } = useQuery({
+    queryKey: ["isUser", user.email],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/user?email=${user.email}`);
+      return res.data;
+    },
+  });
 
   const hendleUpdateProfile = () => {
     setUpdate(!Update);
@@ -50,6 +59,23 @@ const Profile = () => {
     });
   };
 
+  const handleBost = async () => {
+    const paymentInfo = {
+      name: `${user.displayName}`,
+      id: ``,
+      email: user.email,
+      uid: user.uid,
+      amount: 1000,
+      type: `user subscription`,
+    };
+    const res = await axiosInstance.post(
+      // id = 6
+      "/create-checkout-session",
+      paymentInfo
+    );
+    window.location.assign(res.data.url);
+  };
+
   return (
     <div>
       <div>
@@ -58,7 +84,7 @@ const Profile = () => {
       {Update ? (
         <>
           <div>
-            <div className="hero min-h-screen ">
+            <div className="hero h-screen ">
               <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="card w-full shrink-0 bg-[#fee9e6]">
                   <div className="card-body bg-[#fee9e6] rounded-4xl pb-15">
@@ -101,65 +127,98 @@ const Profile = () => {
         </>
       ) : (
         <>
-          <div className="min-h-screen flex items-center justify-center p-6">
-            <div className="w-full max-w-5xl bg-[#fee9e6] radius_css p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Left profile */}
-              <div className="flex flex-col items-center justify-center text-center">
-                <div className="relative">
-                  <div className="w-52 h-52 rounded-2xl border-4 border-red-600 flex items-center justify-center">
-                    <img
-                      src={user.photoURL}
-                      alt="profile"
-                      className="w-40 h-40 rounded-full object-cover border-4 border-black"
-                    />
+          <div>
+            <div className="mt-40 flex items-center justify-center">
+              <div className="w-full max-w-5xl bg-[#fee9e6] radius_css p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Left profile */}
+                <div className="flex flex-col items-center justify-center text-center">
+                  <div className="relative">
+                    <div className="w-52 h-52 rounded-2xl border-4 border-red-600 flex items-center justify-center">
+                      <img
+                        src={user.photoURL}
+                        alt="profile"
+                        className="w-40 h-40 rounded-full object-cover border-4 border-black"
+                      />
+                    </div>
                   </div>
-                </div>
-                <h2 className="mt-6 text-2xl font-semibold">
-                  {user.displayName}
-                </h2>
-                <p className="text-red-600">{user.email}</p>
-              </div>
-
-              {/* Right details */}
-              <div className="md:col-span-2">
-                <h3 className="text-xl font-semibold mb-4 border-b pb-2">
-                  Bio & other details
-                </h3>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
-                  <div>
-                    <p className="text-gray-500">My Name</p>
-                    <p className="font-medium">{user.displayName}</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500">Phone Number</p>
-                    <p className="font-medium">N/A</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500">My Email</p>
-                    <p className="font-medium">{user.email}</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500">Password</p>
-                    <p className="font-medium">************</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500">Gender</p>
-                    <p className="font-medium">N/A</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500">My City or Region</p>
-                    <p className="font-medium">N/A</p>
-                  </div>
+                  <h2 className="mt-6 text-2xl font-semibold flex items-center">
+                    {user.displayName}
+                    {UserData?.result?.isPremium && (
+                      <>
+                        <img
+                          src="src/assets/premium.png"
+                          alt=""
+                          className=" w-20 mx-2"
+                        />
+                      </>
+                    )}
+                  </h2>
+                  <p className="text-red-600">{user.email}</p>
                 </div>
 
-                <div className="mt-8">
-                  <button onClick={hendleUpdateProfile} className="btn_css">
-                    Update
-                  </button>
+                {/* Right details */}
+                <div className="md:col-span-2">
+                  <h3 className="text-xl font-semibold mb-4 border-b pb-2">
+                    Bio & other details
+                  </h3>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+                    <div>
+                      <p className="text-gray-500">My Name</p>
+                      <p className="font-medium">{user.displayName}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500">Phone Number</p>
+                      <p className="font-medium">N/A</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500">My Email</p>
+                      <p className="font-medium">{user.email}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500">Password</p>
+                      <p className="font-medium">************</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500">Gender</p>
+                      <p className="font-medium">N/A</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500">My City or Region</p>
+                      <p className="font-medium">N/A</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-8">
+                    <button onClick={hendleUpdateProfile} className="btn_css">
+                      Update
+                    </button>
+                    {!UserData?.result?.isPremium && (
+                      <button className="btn_css" onClick={handleBost}>
+                        Subscribe Now!
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
+            {UserData?.result?.isBlocked && (
+              <div>
+                <div class="bg-red-50 border border-red-400 rounded p-4 my-5 m-100 flex flex-col justify-center items-center">
+                  <strong class=" mb-2">⚠ Your account has been blocked</strong>
+                  <p class="m-0">
+                    Please contact the system administrator at{" "}
+                    <a
+                      href="mailto:admin@example.com"
+                      class="text-red-600 underline"
+                    >
+                      admin@example.com
+                    </a>
+                    to resolve this issue.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </>
       )}

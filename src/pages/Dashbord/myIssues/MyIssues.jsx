@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const MyIssues = () => {
   const { user } = useAuth();
-  const axiousInsrance = useAxiousInstance();
+  const axiosInstance = useAxiousInstance();
   const navigate = useNavigate();
   const [filter, setfilter] = useState("");
 
@@ -23,7 +23,7 @@ const MyIssues = () => {
   const { data: issues = [], refetch } = useQuery({
     queryKey: ["issues", user.uid, filter],
     queryFn: async () => {
-      const res = await axiousInsrance.get(
+      const res = await axiosInstance.get(
         `/issues?firebaseId=${user?.uid}&sort=${filter}`
       ); // id = 2
       if (res.data.message) {
@@ -44,7 +44,7 @@ const MyIssues = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiousInsrance.delete(`/issues/${id}`).then((res) => {
+        axiosInstance.delete(`/issues/${id}`).then((res) => {
           // id = 5
           console.log(res.data.deletedCount);
           if (res.data.deletedCount) {
@@ -66,9 +66,11 @@ const MyIssues = () => {
       id: id,
       email: user.email,
       uid: user.uid,
+      amount: 100,
+      type: `issues boost`
     };
 
-    const res = await axiousInsrance.post(
+    const res = await axiosInstance.post(
       // id = 6
       "/create-checkout-session",
       paymentInfo
@@ -82,7 +84,7 @@ const MyIssues = () => {
   };
 
   const onSubmit = async (data) => {
-    const res = await axiousInsrance.patch(`/issues?_id=${data?._id}`, data);
+    const res = await axiosInstance.patch(`/issues?_id=${data?._id}`, data);
     console.log(res);
     document.getElementById("edit_modal").close();
     refetch();
@@ -97,6 +99,7 @@ const MyIssues = () => {
     const value = e.target.value;
     setfilter(value);
   };
+
 
   return (
     <div>
@@ -271,22 +274,29 @@ const MyIssues = () => {
                                                   >
                                                     Sow
                                                   </button>
-                                                  <button
-                                                    className="btn_css"
-                                                    onClick={() =>
-                                                      openEditModal(issue)
-                                                    }
-                                                  >
-                                                    Update
-                                                  </button>
-                                                  <button
-                                                    className="btn_css"
-                                                    onClick={() =>
-                                                      handleDelete(issue._id)
-                                                    }
-                                                  >
-                                                    Delete
-                                                  </button>
+                                                  {issue.status ===
+                                                    "pending" && (
+                                                    <>
+                                                      <button
+                                                        className="btn_css"
+                                                        onClick={() =>
+                                                          openEditModal(issue)
+                                                        }
+                                                      >
+                                                        Update
+                                                      </button>
+                                                      <button
+                                                        className="btn_css"
+                                                        onClick={() =>
+                                                          handleDelete(
+                                                            issue._id
+                                                          )
+                                                        }
+                                                      >
+                                                        Delete
+                                                      </button>
+                                                    </>
+                                                  )}
                                                 </>
                                               </td>
                                             </tr>

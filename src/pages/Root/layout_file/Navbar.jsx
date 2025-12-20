@@ -26,9 +26,6 @@ const Navbar = () => {
     },
   });
 
-  console.log(isAdmin);
-  console.log(isStaff);
-
   const li = (
     <>
       {!isStaff && !isAdmin && (
@@ -48,7 +45,7 @@ const Navbar = () => {
             {" "}
             Add Issues
           </NavLink>
-          <NavLink to="/my_issues" className="mx-3">
+          <NavLink to="/dashboard/my_issues" className="mx-3">
             {" "}
             My Issues
           </NavLink>
@@ -64,10 +61,10 @@ const Navbar = () => {
   const handleSingOut = () => {
     singOutUser()
       .then(() => {
-        console.log("Sign-out successful");
+        //console.log("Sign-out successful");
       })
-      .catch((error) => {
-        console.log("An error happened ", error);
+      .catch(() => {
+        //console.log("An error happened ", error);
       });
   };
 
