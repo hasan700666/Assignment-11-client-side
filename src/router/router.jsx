@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router";
 import Home from "../pages/Root/home/Home";
 import AllIssues from "../pages/Root/allIssues/AllIssues";
 import About from "../pages/Root/about/About";
-import MyIssues from "../pages/Root/myIssues/MyIssues";
 import MyFavorites from "../pages/Root/myFavorites/MyFavorites";
 import SingUp from "../pages/Auth/singUp/SingUp";
 import PrivetRoute from "./PrivetRoute";
@@ -29,6 +28,7 @@ import TotalStaffClosedIssues from "../pages/Dashbord/totalStaffClosedIssues/tot
 import AssignedIssues from "../pages/Dashbord/assignedIssues/AssignedIssues";
 import DashboardOverview from "../pages/Dashbord/Dashboard Overview/DashboardOverview";
 import IsUserBlocked from "../components/IsUserBlocked";
+import MyIssues from "../pages/Dashbord/myIssues/MyIssues";
 
 export const router = createBrowserRouter([
   {
@@ -52,14 +52,6 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <IssueDetails></IssueDetails>
-          </PrivetRoute>
-        ),
-      },
-      {
-        path: "my_issues",
-        element: (
-          <PrivetRoute>
-            <MyIssues></MyIssues>
           </PrivetRoute>
         ),
       },
@@ -156,6 +148,10 @@ export const router = createBrowserRouter([
       {
         path: "assigned_issues_page",
         Component: AssignedIssues,
+      },
+      {
+        path: "my_issues",
+        Component: MyIssues,
       },
     ],
   },

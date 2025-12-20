@@ -317,20 +317,14 @@ const DashboardOverview = () => {
     },
   ];
 
-  console.log("p", pendingIssues);
-  console.log("i", inProgressIssues);
-  console.log("w", workingIssues);
-  console.log("r", resolvedIssues);
-  console.log("i", issues);
-  console.log("c", closedIssues);
-
   return (
-    <div className="flex flex-col justify-center items-center m-30">
+    <div className="flex flex-col justify-center items-center">
+      <div className="text-5xl text-[#f22303]">Overview</div>
       <div className="w-200 bg-white rounded-2xl shadow-md p-6 ">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-800">
-            My Reported Issues
+            Reported Issues
           </h2>
           <FileText className="w-5 h-5 text-red-600" />
         </div>
@@ -356,7 +350,9 @@ const DashboardOverview = () => {
         <div></div>
         <div>
           <div className="h-100 my-10 bg-white p-5">
-            <h3 className="text-center p-5">Issues Status Overview</h3>
+            <h3 className="text-center m-10 text-5xl text-[#f22303]">
+              Issues Status Overview
+            </h3>
             <ResponsiveContainer width="700" height="100%">
               <BarChart data={issueChartData}>
                 <XAxis dataKey="name" />
@@ -368,11 +364,13 @@ const DashboardOverview = () => {
           </div>
         </div>
       </div>
-      <div className="my-10">
-        <div className="text-center">all Issues</div>
-        <div>
-          <div className="bg-[#fee9e6] mx-auto my-10 radius_css p-5">
-            <div className="overflow-x-auto">
+      <div className="mt-30 w-full">
+        <div className="text-center m-10 text-5xl text-[#f22303]">
+          all Issues
+        </div>
+        <div className="mx-20">
+          <div className="bg-[#fee9e6] mx-auto my-10 radius_css p-10 w-full">
+            <div className="overflow-x-auto w-full">
               <table className="table table-zebra">
                 {/* head */}
                 <thead>
@@ -503,14 +501,48 @@ const DashboardOverview = () => {
             </div>
           </>
         ) : (
-          <>{isAdmin ? <></> : <>
-          <div>
-            <div><TotalPendingIssues></TotalPendingIssues></div>
-            <div><TotalInProgressIssues></TotalInProgressIssues></div>
-            <div><TotalResolvedIssues></TotalResolvedIssues></div>
-            <div><TotalPayments></TotalPayments></div>
-          </div>
-          </>}</>
+          <>
+            {isAdmin ? (
+              <></>
+            ) : (
+              <>
+                <div>
+                  <div>
+                    <div className="text-center mt-10 text-5xl text-[#f22303]">
+                      Your Total Panding Issues
+                    </div>
+                    <div>
+                      <TotalPendingIssues></TotalPendingIssues>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-center mt-10 text-5xl text-[#f22303]">
+                      Your Total In Progress Issues
+                    </div>
+                    <div>
+                      <TotalInProgressIssues></TotalInProgressIssues>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-center mt-10 text-5xl text-[#f22303]">
+                      Your Total Resolved Issues
+                    </div>
+                    <div>
+                      <TotalResolvedIssues></TotalResolvedIssues>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-center mt-10 text-5xl text-[#f22303]">
+                      Your Total Payment Issues
+                    </div>
+                    <div>
+                      <TotalPayments></TotalPayments>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </>
         )}
       </div>
     </div>

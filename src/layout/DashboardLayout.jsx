@@ -3,7 +3,7 @@ import { NavLink, Outlet } from "react-router";
 import Logo from "../components/Logo";
 import img from "../../public/CircleLogo.png";
 import { CgProfile } from "react-icons/cg";
-import { BiErrorAlt } from "react-icons/bi";
+import { MdError } from "react-icons/md";
 import { PiMoneyWavyDuotone } from "react-icons/pi";
 import { GrUserWorker } from "react-icons/gr";
 import { FaClockRotateLeft } from "react-icons/fa6";
@@ -128,6 +128,19 @@ const DashboardLayout = () => {
                   </span>
                 </NavLink>
               </li>
+              {!isStaff && (
+                <li>
+                  <NavLink
+                    to="/dashboard/my_issues"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right btn_css"
+                    data-tip="Homepage"
+                  >
+                    {/* Logo icon */}
+                    <MdError />
+                    <span className="is-drawer-close:hidden">My issues</span>
+                  </NavLink>
+                </li>
+              )}
               {!isStaff && (
                 <li>
                   <NavLink

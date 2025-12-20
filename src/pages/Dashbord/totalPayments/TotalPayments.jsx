@@ -39,55 +39,42 @@ const TotalPayments = () => {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center m-30">
-        <div className=" bg-white rounded-2xl shadow-md p-6 ">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-800">
-              My Reported Issues
-            </h2>
-            <IoMdCard className="w-5 h-5 text-red-600" />
-          </div>
-          {/* Total Count */}
-          <div className="text-center my-6">
-            <div>
-              <div className="overflow-x-auto">
-                <table className="table table-zebra">
-                  {/* head */}
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Name</th>
-                      <th>Job</th>
-                      <th>Favorite Color</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {/* row 1 */}
-                    <tr>
-                      <th>1</th>
-                      <td>Cy Ganderton</td>
-                      <td>Quality Control Specialist</td>
-                      <td>Blue</td>
-                    </tr>
-                    {/* row 2 */}
-                    <tr>
-                      <th>2</th>
-                      <td>Hart Hagerty</td>
-                      <td>Desktop Support Technician</td>
-                      <td>Purple</td>
-                    </tr>
-                    {/* row 3 */}
-                    <tr>
-                      <th>3</th>
-                      <td>Brice Swyre</td>
-                      <td>Tax Accountant</td>
-                      <td>Red</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+      <div></div>
+      <div className="bg-[#fee9e6] w-9/12 mx-auto my-10 radius_css p-5">
+        <div className="overflow-x-auto">
+          <table className="table table-zebra">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Category</th>
+                <th>State</th>
+                <th>Likes</th>
+                <th>Update</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {payment.map((issue, index) => (
+                <tr>
+                  <th>{index + 1}</th>
+                  <td>{issue.title}</td>
+                  <td>{issue.location}</td>
+                  <td>{issue.category}</td>
+                  <td>{issue.status}</td>
+                  <td>{issue.upvoters.length - 1}</td>
+                  <td>{issue.updatedAt}</td>
+                  
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div>
+            <dialog id="edit_modal" className="modal">
+              
+            </dialog>
           </div>
         </div>
       </div>

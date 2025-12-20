@@ -44,25 +44,31 @@ const TotalPendingIssues = () => {
   });
 
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center m-30">
-        <div className="max-w-md bg-white rounded-2xl shadow-md p-6 ">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-800">
-              My Reported Issues
-            </h2>
+    <div className="max-w-sm mx-auto my-20">
+      <div className="bg-white rounded-lg shadow border border-gray-200 p-6">
+        {/* Header */}
+        <div className="flex items-center mb-6">
+          <div className="p-2 bg-red-100 rounded-lg mr-3">
             <FileText className="w-5 h-5 text-red-600" />
           </div>
-
-          {/* Total Count */}
-          <div className="text-center my-6">
-            <p className="text-sm text-gray-500">Total Pending Submitted</p>
-            <h1 className="text-5xl font-bold text-red-600 mt-2">
-              {pendingIssues.length}
-            </h1>
+          <div>
+            <h2 className="font-semibold text-gray-800">Reported Issues</h2>
+            <p className="text-gray-500 text-sm">Panding review</p>
           </div>
         </div>
+
+        {/* Count */}
+        <div className="text-center mb-6">
+          <div className="text-6xl font-bold text-red-600">
+            {pendingIssues.length}
+          </div>
+          <p className="text-gray-600 mt-2">issues pending</p>
+        </div>
+
+        {/* Single Action Button */}
+        <button className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 rounded-lg transition-colors">
+          View Issues
+        </button>
       </div>
     </div>
   );
