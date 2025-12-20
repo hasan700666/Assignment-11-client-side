@@ -8,13 +8,11 @@ import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const ManageStaff = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
   const { user } = useAuth();
   const axiousInsrance = useAxiousInstance();
+
+  const addForm = useForm();
+  const editForm = useForm();
 
   const { data: isAdmin } = useQuery({
     queryKey: ["is_admin", user?.uid],
@@ -105,10 +103,28 @@ const ManageStaff = () => {
     });
   };
 
-  const handleUpdate = (id) => {
-    console.log(id);
+  const onSubmit = async (data) => {
+    const fromData = new FormData();
+    fromData.append("image", data.photoStaff[0]);
+    const imgUploadURL = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_imgbb_api_key
+    }`;
+    axios.post(imgUploadURL, fromData).then((res) => {
+      const imgURL = res.data.data.url;
+      const obj = {
+        imgURL: imgURL,
+        name: data.name,
+      };
+      axiousInsrance.patch(`/user?UpdateStaffId=${data._id}`, obj).then(() => {
+        refetch();
+        document.getElementById("edit_modal").close();
+      });
+    });
+  };
 
-    // the word is not done
+  const handleUpdate = (staffData) => {
+    editForm.reset(staffData);
+    document.getElementById("edit_modal").showModal();
   };
 
   return (
@@ -175,7 +191,7 @@ const ManageStaff = () => {
         <dialog id="my_modal_1" className="modal">
           <div className="modal-box">
             <form
-              onSubmit={handleSubmit(handleAddStaff)}
+              onSubmit={addForm.handleSubmit(handleAddStaff)}
               className=" m-auto my-10 p-10 bg-[#fee9e6] radius_css"
             >
               <fieldset className="fieldset">
@@ -184,9 +200,9 @@ const ManageStaff = () => {
                   type="text"
                   className="input w-full"
                   placeholder="name of staff"
-                  {...register("name", { required: true })}
+                  {...addForm.register("name", { required: true })}
                 />
-                {errors.name && (
+                {addForm.formState.errors.name && (
                   <p className="text-red-500">Name field required</p>
                 )}
                 <label className="label">email</label>
@@ -194,9 +210,9 @@ const ManageStaff = () => {
                   type="text"
                   className="input w-full"
                   placeholder="email of staff"
-                  {...register("email", { required: true })}
+                  {...addForm.register("email", { required: true })}
                 />
-                {errors.email && (
+                {addForm.formState.errors.email && (
                   <p className="text-red-500">Email field required</p>
                 )}
                 <label className="label">phone Number</label>
@@ -204,9 +220,9 @@ const ManageStaff = () => {
                   type="text"
                   className="input w-full"
                   placeholder="phone number of staff"
-                  {...register("phone", { required: true })}
+                  {...addForm.register("phone", { required: true })}
                 />
-                {errors.phone && (
+                {addForm.formState.errors.phone && (
                   <p className="text-red-500">phone field required</p>
                 )}
                 <label className="label">Password</label>
@@ -214,9 +230,9 @@ const ManageStaff = () => {
                   type="password"
                   className="input w-full"
                   placeholder="Enter password"
-                  {...register("password", { required: true })}
+                  {...addForm.register("password", { required: true })}
                 />
-                {errors.password && (
+                {addForm.formState.errors.password && (
                   <p className="text-red-500">password field required</p>
                 )}
                 <label className="label">Confirm Password</label>
@@ -224,9 +240,9 @@ const ManageStaff = () => {
                   type="password"
                   className="input w-full"
                   placeholder="Enter confirm password"
-                  {...register("confirm_password", { required: true })}
+                  {...addForm.register("confirm_password", { required: true })}
                 ></input>
-                {errors.confirm_password && (
+                {addForm.formState.errors.confirm_password && (
                   <p className="text-red-500">
                     Confirm password field required
                   </p>
@@ -234,9 +250,9 @@ const ManageStaff = () => {
                 <input
                   className="bg-white p-2"
                   type="file"
-                  {...register("photo", { required: true })}
+                  {...addForm.register("photo", { required: true })}
                 ></input>
-                {errors.photo && (
+                {addForm.formState.errors.photo && (
                   <p className="text-red-500">photo field required</p>
                 )}
               </fieldset>
@@ -245,6 +261,44 @@ const ManageStaff = () => {
               </div>
             </form>
 
+            <div className="modal-action">
+              <form method="dialog">
+                <button className="btn_css">Close</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+      </div>
+      <div>
+        <dialog id="edit_modal" className="modal">
+          <div className="modal-box">
+            <form
+              onSubmit={editForm.handleSubmit(onSubmit)}
+              className=" m-auto my-10 p-10 bg-[#fee9e6] radius_css"
+            >
+              <fieldset className="fieldset">
+                <label className="label">Name</label>
+                <input
+                  type="text"
+                  className="input w-full"
+                  placeholder="enter staff name"
+                  {...editForm.register("name", {
+                    required: true,
+                  })}
+                />
+                {editForm.formState.errors.name && (
+                  <p className="text-red-500">Name field required</p>
+                )}
+                <input
+                  className="bg-white p-2"
+                  type="file"
+                  {...editForm.register("photoStaff")}
+                ></input>
+              </fieldset>
+              <div className="flex justify-center items-center">
+                <button className="btn_css text-center">Update</button>
+              </div>
+            </form>
             <div className="modal-action">
               <form method="dialog">
                 <button className="btn_css">Close</button>

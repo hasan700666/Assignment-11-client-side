@@ -12,7 +12,6 @@ const MyIssues = () => {
   const axiosInstance = useAxiousInstance();
   const navigate = useNavigate();
   const [filter, setfilter] = useState("");
-
   const {
     register,
     handleSubmit,
@@ -67,7 +66,7 @@ const MyIssues = () => {
       email: user.email,
       uid: user.uid,
       amount: 100,
-      type: `issues boost`
+      type: `issues boost`,
     };
 
     const res = await axiosInstance.post(
@@ -99,7 +98,6 @@ const MyIssues = () => {
     const value = e.target.value;
     setfilter(value);
   };
-
 
   return (
     <div>
