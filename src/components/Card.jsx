@@ -22,7 +22,7 @@ const Card = ({ issue, refetch }) => {
   const { user } = useAuth();
 
   const { data: IsUserBlocked = [] } = useQuery({
-    queryKey: ["isUser", user.email],
+    queryKey: ["isUser", user?.email],
     queryFn: async () => {
       const res = await axiousInsrance.get(`/user?email=${user.email}`);
       return res.data.result.isBlocked;
@@ -50,9 +50,7 @@ const Card = ({ issue, refetch }) => {
     return res;
   };
 
-  console.log(issue?.reporterFirebaseUid);
-  console.log(user?.uid);
-
+  
   return (
     <div className="card bg-base-100 w-96 shadow-sm">
       <figure>

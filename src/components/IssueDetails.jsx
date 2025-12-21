@@ -18,7 +18,6 @@ const IssueDetails = () => {
     reset,
     formState: { errors },
   } = useForm();
-
   const axiousInsrance = useAxiousInstance();
   const { data: issue = [], refetch } = useQuery({
     queryKey: ["issue", user.uid],
@@ -34,6 +33,8 @@ const IssueDetails = () => {
       id: id,
       email: user.email,
       uid: user.uid,
+      amount: 100,
+      type: `issues boost`,
     };
 
     const res = await axiousInsrance.post(
