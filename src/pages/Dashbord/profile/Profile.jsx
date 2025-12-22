@@ -146,7 +146,7 @@ const Profile = () => {
                       <>
                         <img
                           src="src/assets/premium.png"
-                          alt=""
+                          alt="premium"
                           className=" w-20 mx-2"
                         />
                       </>

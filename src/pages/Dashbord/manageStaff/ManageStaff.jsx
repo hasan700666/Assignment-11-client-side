@@ -70,6 +70,7 @@ const ManageStaff = () => {
         })
         .catch((e) => {
           console.log(e.message);
+          toast.error("this email is already used! ")
         });
     });
   };
@@ -132,7 +133,6 @@ const ManageStaff = () => {
       <div>
         <Toaster />
       </div>
-      <div>All Staff</div>
       <div>
         <div className="bg-[#fee9e6] w-9/12 mx-auto my-10 radius_css p-5">
           <div className="overflow-x-auto">

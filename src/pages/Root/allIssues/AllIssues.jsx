@@ -45,6 +45,9 @@ const AllIssues = () => {
     setSearch(search);
   };
 
+  console.log(issues);
+  
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -138,7 +141,7 @@ const AllIssues = () => {
                                     </>
                                   ) : (
                                     <div className="flex justify-center items-center my-20">
-                                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
                                         {issues.map((issue) => (
                                           <Card
                                             key={issue._id}

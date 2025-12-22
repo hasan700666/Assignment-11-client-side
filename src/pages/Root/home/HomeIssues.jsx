@@ -24,7 +24,7 @@ const HomeIssues = () => {
       <div className="m-20 lg:text-5xl md:text-4xl sm:text-3xl text-2xl text-center">
         Latest Resolve <span className="text_design_like_btn">Issue</span>
       </div>
-      <div className="bg-[#fee9e6] w-9/12 p-10 mx-auto my-10 radius_css grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
+      <div className="bg-[#fee9e6] w-9/12 p-10 mx-auto my-10 radius_css grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-5">
         {issues.map((issue) => (
           <HomeCard issue={issue}></HomeCard>
         ))}

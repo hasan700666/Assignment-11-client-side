@@ -151,6 +151,7 @@ const AddIssues = () => {
                       <option>Mosquito</option>
                       <option>Garbage</option>
                       <option>Street Light</option>
+                      <option>Water</option>
                       <option>Air Pollution</option>
                     </select>
                     {errors.category && (
