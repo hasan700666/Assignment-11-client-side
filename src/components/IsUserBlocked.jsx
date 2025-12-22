@@ -72,8 +72,6 @@ const IsUserBlocked = ({ children }) => {
     );
   }
 
-  console.log("i am in isuser ", IsUserBlocked);
-
   return children;
 };
 

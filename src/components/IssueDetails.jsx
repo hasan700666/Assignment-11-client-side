@@ -47,7 +47,7 @@ const IssueDetails = () => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
+    //console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -85,7 +85,7 @@ const IssueDetails = () => {
 
   const onSubmit = async (data) => {
     const res = await axiousInsrance.patch(`/issues?_id=${data?._id}`, data);
-    console.log(res);
+    //console.log(res);
     document.getElementById("edit_modal").close();
     refetch();
   };

@@ -39,7 +39,7 @@ const Profile = () => {
       const imgURL = res.data.data.url;
 
       updateUser(data.name, res.data.data.url).then((res) => {
-        console.log(res, "update is done");
+        //console.log(res, "update is done");
 
         axiosInstance
           .patch(`/user?Uid=${user.uid}`, {
@@ -47,12 +47,12 @@ const Profile = () => {
             photoURL: imgURL,
           })
           .then((res) => {
-            console.log(res.data);
+            //console.log(res.data);
             toast.success("Successful!");
           })
           .catch((e) => {
-            console.log("hello");
-            console.log(e);
+            //console.log("hello");
+            //console.log(e);
             toast.success("Successful!");
           });
       });

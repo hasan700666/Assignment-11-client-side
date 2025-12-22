@@ -40,7 +40,7 @@ const SingUp = () => {
 
           updateUser(data.name, res.data.data.url)
             .then((res) => {
-              console.log(res, "update Done");
+              //console.log(res, "update Done");
 
               // id = 4
               axiosInstance
@@ -55,21 +55,21 @@ const SingUp = () => {
                   createdAt: new Date(),
                 })
                 .then((res) => {
-                  console.log(res.data);
+                  //console.log(res.data);
                   navigate(location.state || "/");
                 })
                 .catch((e) => {
-                  console.log(e);
+                  //console.log(e);
                   navigate(location.state || "/");
                 });
             })
             .catch((e) => {
-              console.log(e);
+              //console.log(e);
             });
         });
       })
       .catch((e) => {
-        console.log(e);
+        //console.log(e);
         toast.error("The Email Already login on this website!")
       });
   };
@@ -85,7 +85,7 @@ const SingUp = () => {
   const handelGoogleSingIn = () => {
     singInUserByGoogle(provider)
       .then((res) => {
-        console.log(res.user.email);
+        //console.log(res.user.email);
         // id = 4
         axiosInstance
           .post("/user", {
@@ -99,15 +99,15 @@ const SingUp = () => {
             createdAt: new Date(),
           })
           .then((res) => {
-            console.log(res.data);
+            //console.log(res.data);
             navigate(location.state || "/");
           })
           .catch((e) => {
-            console.log(e);
+            //console.log(e);
           });
       })
       .catch((e) => {
-        console.log(e);
+        //console.log(e);
       });
   };
 

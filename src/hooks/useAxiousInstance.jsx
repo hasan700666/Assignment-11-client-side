@@ -8,7 +8,6 @@ const useAxiousInstance = () => {
     baseURL: "https://mokshed-server-side.vercel.app",
   });
 
-  console.log(user);
 
   useEffect(() => {
     instance.interceptors.request.use((config) => {

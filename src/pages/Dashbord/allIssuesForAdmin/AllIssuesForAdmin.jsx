@@ -90,7 +90,7 @@ const AllIssuesForAdmin = () => {
         .patch(`/issues?_id=${IssuesData._id}`, staffUidObj)
         .then((res) => {
           refetch();
-          console.log("update is done ", res.data);
+          //console.log("update is done ", res.data);
         });
     }
   };

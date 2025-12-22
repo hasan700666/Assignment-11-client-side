@@ -234,7 +234,7 @@ const DashboardLayout = () => {
                     >
                       {/* icon */}
                       <ImProfile />
-                      <span className="is-drawer-close:hidden">Total User</span>
+                      <span className="is-drawer-close:hidden">Manage users</span>
                     </NavLink>
                   </li>
                 </>

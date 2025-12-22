@@ -22,11 +22,11 @@ const StaffTodayTask = () => {
     queryKey: ["issues_data", user?.uid],
     queryFn: async () => {
       const res = await axiousInsrance.get(`/issues?staffUid=${user?.uid}`);
-      console.log(res.data);
+      //console.log(res.data);
       const filterdData = res.data.filter(
         (res) => res.status === "in-progress" || res.status === "working"
       );
-      console.log(filterdData);
+      //console.log(filterdData);
 
       return filterdData;
     },
@@ -36,7 +36,7 @@ const StaffTodayTask = () => {
     return <>unaturize access</>;
   }
 
-  console.log(StaffAssignedIssues);
+  //console.log(StaffAssignedIssues);
 
   return (
     <div>

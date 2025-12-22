@@ -45,7 +45,7 @@ const MyIssues = () => {
       if (result.isConfirmed) {
         axiosInstance.delete(`/issues/${id}`).then((res) => {
           // id = 5
-          console.log(res.data.deletedCount);
+          //console.log(res.data.deletedCount);
           if (res.data.deletedCount) {
             refetch();
             Swal.fire({
@@ -84,7 +84,7 @@ const MyIssues = () => {
 
   const onSubmit = async (data) => {
     const res = await axiosInstance.patch(`/issues?_id=${data?._id}`, data);
-    console.log(res);
+    //console.log(res);
     document.getElementById("edit_modal").close();
     refetch();
   };

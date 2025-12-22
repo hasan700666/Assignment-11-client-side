@@ -42,7 +42,7 @@ const TotalUser = () => {
       if (result.isConfirmed) {
         // id = 10
         axiousInsrance.patch(`/user?id=${id}`, { data: true }).then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           if (res.data.acknowledged) {
             refetch();
             Swal.fire({
@@ -69,7 +69,7 @@ const TotalUser = () => {
       if (result.isConfirmed) {
         // id = 10
         axiousInsrance.patch(`/user?id=${id}`, { data: false }).then((res) => {
-          console.log(res.data);
+          //(res.data);
           if (res.data.acknowledged) {
             refetch();
             Swal.fire({

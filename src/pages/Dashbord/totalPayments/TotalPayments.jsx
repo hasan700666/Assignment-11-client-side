@@ -60,8 +60,8 @@ const TotalPayments = () => {
     setFilter(value);
   };
 
-  console.log(payments);
-  console.log(filter);
+  //console.log(payments);
+  //console.log(filter);
 
   return (
     <div>

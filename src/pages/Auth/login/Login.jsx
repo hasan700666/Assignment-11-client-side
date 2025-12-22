@@ -24,7 +24,7 @@ const Login = () => {
     singInUser(data.email, data.password)
       .then((res) => {
         axiosInstance.get(`/user?email=${res.user.email}`).then((res) => {
-          console.log(res);
+          //console.log(res);
           if (res.data?.result?.role == "staff") {
             navigate("/dashboard");
           } else if (res.data.result.role == "admin") {
@@ -35,20 +35,20 @@ const Login = () => {
         });
       })
       .catch((e) => {
-        console.log(e);
+        //console.log(e);
         toast.error("This email not login on this website!");
       });
   };
 
   const handelSow = () => {
     setSow(!sow);
-    console.log(sow);
+    //console.log(sow);
   };
 
   const handelGoogleSingIn = () => {
     singInUserByGoogle(provider)
       .then((res) => {
-        console.log(res.user.email);
+        //console.log(res.user.email);
         const FachEmail = res.user.email;
         // id = 4
         axiosInstance
@@ -63,9 +63,9 @@ const Login = () => {
             createdAt: new Date(),
           })
           .then((res) => {
-            console.log(res.data);
+            //console.log(res.data);
             axiosInstance.get(`/user?email=${FachEmail}`).then((res) => {
-              console.log(res);
+              //console.log(res);
               if (res.data?.result?.role == "staff") {
                 navigate("/dashboard");
               } else {
@@ -74,11 +74,11 @@ const Login = () => {
             });
           })
           .catch((e) => {
-            console.log(e);
+            //console.log(e);
           });
       })
       .catch((e) => {
-        console.log(e);
+        //console.log(e);
         toast.error("This didn't work.");
       });
   };

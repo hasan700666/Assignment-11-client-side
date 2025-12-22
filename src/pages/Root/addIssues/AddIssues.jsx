@@ -36,7 +36,7 @@ const AddIssues = () => {
       import.meta.env.VITE_imgbb_api_key
     }`;
     axios.post(imgURL, fromData).then((res) => {
-      console.log("img upload", res.data.data.url);
+      //console.log("img upload", res.data.data.url);
       // id = 1
       axiousInsrance
         .post("/issues", {
@@ -66,7 +66,7 @@ const AddIssues = () => {
           updatedAt: new Date(),
         })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           navigate("/dashboard/my_issues");
           Swal.fire({
             title: "Issues are added",
@@ -78,7 +78,7 @@ const AddIssues = () => {
           });
         })
         .catch((e) => {
-          console.log(e);
+          //console.log(e);
         });
     });
   };

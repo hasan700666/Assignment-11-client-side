@@ -21,7 +21,7 @@ const AllIssues = () => {
       const res = await axiousInsrance.get(
         `/issues?sort=${filter}&search=${search}`
       ); // id = 2
-      console.log(res.data);
+      //console.log(res.data);
 
       if (res.data.message) {
         return res.data.message;
@@ -45,7 +45,7 @@ const AllIssues = () => {
     setSearch(search);
   };
 
-  console.log(issues);
+  //console.log(issues);
   
 
   return (

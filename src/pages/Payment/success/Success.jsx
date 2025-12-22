@@ -16,7 +16,7 @@ const Success = () => {
     }
   }, [session_id, axiousInsrance]);
 
-  console.log(session_id);
+  //console.log(session_id);
   
 
   return (

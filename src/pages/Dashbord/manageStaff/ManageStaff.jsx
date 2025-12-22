@@ -64,19 +64,19 @@ const ManageStaff = () => {
           createdAt: new Date(),
         })
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           refetch();
           document.getElementById("my_modal_1")?.close();
         })
         .catch((e) => {
-          console.log(e.message);
+          //console.log(e.message);
           toast.error("this email is already used! ")
         });
     });
   };
 
   const handleDelete = (id) => {
-    console.log("delete", id);
+    //console.log("delete", id);
 
     Swal.fire({
       title: "Are you sure?",
@@ -90,7 +90,7 @@ const ManageStaff = () => {
       if (result.isConfirmed) {
         axiousInsrance.delete(`/staff_delete/${id}`).then((res) => {
           // id = 5
-          console.log(res.data.deletedCount);
+          //console.log(res.data.deletedCount);
           if (res.data.deletedCount) {
             refetch();
             Swal.fire({

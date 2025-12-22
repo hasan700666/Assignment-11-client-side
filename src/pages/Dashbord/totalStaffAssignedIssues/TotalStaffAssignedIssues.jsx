@@ -33,7 +33,7 @@ const TotalStaffAssignedIssues = () => {
     return <>unaturize access</>;
   }
 
-  console.log(StaffAssignedIssues);
+  //console.log(StaffAssignedIssues);
 
   return (
     <div>

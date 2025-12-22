@@ -44,12 +44,12 @@ const AssignedIssues = () => {
   };
 
   const handleStatusClick = (status, id) => {
-    console.log("status ", status, id);
+    //console.log("status ", status, id);
     const obj = {
       IssuesStatus: status,
     };
     axiousInsrance.patch(`/issues?_id=${id}`, obj).then((res) => {
-      console.log(res.data);
+      //console.log(res.data);
       refetch();
     });
 
@@ -61,7 +61,7 @@ const AssignedIssues = () => {
     setfilter(value);
   };
 
-  console.log(StaffAssignedIssues);
+  //console.log(StaffAssignedIssues);
 
   return (
     <div>
