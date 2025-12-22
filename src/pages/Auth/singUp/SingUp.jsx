@@ -70,6 +70,7 @@ const SingUp = () => {
       })
       .catch((e) => {
         console.log(e);
+        toast.error("The Email Already login on this website!")
       });
   };
 

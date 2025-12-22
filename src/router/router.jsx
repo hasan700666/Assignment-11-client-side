@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Home from "../pages/Root/home/Home";
 import AllIssues from "../pages/Root/allIssues/AllIssues";
-import About from "../pages/Root/about/About";
 import MyFavorites from "../pages/Root/myFavorites/MyFavorites";
 import SingUp from "../pages/Auth/singUp/SingUp";
 import PrivetRoute from "./PrivetRoute";
@@ -30,6 +29,7 @@ import DashboardOverview from "../pages/Dashbord/Dashboard Overview/DashboardOve
 import IsUserBlocked from "../components/IsUserBlocked";
 import MyIssues from "../pages/Dashbord/myIssues/MyIssues";
 import AllIssuesForAdmin from "../pages/Dashbord/allIssuesForAdmin/AllIssuesForAdmin";
+import About from "../pages/Root/about/About";
 
 export const router = createBrowserRouter([
   {

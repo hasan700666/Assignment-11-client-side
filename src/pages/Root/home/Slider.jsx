@@ -1,7 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import img from "../../../assets/oneboglin.png";
+import img from "../../../assets/issuesIMG.png";
 import { Autoplay } from "swiper/modules";
 
 const Slider = () => {
@@ -44,8 +44,9 @@ const Slider = () => {
             </div>
 
             {/* Right Section – Illustration */}
-            <div className="w-1/2 bg-[#fdeee8] flex items-center justify-center p-4">
-              <img src={img} alt="" className="w-full " />
+            <div className="w-2/3 flex justify-end items-center p-4">
+              <img src={img} alt="" className="absolute w-2xl right-10 -rotate-12"/>
+              <div className="bg-[#fdeee8] w-1/2 h-full"></div>
             </div>
           </div>
         </SwiperSlide>

@@ -128,10 +128,10 @@ const MyIssues = () => {
       </div>
       <div>
         <div>
-          {issues === "no data on bost" ? (
+          {issues === "no data on boost" ? (
             <>
               <div className="text-4xl text-center my-100">
-                No issues Bosted Yet
+                No issues Boosted Yet
               </div>
             </>
           ) : (

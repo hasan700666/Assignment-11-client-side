@@ -46,44 +46,53 @@ const Card = ({ issue, refetch }) => {
       refetch();
     });
 
-    console.log("hasan ", user.uid);
     return res;
   };
 
-  
   return (
-    <div className="card bg-base-100 w-96 shadow-sm">
-      <figure>
-        <img src={photoURL} alt="img" className="w-full h-60 object-cover" />
+    <div className="card bg-[#fee9e6] w-96 shadow-md hover:shadow-xl transition-shadow duration-300 p-5">
+      <figure className="relative">
+        <img src={photoURL} alt="issue" className="w-full h-56 object-cover" />
+
+        <span className="absolute top-3 left-3 bg-[#fee9e6] text-sm px-3 py-1 rounded-full">
+          {status}
+        </span>
+
+        <span className="absolute top-3 right-3 bg-[#fee9e6] text-sm px-3 py-1 rounded-full">
+          {priority}
+        </span>
       </figure>
-      <div className="card-body">
-        <h2 className="card-title">
+
+      <div className="card-body gap-3">
+        <h2 className="card-title text-lg font-semibold line-clamp-2">
           {title}
-          <div className="bg-[#fee9e6] p-1 radius_css">{status}</div>
-          <div className="bg-[#fee9e6] p-1 radius_css">{priority}</div>
         </h2>
-        <p className="flex justify-between">
-          <div className="flex gap-1 items-center">
-            <MdCategory />
-            {category}
+
+        <div className="flex justify-between text-sm text-gray-600">
+          <div className="flex items-center gap-1">
+            <MdCategory className="text-base" />
+            <span>{category}</span>
           </div>
-          <div className="flex gap-1 items-center">
-            <FaLocationDot />
-            {location}
+
+          <div className="flex items-center gap-1">
+            <FaLocationDot className="text-base" />
+            <span>{location}</span>
           </div>
-        </p>
-        <div className="card-actions justify-end">
-          {issue?.reporterFirebaseUid == user?.uid ? (
-            <>
-              <div>this is your</div>
-            </>
+        </div>
+
+        <div className="card-actions justify-between items-center pt-3 border-t">
+          {issue?.reporterFirebaseUid === user?.uid ? (
+            <span className="text-sm text-red-600 font-medium">
+              Your reported issue
+            </span>
           ) : (
-            <button className="btn_css" onClick={() => onUpvote()}>
-              Upvotea | <samp className="">{upvoters.length - 1}</samp>
+            <button className="btn_css" onClick={onUpvote}>
+              👍 Upvote <span>({upvoters.length - 1})</span>
             </button>
           )}
+
           <NavLink to={`/issue_details?id=${_id}`}>
-            <div className="btn_css">View</div>
+            <button className="btn_css">View Details</button>
           </NavLink>
         </div>
       </div>

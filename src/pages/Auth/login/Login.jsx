@@ -36,7 +36,7 @@ const Login = () => {
       })
       .catch((e) => {
         console.log(e);
-        toast.error("This didn't work.");
+        toast.error("This email not login on this website!");
       });
   };
 

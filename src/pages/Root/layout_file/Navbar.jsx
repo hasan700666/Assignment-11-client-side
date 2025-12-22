@@ -121,7 +121,7 @@ const Navbar = () => {
                   tabIndex="-1"
                   className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
                 >
-                  <h1 className="text-xs mb-5">Welcome {user.displayName}</h1>
+                  <h1 className="text-xs mb-5 text-center">Welcome {user.displayName}</h1>
                   <NavLink to="/dashboard" className="btn_css text-center">
                     <button>Dashboard</button>
                   </NavLink>
