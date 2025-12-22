@@ -2,6 +2,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import img from "../../../assets/issuesIMG.png";
+import imgcity from "../../../assets/citydroing.png";
 import { Autoplay } from "swiper/modules";
 
 const Slider = () => {
@@ -17,8 +18,8 @@ const Slider = () => {
       >
         <SwiperSlide>
           <div
-            className="w-full h-[80vh]
-  bg-[url('src/assets/citydroing.png')] bg-cover bg-center bg-no-repeat 2xl:block flex flex-col justify-center items-center"
+            style={{ backgroundImage: `url(${imgcity})` }}
+            className={`w-full h-[80vh] bg-cover bg-center bg-no-repeat 2xl:block flex flex-col justify-center items-center`}
           >
             <div className=" md:text-7xl sm:text-6xl text-5xl p-10 2xl:text-left text-center">
               Make your town

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import useAxiousInstance from "../../../hooks/useAxiousInstance";
 import { useQuery } from "@tanstack/react-query";
+import img from "../../../assets/premium.png";
 
 const Profile = () => {
   const { user, updateUser } = useAuth();
@@ -144,11 +145,7 @@ const Profile = () => {
                     {user.displayName}
                     {UserData?.result?.isPremium && (
                       <>
-                        <img
-                          src="src/assets/premium.png"
-                          alt="premium"
-                          className=" w-20 mx-2"
-                        />
+                        <img src={img} alt="premium" className=" w-20 mx-2" />
                       </>
                     )}
                   </h2>

@@ -29,6 +29,7 @@ import IsUserBlocked from "../components/IsUserBlocked";
 import MyIssues from "../pages/Dashbord/myIssues/MyIssues";
 import AllIssuesForAdmin from "../pages/Dashbord/allIssuesForAdmin/AllIssuesForAdmin";
 import About from "../pages/Root/about/About";
+import ErrorPage from "../pages/Error/ErrorPage";
 
 export const router = createBrowserRouter([
   {
@@ -173,4 +174,8 @@ export const router = createBrowserRouter([
     path: "/isuser_is_blocked",
     Component: IsUserBlocked,
   },
+  {
+    path: "*",
+    Component: ErrorPage
+  }
 ]);
