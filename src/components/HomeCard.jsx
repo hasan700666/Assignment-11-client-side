@@ -5,7 +5,7 @@ import { MdCategory } from "react-icons/md";
 const HomeCard = ({issue}) => {
   return (
     <div>
-      <div className="card bg-white w-96 shadow-md hover:shadow-xl transition-shadow duration-300 p-5">
+      <div className="card bg-white shadow-md hover:shadow-xl transition-shadow duration-300 p-5">
         <figure className="relative">
           <img
             src={issue.photoURL}

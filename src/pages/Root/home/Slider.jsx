@@ -18,25 +18,29 @@ const Slider = () => {
         <SwiperSlide>
           <div
             className="w-full h-[80vh]
-  bg-[url('src/assets/citydroing.png')] bg-cover bg-center bg-no-repeat"
+  bg-[url('src/assets/citydroing.png')] bg-cover bg-center bg-no-repeat 2xl:block flex flex-col justify-center items-center"
           >
-            <div className="text-6xl p-10">Make your town</div>
-            <div className="text-7xl mx-10 text_design_like_btn w-130 text-center">
-              Bright
+            <div className=" md:text-7xl sm:text-6xl text-5xl p-10 2xl:text-left text-center">
+              Make your town
             </div>
-            <div className="m-10">
+            <div className="flex 2xl:justify-start justify-center items-center">
+              <div className=" md:text-7xl sm:text-6xl text-5xl mx-10 text_design_like_btn w-130 text-center 2xl:text-left">
+                Bright
+              </div>
+            </div>
+            <div className="m-10 flex 2xl:justify-start items-center justify-center">
               <button className="btn_css">Submit a issues</button>
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="w-full h-[80vh] rounded-xl shadow-lg bg-white overflow-hidden flex justify-between">
-            <div className="mx-10  p-6 flex flex-col justify-center">
-              <p className="text-2xl tracking-wide text-gray-500">
+          <div className="w-full h-[80vh] rounded-xl shadow-lg bg-white overflow-hidden flex lg:justify-between justify-center items-center">
+            <div className="mx-10 p-6 flex flex-col justify-center lg:items-start items-center">
+              <p className="md:text-2xl text-xl tracking-wide text-gray-500 text-center">
                 NEW-USER DISCOUNT!
               </p>
 
-              <h2 className="text-7xl font-extrabold text-gray-800 leading-snug mt-2">
+              <h2 className="md:text-7xl sm:text-6xl text-4xl font-extrabold text-gray-800 leading-snug mt-2 lg:text-start text-center">
                 Big Discount <br /> on <br /> Sbscreption
               </h2>
 
@@ -44,8 +48,12 @@ const Slider = () => {
             </div>
 
             {/* Right Section – Illustration */}
-            <div className="w-2/3 flex justify-end items-center p-4">
-              <img src={img} alt="" className="absolute w-2xl right-10 -rotate-12"/>
+            <div className="w-2/3 lg:flex lg:justify-end lg:items-center p-4 hidden">
+              <img
+                src={img}
+                alt=""
+                className="absolute 2xl:w-xl w-70 right-10 -rotate-12"
+              />
               <div className="bg-[#fdeee8] w-1/2 h-full"></div>
             </div>
           </div>
