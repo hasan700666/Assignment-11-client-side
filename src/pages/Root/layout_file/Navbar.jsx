@@ -49,10 +49,6 @@ const Navbar = () => {
             {" "}
             My Issues
           </NavLink>
-          <NavLink to="/my_favorites" className="mx-3">
-            {" "}
-            My favorites
-          </NavLink>
         </>
       )}
     </>

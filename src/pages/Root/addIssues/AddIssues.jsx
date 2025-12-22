@@ -99,97 +99,105 @@ const AddIssues = () => {
         </div>
       ) : (
         <>
-          <div>
-            <div className="m-20 text-5xl text-center">
-              Add <span className="text_design_like_btn">Issues</span>
-            </div>
-            <div>
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="w-[80vw] m-auto my-10 p-10 bg-[#fee9e6] radius_css"
-              >
-                <div className="flex justify-between">
-                  <div className="w-[50%]">
-                    <fieldset className="fieldset p-10 ">
-                      <label className="label">Title</label>
-                      <input
-                        type="text"
-                        className="input w-full"
-                        placeholder="name of issues"
-                        {...register("title", { required: true })}
-                      />
-                      {errors.title && (
-                        <p className="text-red-500">Title field required</p>
-                      )}
-
-                      <label className="label">Location</label>
-                      <input
-                        type="text"
-                        className="input w-full"
-                        placeholder="select category name"
-                        {...register("location", { required: true })}
-                      />
-                      {errors.location && (
-                        <p className="text-red-500">Label field required</p>
-                      )}
-
-                      <label className="label">Category</label>
-                      <select
-                        defaultValue="Pick a color"
-                        className="select w-full"
-                        {...register("category", { required: true })}
-                      >
-                        <option disabled={true}>Pick a category</option>
-                        <option>Road</option>
-                        <option>Mosquito</option>
-                        <option>Garbage</option>
-                        <option>Street Light</option>
-                        <option>Air Pollution </option>
-                      </select>
-                      {errors.category && (
-                        <p className="text-red-500">Category field required</p>
-                      )}
-
-                      <label className="label">Description</label>
-                      <textarea
-                        type="text"
-                        className="textarea w-full h-30"
-                        placeholder="add description"
-                        {...register("description", { required: true })}
-                      ></textarea>
-                      {errors.description && (
-                        <p className="text-red-500">
-                          Description field required
-                        </p>
-                      )}
-                    </fieldset>
-                  </div>
-                  <div className="w-[50%] h-full">
-                    <div className="p-10">
-                      <input
-                        type="file"
-                        className="text-white w-full h-[60vh] bg-white radius_css relative cursor-pointer"
-                        {...register("photo", { required: true })}
-                      ></input>
-                      <img
-                        src={img}
-                        alt=""
-                        className="absolute w-20 top-145 right-140"
-                      />
-                      {errors.photo && (
-                        <p className="text-red-500">Photo field required</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex justify-start mx-10 items-center">
-                  <button className="btn_css w-30 text-center">
-                    Add Issues
-                  </button>
-                </div>
-              </form>
-            </div>
+          <div className="my-10 text-3xl md:text-5xl text-center">
+            Add <span className="text_design_like_btn">Issues</span>
           </div>
+
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-full lg:w-[80vw] mx-auto my-10 p-6 md:p-10 bg-[#fee9e6] radius_css"
+          >
+            <div className="flex flex-col lg:flex-row gap-6">
+              {/* Left Side */}
+              <div className="w-full lg:w-1/2">
+                <fieldset className="space-y-4">
+                  <div>
+                    <label className="label">Title</label>
+                    <input
+                      type="text"
+                      className="input w-full"
+                      placeholder="name of issues"
+                      {...register("title", { required: true })}
+                    />
+                    {errors.title && (
+                      <p className="text-red-500">Title field required</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="label">Location</label>
+                    <input
+                      type="text"
+                      className="input w-full"
+                      placeholder="location"
+                      {...register("location", { required: true })}
+                    />
+                    {errors.location && (
+                      <p className="text-red-500">Location field required</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="label">Category</label>
+                    <select
+                      defaultValue=""
+                      className="select w-full"
+                      {...register("category", { required: true })}
+                    >
+                      <option disabled value="">
+                        Pick a category
+                      </option>
+                      <option>Road</option>
+                      <option>Mosquito</option>
+                      <option>Garbage</option>
+                      <option>Street Light</option>
+                      <option>Air Pollution</option>
+                    </select>
+                    {errors.category && (
+                      <p className="text-red-500">Category field required</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="label">Description</label>
+                    <textarea
+                      className="textarea w-full min-h-[120px]"
+                      placeholder="add description"
+                      {...register("description", { required: true })}
+                    ></textarea>
+                    {errors.description && (
+                      <p className="text-red-500">Description field required</p>
+                    )}
+                  </div>
+                </fieldset>
+              </div>
+
+              {/* Right Side */}
+              <div className="w-full lg:w-1/2">
+                <div className="relative">
+                  <input
+                    type="file"
+                    className="w-full lg:h-[50vh] h-[5vh] bg-white radius_css cursor-pointer p-5 text-black"
+                    {...register("photo", { required: true })}
+                  />
+                  {img && (
+                    <img
+                      src={img}
+                      alt=""
+                      className="lg:absolute bottom-4 right-4 w-16 md:w-20 rounded lg:block hidden"
+                    />
+                  )}
+                  {errors.photo && (
+                    <p className="text-red-500 mt-2">Photo field required</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 flex justify-center lg:justify-start">
+              <button className="btn_css px-8">Add Issues</button>
+            </div>
+          </form>
         </>
       )}
     </div>

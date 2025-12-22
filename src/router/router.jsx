@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Home from "../pages/Root/home/Home";
 import AllIssues from "../pages/Root/allIssues/AllIssues";
-import MyFavorites from "../pages/Root/myFavorites/MyFavorites";
 import SingUp from "../pages/Auth/singUp/SingUp";
 import PrivetRoute from "./PrivetRoute";
 import AddIssues from "../pages/Root/addIssues/AddIssues";
@@ -53,14 +52,6 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <IssueDetails></IssueDetails>
-          </PrivetRoute>
-        ),
-      },
-      {
-        path: "my_favorites",
-        element: (
-          <PrivetRoute>
-            <MyFavorites></MyFavorites>
           </PrivetRoute>
         ),
       },

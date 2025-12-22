@@ -47,28 +47,30 @@ const AllIssues = () => {
 
   return (
     <div>
-      <div className="flex justify-baseline items-center">
-        <div className="m-5 flex items-center">
-          sort by:{"  "}
-          <select
-            defaultValue=""
-            className="select"
-            onChange={handleSortChange}
-          >
-            <option disabled={true} value="">
-              Sort by
-            </option>
-            <option value="boost">Boost</option>
-            <option value="date">Date</option>
-            <option value="pending">Pending</option>
-            <option value="in-progress">In-Progress</option>
-            <option value="working">Working</option>
-            <option value="resolved">Resolved</option>
-            <option value="closed">Closed</option>
-          </select>
+      <div className="flex justify-between items-center">
+        <div className="m-10 flex justify-center items-center bg-[#fee9e6] p-5 rounded-2xl">
+          <div className="mr-5">Sort By </div>
+          <div>
+            <select
+              defaultValue=""
+              className="select"
+              onChange={handleSortChange}
+            >
+              <option disabled={true} value="">
+                Sort by
+              </option>
+              <option value="boost">Boost</option>
+              <option value="date">Date</option>
+              <option value="pending">Pending</option>
+              <option value="in-progress">In-Progress</option>
+              <option value="working">Working</option>
+              <option value="resolved">Resolved</option>
+              <option value="closed">Closed</option>
+            </select>
+          </div>
         </div>
-        <div className="flex items-center m-5">
-          <div>Search</div>
+        <div className="flex items-center m-10 bg-[#fee9e6] p-5 rounded-2xl">
+          <div className="mr-5">Search</div>
           <input
             type="text"
             placeholder="Type here"
@@ -135,14 +137,16 @@ const AllIssues = () => {
                                       </div>
                                     </>
                                   ) : (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                                      {issues.map((issue) => (
-                                        <Card
-                                          key={issue._id}
-                                          issue={issue}
-                                          refetch={refetch}
-                                        />
-                                      ))}
+                                    <div className="flex justify-center items-center my-20">
+                                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                        {issues.map((issue) => (
+                                          <Card
+                                            key={issue._id}
+                                            issue={issue}
+                                            refetch={refetch}
+                                          />
+                                        ))}
+                                      </div>
                                     </div>
                                   )}
                                 </>

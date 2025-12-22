@@ -1,8 +1,9 @@
 import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdCategory } from "react-icons/md";
+import { NavLink } from "react-router";
 
-const HomeCard = ({issue}) => {
+const HomeCard = ({ issue }) => {
   return (
     <div>
       <div className="card bg-white shadow-md hover:shadow-xl transition-shadow duration-300 p-5">
@@ -37,6 +38,11 @@ const HomeCard = ({issue}) => {
               <FaLocationDot className="text-base" />
               <span>{issue.location}</span>
             </div>
+          </div>
+          <div className="flex justify-center items-center">
+            <NavLink to={`/issue_details?id=${issue._id}`}>
+              <button className="btn_css">View Details</button>
+            </NavLink>
           </div>
         </div>
       </div>
