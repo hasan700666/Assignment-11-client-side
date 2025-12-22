@@ -19,52 +19,52 @@ const SideDesign = () => {
           <img
             src={img_1}
             alt=""
-            className="w-150 h-100 overflow-hidden radius_css  "
+            className="2xl:w-150 xl:w-60 2xl:h-100  xl:h-30 overflow-hidden radius_css  "
           />
           <img
             src={img_2}
             alt=""
-            className="w-150 h-100 overflow-hidden radius_css  "
+            className="2xl:w-150 xl:w-60 2xl:h-100  xl:h-30 overflow-hidden radius_css  "
           />
           <img
             src={img_3}
             alt=""
-            className="w-150 h-100 overflow-hidden radius_css  "
+            className="2xl:w-150 xl:w-60 2xl:h-100  xl:h-30 overflow-hidden radius_css  "
           />
           <img
             src={img_4}
             alt=""
-            className="w-150 h-100 overflow-hidden radius_css  "
+            className="2xl:w-150 xl:w-60 2xl:h-100  xl:h-30 overflow-hidden radius_css  "
           />
           <img
             src={img_5}
             alt=""
-            className="w-150 h-100 overflow-hidden radius_css  "
+            className="2xl:w-150 xl:w-60 2xl:h-100  xl:h-30 overflow-hidden radius_css  "
           />
           <img
             src={img_6}
             alt=""
-            className="w-150 h-100 overflow-hidden radius_css  "
+            className="2xl:w-150 xl:w-60 2xl:h-100  xl:h-30 overflow-hidden radius_css  "
           />
           <img
             src={img_7}
             alt=""
-            className="w-150 h-100 overflow-hidden radius_css  "
+            className="2xl:w-150 xl:w-60 2xl:h-100  xl:h-30 overflow-hidden radius_css  "
           />
           <img
             src={img_8}
             alt=""
-            className="w-150 h-100 overflow-hidden radius_css  "
+            className="2xl:w-150 xl:w-60 2xl:h-100  xl:h-30 overflow-hidden radius_css  "
           />
           <img
             src={img_9}
             alt=""
-            className="w-150 h-100 overflow-hidden radius_css  "
+            className="2xl:w-150 xl:w-60 2xl:h-100  xl:h-30 overflow-hidden radius_css  "
           />
           <img
             src={img_10}
             alt=""
-            className="w-150 h-100 overflow-hidden radius_css  "
+            className="2xl:w-150 xl:w-60 2xl:h-100  xl:h-30 overflow-hidden radius_css  "
           />
         </Marquee>
       }
